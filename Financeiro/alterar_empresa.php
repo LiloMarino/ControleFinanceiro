@@ -25,7 +25,7 @@ include_once '_head.php';
                 <!-- /. ROW  -->
                 <hr />
                 <div class="form-group">
-                    <label>Nome Atual da Empresa</label>
+                    <strong>Nome Atual da Empresa</strong>
                     <h5>(Nome)</h5>
                 </div>
                 <div class="form-group">
@@ -33,20 +33,20 @@ include_once '_head.php';
                     <input class="form-control" placeholder="Digite o nome da empresa. Exemplo: Burger King">
                 </div>
                 <div class="form-group">
-                    <label>Telefone Atual da Empresa</label>
+                    <strong>Telefone Atual da Empresa</strong>
                     <h5>(Telefone)</h5>
                 </div>
                 <div class="form-group">
-                    <label>Telefone</label>
-                    <input class="form-control" placeholder="Digite o telefone da empresa. (Opcional)">
+                    <label>Novo Telefone</label>
+                    <input class="form-control" placeholder="Digite o telefone da empresa.">
                 </div>
                 <div class="form-group">
-                    <label>Endereço Atual da Empresa</label>
+                    <strong>Endereço Atual da Empresa</strong>
                     <h5>(Endereço)</h5>
                 </div>
                 <div class="form-group">
-                    <label>Endereço</label>
-                    <input class="form-control" placeholder="Digite o endereço da empresa. (Opcional)">
+                    <label>Novo Endereço</label>
+                    <input class="form-control" placeholder="Digite o endereço da empresa.">
                 </div>
                 <button type="submit" class="btn btn-warning">Alterar</button>
             </div>

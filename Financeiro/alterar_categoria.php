@@ -25,7 +25,7 @@ include_once '_head.php';
                 <!-- /. ROW  -->
                 <hr />
                 <div class="form-group">
-                    <label>Nome Atual da Categoria</label>
+                    <strong>Nome Atual da Categoria</strong>
                     <h5>(Nome)</h5>
                 </div>
                 <div class="form-group">
