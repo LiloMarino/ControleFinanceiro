@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php
-include_once '_head.php';
+
+<?php 
+include_once '_head.php'
 ?>
+
 <body>
     <div class="container">
         <div class="row text-center  ">
