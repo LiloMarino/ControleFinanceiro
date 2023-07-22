@@ -1,60 +1,55 @@
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
-            <li class="text-center">
-                <img src="assets/img/find_user.png" class="user-image img-responsive" />
-            </li>
-
-
             <li>
-                <a href="index.html"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+                <a href="meus_dados.php"><i class="fa fa-user fa-3x"></i>Meus Dados</a>
             </li>
             <li>
-                <a href="ui.html"><i class="fa fa-desktop fa-3x"></i> UI Elements</a>
-            </li>
-            <li>
-                <a href="tab-panel.html"><i class="fa fa-qrcode fa-3x"></i> Tabs & Panels</a>
-            </li>
-            <li>
-                <a href="chart.html"><i class="fa fa-bar-chart-o fa-3x"></i> Morris Charts</a>
-            </li>
-            <li>
-                <a href="table.html"><i class="fa fa-table fa-3x"></i> Table Examples</a>
-            </li>
-            <li>
-                <a href="form.html"><i class="fa fa-edit fa-3x"></i> Forms </a>
-            </li>
-
-
-            <li>
-                <a href="#"><i class="fa fa-sitemap fa-3x"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa-solid fa-arrow-right-arrow-left" style="color: #ffffff;"></i>Movimentos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Second Level Link</a>
+                        <a href="realizar_movimento.php">Realizar Movimentos</a>
                     </li>
                     <li>
-                        <a href="#">Second Level Link</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li>
-                                <a href="#">Third Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Link</a>
-                            </li>
-
-                        </ul>
-
+                        <a href="consultar_movimento.php">Consultar Movimentos</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a class="active-menu" href="blank.html"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
+                <a href="#"><i class="fa fa-sitemap fa-3x"></i>Categorias<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="nova_categoria.php">Adicionar Categoria</a>
+                    </li>
+                    <li>
+                        <a href="consultar_categoria.php">Consultar Categorias</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-sitemap fa-3x"></i>Empresas<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="nova_empresa.php">Adicionar Empresa</a>
+                    </li>
+                    <li>
+                        <a href="consultar_empresa.php">Consultar Empresas</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-sitemap fa-3x"></i>Contas<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="nova_conta.php">Adicionar Conta</a>
+                    </li>
+                    <li>
+                        <a href="consultar_conta.php">Consultar Contas</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="blank.html"><i class="fa fa-square-o fa-3x"></i> Sair</a>
             </li>
 
         </ul>
