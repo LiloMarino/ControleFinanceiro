@@ -17,8 +17,8 @@ include_once '_head.php';
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Nova Categoria</h2>
-                        <h5>Aqui você poderá cadastrar todas as suas categorias!</h5>
+                        <h2>Alterar Categoria</h2>
+                        <h5>Aqui você poderá alterar ou excluir todas as suas categorias!</h5>
 
                     </div>
                 </div>
@@ -26,9 +26,13 @@ include_once '_head.php';
                 <hr />
                 <div class="form-group">
                     <label>Nome da Categoria</label>
+                    <h5>(Nome)</h5>
+                </div>
+                <div class="form-group">
+                    <label>Novo Nome da Categoria</label>
                     <input class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
                 </div>
-                <button type="submit" class="btn btn-success">Adicionar</button>
+                <button type="submit" class="btn btn-warning">Alterar</button>
             </div>
             <!-- /. PAGE INNER  -->
         </div>
