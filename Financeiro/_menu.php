@@ -2,10 +2,15 @@
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
             <li>
-                <a href="meus_dados.php"><i class="fa fa-user fa-3x"></i>Meus Dados</a>
+                <a href="meus_dados.php">
+                    <i class="fa fa-user fa-2x"></i>Meus Dados
+                </a>
             </li>
             <li>
-                <a href="#"><i class="fa-solid fa-arrow-right-arrow-left" style="color: #ffffff;"></i>Movimentos<span class="fa arrow"></span></a>
+                <a href="#">
+                    <i class="fa fa-solid fa-money-bill-transfer fa-2x"></i> Movimentos
+                    <span class="fa arrow"></span>
+                </a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="realizar_movimento.php">Realizar Movimentos</a>
@@ -16,7 +21,9 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap fa-3x"></i>Categorias<span class="fa arrow"></span></a>
+                <a href="#">
+                    <i class="fa fa-diagram-project fa-2x"></i>Categorias<span class="fa arrow"></span>
+                </a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="nova_categoria.php">Adicionar Categoria</a>
@@ -27,7 +34,9 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap fa-3x"></i>Empresas<span class="fa arrow"></span></a>
+                <a href="#">
+                    <i class="fa fa-shop fa-2x "></i>Empresas<span class="fa arrow"></span>
+                </a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="nova_empresa.php">Adicionar Empresa</a>
@@ -38,7 +47,9 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap fa-3x"></i>Contas<span class="fa arrow"></span></a>
+                <a href="#">
+                    <i class="fa fa-landmark fa-2x"></i>Contas<span class="fa arrow"></span>
+                </a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="nova_conta.php">Adicionar Conta</a>
@@ -49,11 +60,11 @@
                 </ul>
             </li>
             <li>
-                <a href="blank.html"><i class="fa fa-square-o fa-3x"></i> Sair</a>
+                <a href="blank.html">
+                    <i class="fa fa-right-from-bracket fa-2x "></i>Sair
+                </a>
             </li>
-
         </ul>
-
     </div>
 
 </nav>
