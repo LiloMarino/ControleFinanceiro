@@ -35,7 +35,7 @@ include_once '_head.php';
                                 <input type="password" class="form-control" placeholder="Sua senha" />
                             </div>
 
-                            <a href="index.html" class="btn btn-primary ">Login</a>
+                            <a href="meus_dados.php" class="btn btn-primary ">Login</a>
                             <hr />
                             Não possui conta? <a href="cadastro.php"> Clique aqui </a>
                         </form>

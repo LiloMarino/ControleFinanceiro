@@ -43,7 +43,7 @@ include_once '_head.php';
                                 <input type="password" class="form-control" placeholder="Repita a senha criada" />
                             </div>
 
-                            <a href="index.html" class="btn btn-success ">Finalizar cadastro</a>
+                            <a href="meus_dados.php" class="btn btn-success ">Finalizar cadastro</a>
                             <hr />
                             Já possui um cadastro? <a href="login.php">Clique aqui</a>
                         </form>

@@ -7,7 +7,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a>
                     <i class="fa fa-solid fa-money-bill-transfer fa-2x"></i> Movimentos
                     <span class="fa arrow"></span>
                 </a>
@@ -21,7 +21,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a >
                     <i class="fa fa-diagram-project fa-2x"></i>Categorias<span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -34,7 +34,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a >
                     <i class="fa fa-shop fa-2x"></i>Empresas<span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -47,7 +47,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a >
                     <i class="fa fa-landmark fa-2x"></i>Contas<span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -60,7 +60,7 @@
                 </ul>
             </li>
             <li>
-                <a href="blank.html">
+                <a href="login.php">
                     <i class="fa fa-right-from-bracket fa-2x"></i>Sair
                 </a>
             </li>

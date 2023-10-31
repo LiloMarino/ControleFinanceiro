@@ -82,7 +82,7 @@ include_once '_head.php';
                                                 <th>(Valor)</th>
                                                 <th>(Observações)</th>
                                                 <td>
-                                                    <a href="#" type="submit" class="btn btn-danger btn-sm">Excluir</a>
+                                                    <a type="submit" class="btn btn-danger btn-sm">Excluir</a>
                                                 </td>
                                             </tr>
                                         </tbody>
