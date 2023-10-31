@@ -27,19 +27,19 @@ include_once '_head.php';
                         <form role="form">
                             <br />
                             <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-circle-o-notch"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 <input type="text" class="form-control" placeholder="Seu Nome" />
                             </div>
                             <div class="form-group input-group">
-                                <span class="input-group-addon">@</span>
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 <input type="text" class="form-control" placeholder="Seu e-mail" />
                             </div>
                             <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                 <input type="password" class="form-control" placeholder="Crie uma senha (mínimo 6 caracteres)" />
                             </div>
                             <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                 <input type="password" class="form-control" placeholder="Repita a senha criada" />
                             </div>
 

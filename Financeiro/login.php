@@ -27,11 +27,11 @@ include_once '_head.php';
                         <form role="form">
                             <br />
                             <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 <input type="text" class="form-control" placeholder="Seu e-mail" />
                             </div>
                             <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                 <input type="password" class="form-control" placeholder="Sua senha" />
                             </div>
 

@@ -35,7 +35,7 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-shop fa-2x "></i>Empresas<span class="fa arrow"></span>
+                    <i class="fa fa-shop fa-2x"></i>Empresas<span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
@@ -61,7 +61,7 @@
             </li>
             <li>
                 <a href="blank.html">
-                    <i class="fa fa-right-from-bracket fa-2x "></i>Sair
+                    <i class="fa fa-right-from-bracket fa-2x"></i>Sair
                 </a>
             </li>
         </ul>
