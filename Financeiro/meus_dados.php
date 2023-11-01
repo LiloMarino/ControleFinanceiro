@@ -1,7 +1,17 @@
+<?php
+
+require_once '../DAO/Usuario.php';
+
+if (isset($_POST['btn'])) {
+    $usuario = new Usuario();
+    $ret = $usuario->atualizarDados($_POST['nome'],$_POST['email']);
+}
+
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<?php 
+<?php
 include_once '_head.php';
 ?>
 
@@ -24,15 +34,18 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="form-group">
-                    <label>Nome</label>
-                    <input class="form-control" placeholder="Insira seu Nome">
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input class="form-control" placeholder="Insira seu Email">
-                </div>
-                <button type="submit" class="btn btn-success">Concluído</button>
+                <?php include_once '_msg.php' ?>
+                <form action="meus_dados.php" method="post">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input class="form-control" placeholder="Insira seu Nome" name="nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input class="form-control" placeholder="Insira seu Email" name="email">
+                    </div>
+                    <button type="submit" class="btn btn-success" name="btn">Concluído</button>
+                </form>
             </div>
             <!-- /. PAGE INNER  -->
         </div>
