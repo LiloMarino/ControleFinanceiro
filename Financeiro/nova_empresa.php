@@ -1,3 +1,10 @@
+<?php
+require_once '../DAO/Empresa.php';
+if (isset($_POST['btn'])) {
+    $empresa = new Empresa();
+    $ret = $empresa->cadastrarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -24,19 +31,27 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="form-group">
-                    <label>Nome da Empresa</label>
-                    <input class="form-control" placeholder="Digite o nome da empresa. Exemplo: Burger King">
-                </div>
-                <div class="form-group">
-                    <label>Telefone</label>
-                    <input class="form-control" placeholder="Digite o telefone da empresa. (Opcional)">
-                </div>
-                <div class="form-group">
-                    <label>Endereço</label>
-                    <input class="form-control" placeholder="Digite o endereço da empresa. (Opcional)">
-                </div>
-                <button type="submit" class="btn btn-success">Adicionar</button>
+                <?php
+                include_once '_msg.php';
+                ?>
+                <form action="nova_empresa.php" method="post">
+                    <div class="form-group">
+                        <label>Nome da Empresa</label>
+                        <input class="form-control" name="nome"
+                            placeholder="Digite o nome da empresa. Exemplo: Burger King">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input class="form-control" name="telefone"
+                            placeholder="Digite o telefone da empresa. (Opcional)">
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço</label>
+                        <input class="form-control" name="endereco"
+                            placeholder="Digite o endereço da empresa. (Opcional)">
+                    </div>
+                    <button type="submit" name="btn" class="btn btn-success">Adicionar</button>
+                </form>
             </div>
             <!-- /. PAGE INNER  -->
         </div>

@@ -40,6 +40,10 @@ class Empresa
      */
     public function cadastrarEmpresa(string $nome, string $telefone = '', string $endereco = '') : int
     {
+        if(trim($nome) == '' || trim($telefone) == '' || trim($endereco) == '')
+        {
+            return 0;
+        }
         return 1;
     }
 
