@@ -46,6 +46,10 @@ class Conta
      */
     public function cadastrarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
+        if(trim($nomeDoBanco) == '' || trim($agencia) == '' || trim($numeroDaConta) == '' || trim($saldo) == '')
+        {
+            return 0;   
+        }
         return 1;
     }
 
