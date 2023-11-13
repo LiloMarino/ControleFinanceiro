@@ -1,4 +1,5 @@
 <?php
+require_once 'Funcoes.php';
 /**
  * Movimento no sistema financeiro
  */
@@ -53,17 +54,21 @@ class Movimento
 
     /**
      * Realiza o movimento inserindo-o no banco de dados
-     * @param int $tipo Tipo do movimento
-     * @param int $idCategoria Id da Categoria
+     * @param string $tipo Tipo do movimento
+     * @param string $idCategoria Id da Categoria
      * @param string $data Data do movimento
-     * @param int $idEmpresa Id da Empresa
+     * @param string $idEmpresa Id da Empresa
      * @param string $valor Valor do movimento
-     * @param int $idConta Id da conta
+     * @param string $idConta Id da conta
      * @param string $observacao Observação do movimento
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function realizarMovimento(int $tipo, int $idCategoria, string $data, int $idEmpresa, string $valor, int $idConta, string $observacao = '') : int
+    public function realizarMovimento(string $tipo, string $idCategoria, string $data, string $idEmpresa, string $valor, string $idConta, string $observacao) : int
     {
+        if(isEmpty($tipo, $idCategoria, $data, $idEmpresa, $valor, $idConta))
+        {
+            return 0;
+        }
         return 1;
     }
 
