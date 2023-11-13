@@ -1,4 +1,5 @@
 <?php
+require_once 'Funcoes.php';
 /**
  * Usuario do sistema financeiro
  */
@@ -31,22 +32,39 @@ class Usuario
      * @param string $nome Nome do usuário
      * @param string $email Email do usuário
      * @param string $senha Senha do usuário
-     * @return void
+     * @param string $rsenha Repetir senha do usuário
+     * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function cadastrarUsuario(string $nome, string $email, string $senha)
+    public function cadastrarUsuario(string $nome, string $email, string $senha, string $rsenha) : int
     {
-
+        if (isEmpty($nome,$email,$senha,$rsenha))
+        {
+            return 0;
+        }
+        if (strlen($senha) < 6)
+        {
+            return -2;
+        }
+        if($senha != $rsenha)
+        {
+            return -3;
+        }
+        return 1;
     }
 
     /**
      * Realiza o login do usuário com base no banco de dados
      * @param string $email Email do usuário
      * @param string $senha Senha do usuário
-     * @return void
+     * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function logarUsuario(string $email, string $senha)
+    public function fazerLogin(string $email, string $senha) : int
     {
-
+        if (isEmpty($email,$senha))
+        {
+            return 0;
+        }
+        return 1;
     }
 
     /**

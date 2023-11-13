@@ -1,3 +1,10 @@
+<?php
+require_once '../DAO/Usuario.php';
+if(isset($_POST['btn']))
+{
+    $ret = (new Usuario)->fazerLogin($_POST['email'],$_POST['senha']);
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -10,6 +17,7 @@ include_once '_head.php';
         <div class="row text-center ">
             <div class="col-md-12">
                 <br /><br />
+                <?php include_once '_msg.php';?>
                 <h2> Controle Financeiro : Login</h2>
 
                 <h5>( Faça seu login )</h5>
@@ -24,18 +32,18 @@ include_once '_head.php';
                         <strong> Entre com seus dados </strong>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form action="login.php" method="post" role="form">
                             <br />
                             <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" class="form-control" placeholder="Seu e-mail" />
+                                <input name="email" type="text" class="form-control" placeholder="Seu e-mail" />
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="Sua senha" />
+                                <input name="senha" type="password" class="form-control" placeholder="Sua senha" />
                             </div>
 
-                            <a href="meus_dados.php" class="btn btn-primary ">Login</a>
+                            <button name="btn" href="meus_dados.php" class="btn btn-primary ">Login</button>
                             <hr />
                             Não possui conta? <a href="cadastro.php"> Clique aqui </a>
                         </form>
