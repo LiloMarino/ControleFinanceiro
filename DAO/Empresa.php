@@ -1,4 +1,5 @@
 <?php
+require_once 'Funcoes.php';
 /**
  * Empresa presente no movimento do sistema financeiro
  */
@@ -38,9 +39,9 @@ class Empresa
      * @param string $endereco Endereço da empresa
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function cadastrarEmpresa(string $nome, string $telefone = '', string $endereco = '') : int
+    public function cadastrarEmpresa(string $nome, string $telefone, string $endereco) : int
     {
-        if(trim($nome) == '' || trim($telefone) == '' || trim($endereco) == '')
+        if(isEmpty($nome))
         {
             return 0;
         }

@@ -1,4 +1,5 @@
 <?php
+require_once 'Funcoes.php';
 /**
  * Conta bancária do usuário do sistema financeiro
  */
@@ -46,7 +47,7 @@ class Conta
      */
     public function cadastrarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
-        if(trim($nomeDoBanco) == '' || trim($agencia) == '' || trim($numeroDaConta) == '' || trim($saldo) == '')
+        if(isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
         {
             return 0;   
         }
