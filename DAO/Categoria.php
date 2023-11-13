@@ -1,4 +1,5 @@
 <?php
+require_once 'Funcoes.php';
 /**
  * Categoria dos movimentos do sistema financeiro
  */
@@ -28,6 +29,10 @@ class Categoria
      */
     public function cadastrarCategoria(string $nome): int
     {
+        if(isEmpty($nome))
+        {
+            return 0;
+        }
         return 1;
     }
 

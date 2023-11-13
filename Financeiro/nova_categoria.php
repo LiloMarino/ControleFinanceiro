@@ -1,3 +1,9 @@
+<?php
+require_once '../DAO/Categoria.php';
+if (isset($_POST['btn'])) {
+    $ret = (new Categoria)->cadastrarCategoria($_POST['nome']);
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -24,11 +30,16 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="form-group">
-                    <label>Nome da Categoria</label>
-                    <input class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
-                </div>
-                <button type="submit" class="btn btn-success">Adicionar</button>
+                <?php
+                include_once '_msg.php';
+                ?>
+                <form action="nova_categoria.php"  method="post">
+                    <div class="form-group">
+                        <label>Nome da Categoria</label>
+                        <input name="nome" class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
+                    </div>
+                    <button name="btn" type="submit" class="btn btn-success">Adicionar</button>
+                </form>
             </div>
             <!-- /. PAGE INNER  -->
         </div>
