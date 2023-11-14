@@ -38,13 +38,13 @@ include_once '_head.php';
                 <form action="meus_dados.php" method="post">
                     <div class="form-group">
                         <label>Nome</label>
-                        <input class="form-control" placeholder="Insira seu Nome" name="nome">
+                        <input id="nome" class="form-control" placeholder="Insira seu Nome" name="nome">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input class="form-control" placeholder="Insira seu Email" name="email">
+                        <input id="email" class="form-control" placeholder="Insira seu Email" name="email">
                     </div>
-                    <button type="submit" class="btn btn-success" name="btn">Concluído</button>
+                    <button type="submit" onclick="return ValidarMeusDados()" class="btn btn-success" name="btn">Concluído</button>
                 </form>
             </div>
             <!-- /. PAGE INNER  -->
