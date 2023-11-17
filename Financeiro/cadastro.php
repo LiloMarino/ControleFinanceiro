@@ -34,23 +34,23 @@ include_once '_head.php';
                     <div class="panel-body">
                         <form role="form" action="cadastro.php" method="post">
                             <br />
-                            <div class="form-group input-group">
+                            <div class="form-group input-group" id="divNome">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input name="nome" type="text" class="form-control" placeholder="Seu Nome" />
+                                <input id="nome" onblur="isCampoPreenchido(nome,divNome,false)" name="nome" type="text" class="form-control" placeholder="Seu Nome" />
                             </div>
-                            <div class="form-group input-group">
+                            <div class="form-group input-group" id="divEmail">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input name="email" type="text" class="form-control" placeholder="Seu e-mail" />
+                                <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" name="email" type="text" class="form-control" placeholder="Seu e-mail" />
                             </div>
-                            <div class="form-group input-group">
+                            <div class="form-group input-group" id="divSenha">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input name="senha" type="password" class="form-control" placeholder="Crie uma senha (mínimo 6 caracteres)" />
+                                <input id="senha" onblur="isCampoPreenchido(senha,divSenha,false)" name="senha" type="password" class="form-control" placeholder="Crie uma senha (mínimo 6 caracteres)" />
                             </div>
-                            <div class="form-group input-group">
+                            <div class="form-group input-group" id="divRsenha">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input name="rsenha" type="password" class="form-control" placeholder="Repita a senha criada" />
+                                <input id="rsenha" onblur="isCampoPreenchido(rsenha,divRsenha,false)" name="rsenha" type="password" class="form-control" placeholder="Repita a senha criada" />
                             </div>
-                            <button type="submit" name="btn" class="btn btn-success">Finalizar cadastro</button>
+                            <button onclick="return ValidarCampos('nome','email','senha','rsenha')" type="submit" name="btn" class="btn btn-success">Finalizar cadastro</button>
                             <hr />
                             Já possui um cadastro? <a href="login.php">Clique aqui</a>
                         </form>

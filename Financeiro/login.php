@@ -34,16 +34,16 @@ include_once '_head.php';
                     <div class="panel-body">
                         <form action="login.php" method="post" role="form">
                             <br />
-                            <div class="form-group input-group">
+                            <div class="form-group input-group" id="divEmail">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input name="email" type="text" class="form-control" placeholder="Seu e-mail" />
+                                <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" name="email" type="text" class="form-control" placeholder="Seu e-mail" />
                             </div>
-                            <div class="form-group input-group">
+                            <div class="form-group input-group" id="divSenha">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input name="senha" type="password" class="form-control" placeholder="Sua senha" />
+                                <input id="senha" onblur="isCampoPreenchido(senha,divSenha,false)" name="senha" type="password" class="form-control" placeholder="Sua senha" />
                             </div>
 
-                            <button name="btn" href="meus_dados.php" class="btn btn-primary ">Login</button>
+                            <button onclick="return ValidarCampos('email','senha')" name="btn" href="meus_dados.php" class="btn btn-primary ">Login</button>
                             <hr />
                             Não possui conta? <a href="cadastro.php"> Clique aqui </a>
                         </form>

@@ -18,7 +18,14 @@ function ValidarCampos(...inputIds) {
         let id = inputIds[i];
         if (!isCampoPreenchido("#" + id, "#div" + Capitalizar(id), ret)) {
             let label = $("#" + id).closest("div").find("label");
-            campos += "- " + label.text() + "\n";
+            if(label.text() == '')
+            {
+                campos += "- " + Capitalizar(id) + "\n";
+            }
+            else
+            {
+                campos += "- " + label.text() + "\n";
+            }
             ret = false;
         }
     }
