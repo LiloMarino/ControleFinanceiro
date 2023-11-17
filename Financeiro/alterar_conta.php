@@ -1,3 +1,9 @@
+<?php
+require_once '../DAO/Conta.php';
+if (isset($_POST['btn'])) {
+    $ret = (new Conta)->atualizarConta($_POST['nome'], $_POST['agencia'], $_POST['nconta'], $_POST['saldo']);
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -24,39 +30,28 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="form-group">
-                    <strong>Nome Atual do Banco</strong>
-                    <h5>(Nome)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Nome do Banco</label>
-                    <input class="form-control" placeholder="Digite o nome do banco. Exemplo: NuBank">
-                </div>
-                <div class="form-group">
-                    <strong>Agência Atual</strong>
-                    <h5>(Agência)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Nova Agência</label>
-                    <input class="form-control" placeholder="Digite a agência.">
-                </div>
-                <div class="form-group">
-                    <strong>Número da conta Atual</strong>
-                    <h5>(Número)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Número da conta</label>
-                    <input class="form-control" placeholder="Digite o número da conta.">
-                </div>
-                <div class="form-group">
-                    <strong>Saldo Atual</strong>
-                    <h5>(Saldo)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Saldo</label>
-                    <input class="form-control" placeholder="Digite o saldo da conta.">
-                </div>
-                <button type="submit" class="btn btn-warning">Alterar</button>
+                <?php
+                include_once '_msg.php';
+                ?>
+                <form action="alterar_conta.php" method="post">
+                    <div class="form-group">
+                        <label>Nome do Banco</label><span class="red-text">*</span>
+                        <input class="form-control" name="nome" placeholder="Digite o nome do banco. Exemplo: NuBank">
+                    </div>
+                    <div class="form-group">
+                        <label>Agência</label><span class="red-text">*</span>
+                        <input class="form-control" name="agencia" placeholder="Digite a agência.">
+                    </div>
+                    <div class="form-group">
+                        <label>Número da Conta</label><span class="red-text">*</span>
+                        <input class="form-control" name="nconta" placeholder="Digite o número da conta.">
+                    </div>
+                    <div class="form-group">
+                        <label>Saldo</label><span class="red-text">*</span>
+                        <input class="form-control" name="saldo" placeholder="Digite o saldo da conta.">
+                    </div>
+                    <button type="submit" name="btn" class="btn btn-warning">Alterar</button>
+                </form>
             </div>
             <!-- /. PAGE INNER  -->
         </div>

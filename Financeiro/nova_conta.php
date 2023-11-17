@@ -36,19 +36,19 @@ include_once '_head.php';
                 ?>
                 <form action="nova_conta.php" method="post">
                     <div class="form-group">
-                        <label>Nome do Banco</label>
+                        <label>Nome do Banco</label><span class="red-text">*</span>
                         <input class="form-control" name="nome" placeholder="Digite o nome do banco. Exemplo: NuBank">
                     </div>
                     <div class="form-group">
-                        <label>Agência</label>
+                        <label>Agência</label><span class="red-text">*</span>
                         <input class="form-control" name="agencia" placeholder="Digite a agência.">
                     </div>
                     <div class="form-group">
-                        <label>Número da Conta</label>
+                        <label>Número da Conta</label><span class="red-text">*</span>
                         <input class="form-control" name="nconta" placeholder="Digite o número da conta.">
                     </div>
                     <div class="form-group">
-                        <label>Saldo</label>
+                        <label>Saldo</label><span class="red-text">*</span>
                         <input class="form-control" name="saldo" placeholder="Digite o saldo da conta.">
                     </div>
                     <button type="submit" name="btn" class="btn btn-success">Adicionar</button>

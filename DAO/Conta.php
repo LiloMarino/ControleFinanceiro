@@ -73,6 +73,10 @@ class Conta
      */
     public function atualizarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
+        if(isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
+        {
+            return 0;   
+        }
         return 1;
     }
 
