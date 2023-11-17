@@ -52,6 +52,10 @@ class Categoria
      */
     public function atualizarCategoria(string $nome): int
     {
+        if(isEmpty($nome))
+        {
+            return 0;
+        }
         return 1;
     }
 

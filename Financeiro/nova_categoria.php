@@ -33,12 +33,14 @@ include_once '_head.php';
                 <?php
                 include_once '_msg.php';
                 ?>
-                <form action="nova_categoria.php"  method="post">
+                <form action="nova_categoria.php" method="post">
                     <div class="form-group" id="divCategoria">
                         <label for="categoria">Nome da Categoria</label><span class="red-text">*</span>
-                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)"  name="nome" class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
+                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome"
+                            class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
                     </div>
-                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit" class="btn btn-success">Adicionar</button>
+                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit"
+                        class="btn btn-success">Adicionar</button>
                 </form>
             </div>
             <!-- /. PAGE INNER  -->

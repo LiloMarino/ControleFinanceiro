@@ -1,3 +1,9 @@
+<?php
+require_once '../DAO/Categoria.php';
+if (isset($_POST['btn'])) {
+    $ret = (new Categoria)->atualizarCategoria($_POST['nome']);
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -24,15 +30,18 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="form-group">
-                    <strong>Nome Atual da Categoria</strong>
-                    <h5>(Nome)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Nome da Categoria</label>
-                    <input class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
-                </div>
-                <button type="submit" class="btn btn-warning">Alterar</button>
+                <?php
+                include_once '_msg.php';
+                ?>
+                <form action="alterar_categoria.php" method="post">
+                    <div class="form-group" id="divCategoria">
+                        <label for="categoria">Nome da Categoria</label><span class="red-text">*</span>
+                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome"
+                            class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
+                    </div>
+                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit"
+                        class="btn btn-warning">Alterar</button>
+                </form>
             </div>
             <!-- /. PAGE INNER  -->
         </div>
