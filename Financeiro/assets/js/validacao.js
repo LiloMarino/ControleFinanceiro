@@ -1,4 +1,4 @@
-function VerificarCampoPreenchido(inputId, inputCssId, focus) {
+function isCampoPreenchido(inputId, inputCssId, focus) {
     if ($(inputId).val().trim() == '') {
         if (focus) {
             $(inputId).focus();
@@ -10,22 +10,26 @@ function VerificarCampoPreenchido(inputId, inputCssId, focus) {
     return true;
 }
 
-function ValidarMeusDados() {
+function ValidarCampos(...inputIds) {
     var ret = true;
     var campos = "";
 
-    if (!VerificarCampoPreenchido("#nome", "#divNome", ret)) {
-        campos += "- Nome\n";
-        ret = false;
-    }
-
-    if (!VerificarCampoPreenchido("#email", "#divEmail", ret)) {
-        campos += "- Email\n";
-        ret = false;
+    for (let i = 0; i < inputIds.length; i++) {
+        let id = inputIds[i];
+        if (!isCampoPreenchido("#" + id, "#div" + Capitalizar(id), ret)) {
+            let label = $("#" + id).closest("div").find("label");
+            campos += "- " + label.text() + "\n";
+            ret = false;
+        }
     }
 
     if (!ret) {
         alert("Preencher o(s) campo(s):\n" + campos);
     }
     return ret;
+}
+
+function Capitalizar(str)
+{
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
