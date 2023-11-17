@@ -35,9 +35,9 @@ include_once '_head.php';
                 include_once '_msg.php';
                 ?>
                 <form action="nova_empresa.php" method="post">
-                    <div class="form-group">
-                        <label>Nome da Empresa</label>
-                        <input class="form-control" name="nome"
+                    <div class="form-group" id="divEmpresa">
+                        <label>Nome da Empresa</label><span class="red-text">*</span>
+                        <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control" name="nome"
                             placeholder="Digite o nome da empresa. Exemplo: Burger King">
                     </div>
                     <div class="form-group">
@@ -50,7 +50,7 @@ include_once '_head.php';
                         <input class="form-control" name="endereco"
                             placeholder="Digite o endereço da empresa. (Opcional)">
                     </div>
-                    <button type="submit" name="btn" class="btn btn-success">Adicionar</button>
+                    <button onclick="return ValidarCampos('empresa')" type="submit" name="btn" class="btn btn-success">Adicionar</button>
                 </form>
             </div>
             <!-- /. PAGE INNER  -->

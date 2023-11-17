@@ -24,31 +24,24 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="form-group">
-                    <strong>Nome Atual da Empresa</strong>
-                    <h5>(Nome)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Nome da Empresa</label>
-                    <input class="form-control" placeholder="Digite o nome da empresa. Exemplo: Burger King">
-                </div>
-                <div class="form-group">
-                    <strong>Telefone Atual da Empresa</strong>
-                    <h5>(Telefone)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Telefone</label>
-                    <input class="form-control" placeholder="Digite o telefone da empresa.">
-                </div>
-                <div class="form-group">
-                    <strong>Endereço Atual da Empresa</strong>
-                    <h5>(Endereço)</h5>
-                </div>
-                <div class="form-group">
-                    <label>Novo Endereço</label>
-                    <input class="form-control" placeholder="Digite o endereço da empresa.">
-                </div>
-                <button type="submit" class="btn btn-warning">Alterar</button>
+                <form action="">
+                <div class="form-group" id="divEmpresa">
+                        <label>Nome da Empresa</label><span class="red-text">*</span>
+                        <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control" name="nome"
+                            placeholder="Digite o nome da empresa. Exemplo: Burger King">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input class="form-control" name="telefone"
+                            placeholder="Digite o telefone da empresa. (Opcional)">
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço</label>
+                        <input class="form-control" name="endereco"
+                            placeholder="Digite o endereço da empresa. (Opcional)">
+                    </div>
+                    <button onclick="return ValidarCampos('empresa')" type="submit" class="btn btn-warning">Alterar</button>
+                </form>
             </div>
             <!-- /. PAGE INNER  -->
         </div>
