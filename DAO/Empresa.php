@@ -64,8 +64,12 @@ class Empresa
      * @param string $endereco Endereço da empresa
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function atualizarEmpresa(string $nome, string $telefone = '', string $endereco = '') : int
+    public function atualizarEmpresa(string $nome, string $telefone, string $endereco) : int
     {
+        if(isEmpty($nome))
+        {
+            return 0;
+        }
         return 1;
     }
 

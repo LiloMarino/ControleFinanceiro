@@ -1,3 +1,10 @@
+<?php
+require_once '../DAO/Empresa.php';
+if (isset($_POST['btn'])) {
+    $empresa = new Empresa();
+    $ret = $empresa->atualizarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -24,11 +31,14 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <form action="">
-                <div class="form-group" id="divEmpresa">
+                <?php
+                include_once '_msg.php';
+                ?>
+                <form action="alterar_empresa.php" method="post">
+                    <div class="form-group" id="divEmpresa">
                         <label>Nome da Empresa</label><span class="red-text">*</span>
-                        <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control" name="nome"
-                            placeholder="Digite o nome da empresa. Exemplo: Burger King">
+                        <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control"
+                            name="nome" placeholder="Digite o nome da empresa. Exemplo: Burger King">
                     </div>
                     <div class="form-group">
                         <label>Telefone</label>
@@ -40,7 +50,7 @@ include_once '_head.php';
                         <input class="form-control" name="endereco"
                             placeholder="Digite o endereço da empresa. (Opcional)">
                     </div>
-                    <button onclick="return ValidarCampos('empresa')" type="submit" class="btn btn-warning">Alterar</button>
+                    <button onclick="return ValidarCampos('empresa')" type="submit" name="btn" class="btn btn-warning">Alterar</button>
                 </form>
             </div>
             <!-- /. PAGE INNER  -->
