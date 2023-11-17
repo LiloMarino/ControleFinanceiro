@@ -1,16 +1,31 @@
+function VerificarCampoPreenchido(inputId, inputCssId, focus) {
+    if ($(inputId).val().trim() == '') {
+        if (focus) {
+            $(inputId).focus();
+        }
+        $(inputCssId).addClass("has-error");
+        return false;
+    }
+    $(inputCssId).removeClass("has-error").addClass("has-success");
+    return true;
+}
+
 function ValidarMeusDados() {
-    var nome = document.getElementById("nome").value;
-    var email = $("#email").val();
-    if (nome.trim() == '') {
-        alert("Preencher o campo NOME");
-        $("#nome").focus();
-        return false;
+    var ret = true;
+    var campos = "";
+
+    if (!VerificarCampoPreenchido("#nome", "#divNome", ret)) {
+        campos += "- Nome\n";
+        ret = false;
     }
-    
-    if (email.trim() == '')
-    {
-        alert("Preencher o campo EMAIL");
-        $("#email").focus();
-        return false;
+
+    if (!VerificarCampoPreenchido("#email", "#divEmail", ret)) {
+        campos += "- Email\n";
+        ret = false;
     }
+
+    if (!ret) {
+        alert("Preencher o(s) campo(s):\n" + campos);
+    }
+    return ret;
 }

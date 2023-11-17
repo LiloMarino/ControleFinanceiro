@@ -36,13 +36,13 @@ include_once '_head.php';
                 <hr />
                 <?php include_once '_msg.php' ?>
                 <form action="meus_dados.php" method="post">
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <input id="nome" class="form-control" placeholder="Insira seu Nome" name="nome">
+                    <div class="form-group" id="divNome">
+                        <label for="nome">Nome</label>
+                        <input id="nome" onblur="VerificarCampoPreenchido(nome,divNome,false)" class="form-control" placeholder="Insira seu Nome" name="nome">
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input id="email" class="form-control" placeholder="Insira seu Email" name="email">
+                    <div class="form-group" id="divEmail">
+                        <label for="email">Email</label>
+                        <input id="email" onblur="VerificarCampoPreenchido(email,divEmail,false)" class="form-control" placeholder="Insira seu Email" name="email">
                     </div>
                     <button type="submit" onclick="return ValidarMeusDados()" class="btn btn-success" name="btn">Concluído</button>
                 </form>
