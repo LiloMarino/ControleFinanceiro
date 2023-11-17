@@ -24,34 +24,40 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Tipo do movimento</label>
-                        <select class="form-control">
-                            <option value="0">Todos</option>
-                            <option value="1">Entrada</option>
-                            <option value="2">Saída</option>
-                        </select>
+                <form action="consultar_movimento.php" method="post">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Tipo do movimento</label>
+                            <select class="form-control">
+                                <option value="0">Todos</option>
+                                <option value="1">Entrada</option>
+                                <option value="2">Saída</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Data Inicial</label>
-                        <input type="date" class="form-control" placeholder="Coloque a data do movimento">
+                    <div class="col-md-6">
+                        <div class="form-group" id="divDataInicial">
+                            <label for="dataInicial">Data Inicial</label><span class="red-text">*</span>
+                            <input id="dataInicial" type="date"
+                                onblur="isCampoPreenchido(dataInicial,divDataInicial,false)" class="form-control"
+                                placeholder="Coloque a data do movimento">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Data Final</label>
-                        <input type="date" class="form-control" placeholder="Coloque a data do movimento">
+                    <div class="col-md-6">
+                        <div class="form-group" id="divDataFinal">
+                            <label for="dataFinal">Data Final</label><span class="red-text">*</span>
+                            <input id="dataFinal" type="date" onblur="isCampoPreenchido(dataFinal,divDataFinal,false)"
+                                class="form-control" placeholder="Coloque a data do movimento">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <a class="btn btn-info">Pesquisar</a>
-                    <hr>
-                </div>
+                    <div class="col-md-12">
+                        <button onclick="return ValidarCampos('dataInicial','dataFinal')" type="submit" name="btn"
+                            class="btn btn-info">Pesquisar</a>
+                    </div>
+                </form>
                 <div class="row">
                     <div class="col-md-12">
+                        <hr>
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -59,7 +65,8 @@ include_once '_head.php';
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <table class="table table-striped table-bordered table-hover"
+                                        id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>Data</th>
