@@ -37,8 +37,9 @@ function ValidarCampos(...inputIds) {
 function ValidarCadastro(...inputIds) {
     var ret = ValidarCampos(...inputIds);
     if (ret) {
+
         /* Validar Email */
-        if (validarEmail($("#email").val())) {
+        if (!validarEmail($("#email").val())) {
             alert("Email inválido!");
             ret = false;
         }
@@ -55,7 +56,6 @@ function ValidarCadastro(...inputIds) {
             alert("A senha e o repetir senha não coincidem");
             ret = false;
         }
-
     }
     return ret;
 }
@@ -64,16 +64,31 @@ function isPreenchidoSenha() {
     if ($("#senha").val().trim() == '') {
         $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
     }
-    $("#labelSenha").hide();
-}
-
-function ValidarSenha() {
-    if ($("#senha").val().trim().length < 6) {
-        $("#divSenha").addClass("has-error");
-        $("#labelSenha").text("A senha deverá conter no mínimo 6 caracteres");
+    if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
         $("#labelSenha").show();
     }
     else {
+        $("#labelSenha").hide();
+    }
+}
+
+function isPreenchidoRSenha() {
+    if ($("#rsenha").val().trim() == '') {
+        $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+    }
+
+    if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
+        $("#labelSenha").show();
+        $("#labelSenha").text("As senhas não coincidem");
+        $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+    }
+    else {
+        $("#labelSenha").hide();
+    }
+}
+
+function MostrarForcaSenha() {
+    if ($("#rsenha").val().trim() == '' || $("#senha").is(":focus")) {
         $("#labelSenha").show();
         switch (avaliarForcaSenha($("#senha").val())) {
             case 1:
@@ -90,17 +105,7 @@ function ValidarSenha() {
                 break;
         }
     }
-}
-
-function ValidarRepetirSenha() {
-    if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
-        $("#labelSenha").show();
-        $("#labelSenha").text("As senhas não coincidem");
-        $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-        $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-    }
     else {
-        $("#labelSenha").hide();
         switch (avaliarForcaSenha($("#senha").val())) {
             case 1:
                 $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
@@ -117,18 +122,37 @@ function ValidarRepetirSenha() {
         }
     }
 }
+function ValidarSenha() {
+    if ($("#senha").val().trim().length < 6) {
+        $("#divSenha").addClass("has-error");
+        $("#labelSenha").text("A senha deverá conter no mínimo 6 caracteres");
+        $("#labelSenha").show();
+    }
+    else {
+        MostrarForcaSenha();
+
+        if ($("#rsenha").val().trim() != '') {
+            if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
+                $("#labelSenha").show();
+                $("#labelSenha").text("As senhas não coincidem");
+                $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+                $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+            }
+        }
+    }
+}
 
 function Capitalizar(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function validarEmail(email) {
-    // Expressão regular para validar o formato do e-mail
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    // Expressão regular mais abrangente para validar o formato do e-mail
+    const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    
     // Testa se o e-mail corresponde à expressão regular
     return regexEmail.test(email);
-}
+  }  
 
 function avaliarForcaSenha(senha) {
     // Critérios para avaliação da força da senha
