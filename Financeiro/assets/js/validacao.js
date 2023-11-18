@@ -60,86 +60,83 @@ function ValidarCadastro(...inputIds) {
     return ret;
 }
 
-function isPreenchidoSenha() {
-    if ($("#senha").val().trim() == '') {
-        $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-    }
-    if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
-        $("#labelSenha").show();
-    }
-    else {
-        $("#labelSenha").hide();
-    }
-}
-
-function isPreenchidoRSenha() {
-    if ($("#rsenha").val().trim() == '') {
-        $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-    }
-
-    if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
-        $("#labelSenha").show();
-        $("#labelSenha").text("As senhas não coincidem");
-        $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-    }
-    else {
-        $("#labelSenha").hide();
-    }
-}
-
-function MostrarForcaSenha() {
-    if ($("#rsenha").val().trim() == '' || $("#senha").is(":focus")) {
-        $("#labelSenha").show();
-        switch (avaliarForcaSenha($("#senha").val())) {
-            case 1:
-                $("#labelSenha").text("Senha Fraca");
-                $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-                break;
-            case 2:
-                $("#labelSenha").text("Senha Média");
-                $("#divSenha").removeClass("has-success").removeClass("has-error").addClass("has-warning");
-                break;
-            case 3:
-                $("#labelSenha").text("Senha Forte");
-                $("#divSenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
-                break;
+function coincideSenha(idSenha, cssSenha) {
+    /* Verifica se o repetir senha está preenchido */
+    if ($("#rsenha").val().trim() != '') {
+        /* Verifica se as senhas coincidem */
+        if ($("#senha").val().trim() == $("#rsenha").val().trim()) {
+            /* Senhas coincidem */
+            $("#labelSenha").hide();
+            /* Avalia a força da senha */
+            validarSenha();
+        }
+        else {
+            /* Senhas não coincidem */
+            $("#labelSenha").show();
+            $("#labelSenha").text("As senhas não coincidem");
+            $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+            $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
         }
     }
-    else {
-        switch (avaliarForcaSenha($("#senha").val())) {
-            case 1:
-                $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-                $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-                break;
-            case 2:
-                $("#divSenha").removeClass("has-success").removeClass("has-error").addClass("has-warning");
-                $("#divRsenha").removeClass("has-success").removeClass("has-error").addClass("has-warning");
-                break;
-            case 3:
-                $("#divSenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
-                $("#divRsenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
-                break;
-        }
+
+    /* Verifica se o campo está vazio */
+    if ($(idSenha).val().trim() == '') {
+        $(cssSenha).removeClass("has-success").removeClass("has-warning").addClass("has-error");
     }
 }
-function ValidarSenha() {
+
+function validarSenha() {
+    /* Verifica se a senha tem pelo menos 6 caracteres */
     if ($("#senha").val().trim().length < 6) {
         $("#divSenha").addClass("has-error");
         $("#labelSenha").text("A senha deverá conter no mínimo 6 caracteres");
         $("#labelSenha").show();
     }
     else {
-        MostrarForcaSenha();
-
-        if ($("#rsenha").val().trim() != '') {
-            if ($("#senha").val().trim() != $("#rsenha").val().trim()) {
-                $("#labelSenha").show();
-                $("#labelSenha").text("As senhas não coincidem");
-                $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
-                $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+        /* Avalia a força da senha */
+        if ($("#rsenha").val().trim() == '' || $("#senha").is(":focus")) {
+            $("#labelSenha").show();
+            switch (avaliarForcaSenha($("#senha").val())) {
+                case 1:
+                    $("#labelSenha").text("Senha Fraca");
+                    $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+                    break;
+                case 2:
+                    $("#labelSenha").text("Senha Média");
+                    $("#divSenha").removeClass("has-success").removeClass("has-error").addClass("has-warning");
+                    break;
+                case 3:
+                    $("#labelSenha").text("Senha Forte");
+                    $("#divSenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
+                    break;
+                case 4:
+                    $("#labelSenha").text("Senha Muito Forte");
+                    $("#divSenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
+                    break;
+            }
+        }
+        else {
+            switch (avaliarForcaSenha($("#senha").val())) {
+                case 1:
+                    $("#divSenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+                    $("#divRsenha").removeClass("has-success").removeClass("has-warning").addClass("has-error");
+                    break;
+                case 2:
+                    $("#divSenha").removeClass("has-success").removeClass("has-error").addClass("has-warning");
+                    $("#divRsenha").removeClass("has-success").removeClass("has-error").addClass("has-warning");
+                    break;
+                case 3:
+                    $("#divSenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
+                    $("#divRsenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
+                    break;
+                case 4:
+                    $("#divSenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
+                    $("#divRsenha").removeClass("has-error").removeClass("has-warning").addClass("has-success");
+                    break;
             }
         }
     }
+
 }
 
 function Capitalizar(str) {
@@ -149,13 +146,14 @@ function Capitalizar(str) {
 function validarEmail(email) {
     // Expressão regular mais abrangente para validar o formato do e-mail
     const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    
+
     // Testa se o e-mail corresponde à expressão regular
     return regexEmail.test(email);
-  }  
+}
 
 function avaliarForcaSenha(senha) {
     // Critérios para avaliação da força da senha
+    const comprimento = 10;
     const contemLetras = /[a-zA-Z]/.test(senha);
     const contemNumeros = /\d/.test(senha);
     const contemCaracteresEspeciais = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(senha);
@@ -174,13 +172,20 @@ function avaliarForcaSenha(senha) {
         pontuacao += 1;
     }
 
+    // Verifica o tamanho da senha e se ela contem numa senha comprida pelo menos uma combinação de 2 critérios anteriores
+    if (senha.length >= comprimento && pontuacao >= 2) {
+        pontuacao += 1;
+    }
+
     // Classifica a força da senha com base na pontuação
     if (pontuacao <= 1) {
         return 1; // Fraca
     } else if (pontuacao === 2) {
         return 2; // Média  
-    } else {
+    } else if (pontuacao == 3) {
         return 3; // Forte
+    } else {
+        return 4; // Muito Forte
     }
 }
 

@@ -47,14 +47,14 @@ include_once '_head.php';
                                 <label hidden class="control-label" for="senha" id="labelSenha"></label>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                    <input id="senha" oninput="ValidarSenha()" onfocus="ValidarSenha()"
-                                    onblur="isPreenchidoSenha()" name="senha" type="password"
+                                    <input id="senha" oninput="validarSenha()" onfocus="validarSenha()"
+                                    onblur="coincideSenha(senha,divSenha)" name="senha" type="password"
                                     class="form-control" placeholder="Crie uma senha (mínimo 6 caracteres)" />
                                 </div>
                             </div>
                             <div class="form-group input-group" id="divRsenha">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input id="rsenha" oninput="ValidarSenha()" onblur="isPreenchidoRSenha()" name="rsenha"
+                                <input id="rsenha" oninput="coincideSenha(rsenha,divRsenha)" onblur="coincideSenha(rsenha,divRsenha)" name="rsenha"
                                     type="password" class="form-control" placeholder="Repita a senha criada" />
                             </div>
                             <button onclick="return ValidarCadastro('nome','email','senha','rsenha')" type="submit"
