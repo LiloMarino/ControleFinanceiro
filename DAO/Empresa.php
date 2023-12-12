@@ -1,5 +1,5 @@
 <?php
-require_once 'Funcoes.php';
+require_once 'Util.php';
 /**
  * Empresa presente no movimento do sistema financeiro
  */
@@ -41,7 +41,7 @@ class Empresa
      */
     public function cadastrarEmpresa(string $nome, string $telefone, string $endereco) : int
     {
-        if(isEmpty($nome))
+        if(Util::isEmpty($nome))
         {
             return 0;
         }
@@ -66,7 +66,7 @@ class Empresa
      */
     public function atualizarEmpresa(string $nome, string $telefone, string $endereco) : int
     {
-        if(isEmpty($nome))
+        if(Util::isEmpty($nome))
         {
             return 0;
         }

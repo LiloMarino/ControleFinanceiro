@@ -1,5 +1,6 @@
 <?php
-require_once 'Funcoes.php';
+require_once 'Util.php';
+require_once 'Conexao.php';
 /**
  * Categoria dos movimentos do sistema financeiro
  */
@@ -18,6 +19,7 @@ class Categoria
     {
         if ($id != null) {
             // Busca no banco e faz as atribuições
+
         }
         // Caso contrário interpreta-se que é um objeto que ainda não possui um id no banco
     }
@@ -29,11 +31,20 @@ class Categoria
      */
     public function cadastrarCategoria(string $nome): int
     {
-        if(isEmpty($nome))
-        {
+        if (Util::isEmpty($nome)) {
             return 0;
         }
-        return 1;
+        $query = "INSERT INTO categoria (nome_categoria, id_usuario) VALUES (?, ?)";
+        $sql = new PDOStatement();
+        $sql = Conexao::retornaConexao()->prepare($query);
+        $sql->bindValue(1, $nome);
+        $sql->bindValue(2, Util::codigoLogado());
+        try {
+            $sql->execute();
+            return 1;
+        } catch (Exception $e) {
+            return -1;
+        }
     }
 
     /**
@@ -52,8 +63,7 @@ class Categoria
      */
     public function atualizarCategoria(string $nome): int
     {
-        if(isEmpty($nome))
-        {
+        if (Util::isEmpty($nome)) {
             return 0;
         }
         return 1;

@@ -1,5 +1,5 @@
 <?php
-require_once 'Funcoes.php';
+require_once 'Util.php';
 /**
  * Movimento no sistema financeiro
  */
@@ -65,7 +65,7 @@ class Movimento
      */
     public function realizarMovimento(string $tipo, string $idCategoria, string $data, string $idEmpresa, string $valor, string $idConta, string $observacao) : int
     {
-        if(isEmpty($tipo, $idCategoria, $data, $idEmpresa, $valor, $idConta))
+        if(Util::isEmpty($tipo, $idCategoria, $data, $idEmpresa, $valor, $idConta))
         {
             return 0;
         }

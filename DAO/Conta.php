@@ -1,5 +1,5 @@
 <?php
-require_once 'Funcoes.php';
+require_once 'Util.php';
 /**
  * Conta bancária do usuário do sistema financeiro
  */
@@ -47,7 +47,7 @@ class Conta
      */
     public function cadastrarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
-        if(isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
+        if(Util::isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
         {
             return 0;   
         }
@@ -73,7 +73,7 @@ class Conta
      */
     public function atualizarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
-        if(isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
+        if(Util::isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
         {
             return 0;   
         }

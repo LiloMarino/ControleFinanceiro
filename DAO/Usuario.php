@@ -1,5 +1,5 @@
 <?php
-require_once 'Funcoes.php';
+require_once 'Util.php';
 /**
  * Usuario do sistema financeiro
  */
@@ -37,7 +37,7 @@ class Usuario
      */
     public function cadastrarUsuario(string $nome, string $email, string $senha, string $rsenha) : int
     {
-        if (isEmpty($nome,$email,$senha,$rsenha))
+        if (Util::isEmpty($nome,$email,$senha,$rsenha))
         {
             return 0;
         }
@@ -60,7 +60,7 @@ class Usuario
      */
     public function fazerLogin(string $email, string $senha) : int
     {
-        if (isEmpty($email,$senha))
+        if (Util::isEmpty($email,$senha))
         {
             return 0;
         }
