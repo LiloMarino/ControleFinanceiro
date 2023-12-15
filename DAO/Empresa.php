@@ -39,10 +39,9 @@ class Empresa
      * @param string $endereco Endereço da empresa
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function cadastrarEmpresa(string $nome, string $telefone, string $endereco) : int
+    public function cadastrarEmpresa(string $nome, string $telefone, string $endereco): int
     {
-        if(Util::isEmpty($nome))
-        {
+        if (Util::isEmpty($nome)) {
             return 0;
         }
         return 1;
@@ -52,7 +51,7 @@ class Empresa
      * Realiza a consulta de todas as empresas cadastradas
      * @return array Retorna o array de Empresas[] 
      */
-    static public function consultarEmpresa() : array
+    static public function consultarEmpresa(): array
     {
         return [];
     }
@@ -64,10 +63,9 @@ class Empresa
      * @param string $endereco Endereço da empresa
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function atualizarEmpresa(string $nome, string $telefone, string $endereco) : int
+    public function atualizarEmpresa(string $nome, string $telefone, string $endereco): int
     {
-        if(Util::isEmpty($nome))
-        {
+        if (Util::isEmpty($nome)) {
             return 0;
         }
         return 1;
@@ -77,8 +75,8 @@ class Empresa
      * Realiza a exclusão da empresa
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function excluirEmpresa() : int
+    public function excluirEmpresa(): int
     {
         return 1;
-    }   
+    }
 }

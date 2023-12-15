@@ -47,9 +47,8 @@ class Conta
      */
     public function cadastrarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
-        if(Util::isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
-        {
-            return 0;   
+        if (Util::isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo)) {
+            return 0;
         }
         return 1;
     }
@@ -73,9 +72,8 @@ class Conta
      */
     public function atualizarConta(string $nomeDoBanco, string $agencia, string $numeroDaConta, string $saldo): int
     {
-        if(Util::isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo))
-        {
-            return 0;   
+        if (Util::isEmpty($nomeDoBanco, $agencia, $numeroDaConta, $saldo)) {
+            return 0;
         }
         return 1;
     }

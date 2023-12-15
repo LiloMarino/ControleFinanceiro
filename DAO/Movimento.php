@@ -63,10 +63,9 @@ class Movimento
      * @param string $observacao Observação do movimento
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function realizarMovimento(string $tipo, string $idCategoria, string $data, string $idEmpresa, string $valor, string $idConta, string $observacao) : int
+    public function realizarMovimento(string $tipo, string $idCategoria, string $data, string $idEmpresa, string $valor, string $idConta, string $observacao): int
     {
-        if(Util::isEmpty($tipo, $idCategoria, $data, $idEmpresa, $valor, $idConta))
-        {
+        if (Util::isEmpty($tipo, $idCategoria, $data, $idEmpresa, $valor, $idConta)) {
             return 0;
         }
         return 1;
@@ -107,7 +106,7 @@ class Movimento
      * Realiza a exclusão do movimento
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function excluirMovimento() : int
+    public function excluirMovimento(): int
     {
         return 1;
     }

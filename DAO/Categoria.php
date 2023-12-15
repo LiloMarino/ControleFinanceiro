@@ -34,15 +34,17 @@ class Categoria
         if (Util::isEmpty($nome)) {
             return 0;
         }
+        $cod = Util::codigoLogado();
+        
+        // Faz o SQL
         $query = "INSERT INTO categoria (nome_categoria, id_usuario) VALUES (?, ?)";
-        $sql = new PDOStatement();
-        $sql = Conexao::retornaConexao()->prepare($query);
-        $sql->bindValue(1, $nome);
-        $sql->bindValue(2, Util::codigoLogado());
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bind_param("si", $nome, $cod);
         try {
             $sql->execute();
             return 1;
         } catch (Exception $e) {
+            echo $e->getMessage();
             return -1;
         }
     }
