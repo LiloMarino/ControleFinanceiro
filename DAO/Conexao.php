@@ -1,45 +1,31 @@
 <?php
-// Configurações do Site
-define('HOST', 'localhost'); //IP
-define('USER', 'root'); //usuario
-define('PASS', 'root'); //senha
-define('DB', 'db_financeiro'); //banco
-
-/**
- * Conexao.class TIPO [Conexão]
- * Descricao: Estabelece conexões com o banco usando SingleTon
- * @copyright (c) year, Wladimir M. Barros
+/* 
+ * 
+ * Classe de conexão com o banco de dados usando o padrão de projeto Singleton
+ * 
  */
 
-class Conexao
+const host = 'localhost'; // IP 
+const db_name = 'db_financeiro'; // Nome do banco de dados
+const username = 'root'; // Username
+const password = 'root';  // Senha
+
+abstract class Conexao
 {
+    private static mysqli $conn = null; // Conexão
 
-    /** @var PDO */
-    private static $Connect;
-
-    private static function Conectar()
+    /**
+     * Retorna a conexão com o banco de dados
+     */
+    public static function getConexao() : mysqli
     {
-        try {
-
-            //Verifica se a conexão não existe
-            if (self::$Connect == null) {
-
-                $dsn = 'mysql:host=' . HOST . ';dbname=' . DB;
-                self::$Connect = new PDO($dsn, USER, PASS, null);
+        if (self::$conn == null) {
+            self::$conn = new mysqli(host, username, password, db_name);
+            if (self::$conn->connect_error) {
+                die("Connection failed: " . self::$conn->connect_error);
             }
-        } catch (PDOException $e) {
-            echo $e->getMessage();
         }
-
-        //Seta os atributos para que seja retornado as excessões do banco
-        self::$Connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-        return self::$Connect;
-    }
-
-    public static function retornaConexao()
-    {
-        return self::Conectar();
+        return self::$conn;
     }
 }
+?>
