@@ -34,12 +34,11 @@ class Categoria
         if (Util::isEmpty($nome)) {
             return 0;
         }
-        $cod = Util::codigoLogado();
         
-        // Faz o SQL
         $query = "INSERT INTO categoria (nome_categoria, id_usuario) VALUES (?, ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bind_param("si", $nome, $cod);
+        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
             return 1;

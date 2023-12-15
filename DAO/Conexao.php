@@ -15,24 +15,25 @@ abstract class Conexao
 
     /**
      * Objeto de conexão com o banco de dados
-     * @var mysqli 
+     * @var PDO 
      */
-    private static ?mysqli $conexao = null;
+    private static ?PDO $conexao = null;
 
     /**
      * Retorna a conexão com o banco de dados
-     * @return mysqli Objeto de conexão com o banco de dados
+     * @return PDO Objeto de conexão com o banco de dados
      */
-    public static function getConexao(): mysqli
+    public static function getConexao(): PDO
     {
         try {
             if (self::$conexao == null) {
-                self::$conexao = new mysqli(host, username, password, db_name);
+                $dsn = 'mysql:host=' . host . ';dbname=' . db_name;
+                self::$conexao = new PDO($dsn, username, password, null);
             }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return self::$conexao;
     }
 }
