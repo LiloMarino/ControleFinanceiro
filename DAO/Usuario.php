@@ -1,5 +1,6 @@
 <?php
 require_once 'Util.php';
+require_once 'Conexao.php';
 /**
  * Usuario do sistema financeiro
  */
@@ -23,6 +24,17 @@ class Usuario
     {
         if ($id != null) {
             // Busca no banco e faz as atribuições
+            $query = "SELECT nome_usuario,email_usuario FROM usuario WHERE (id_usuario = ?)";
+            $sql = Conexao::getConexao()->prepare($query);
+            $sql->bindValue(1, $id, PDO::PARAM_INT);
+            try {
+                $sql->execute();
+                $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+                $this->nome = $usuario['nome_usuario'];
+                $this->email = $usuario['email_usuario'];
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
         }
         // Caso contrário interpreta-se que é um objeto que ainda não possui um id no banco
     }
@@ -75,10 +87,23 @@ class Usuario
      */
     public function atualizarDados(string $nome, string $email): int
     {
-        if (trim($nome) == '' || trim($email) == '') {
+        if (Util::isEmpty($nome,$email)) {
             return 0;
         }
-        return 1; // Para quando der certo
+        $query = "UPDATE usuario SET nome_usuario = ? email_usuario = ? WHERE (id_usuario = ?)";
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(2, $email, PDO::PARAM_INT);
+        $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
+        try {
+            $sql->execute();
+            $this->nome = $nome;
+            $this->email = $email;
+            return 1;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return -1;
+        }
     }
 
     /**

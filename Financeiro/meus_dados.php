@@ -1,9 +1,7 @@
 <?php
-
 require_once '../DAO/Usuario.php';
-
+$usuario = new Usuario(Util::codigoLogado());
 if (isset($_POST['btn'])) {
-    $usuario = new Usuario();
     $ret = $usuario->atualizarDados($_POST['nome'],$_POST['email']);
 }
 
@@ -38,11 +36,11 @@ include_once '_head.php';
                 <form action="meus_dados.php" method="post">
                     <div class="form-group" id="divNome">
                         <label for="nome">Nome</label>
-                        <input id="nome" onblur="isCampoPreenchido(nome,divNome,false)" class="form-control" placeholder="Insira seu Nome" name="nome">
+                        <input id="nome" onblur="isCampoPreenchido(nome,divNome,false)" class="form-control" placeholder="Insira seu Nome" name="nome" value="<?= $usuario->getNome() ?>">
                     </div>
                     <div class="form-group" id="divEmail">
                         <label for="email">Email</label>
-                        <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" class="form-control" placeholder="Insira seu Email" name="email">
+                        <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" class="form-control" placeholder="Insira seu Email" name="email" value="<?= $usuario->getEmail() ?>">
                     </div>
                     <button type="submit" onclick="return ValidarCampos('nome','email')" class="btn btn-success" name="btn">Concluído</button>
                 </form>
