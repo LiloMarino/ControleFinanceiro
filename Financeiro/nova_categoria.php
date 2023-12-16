@@ -1,7 +1,7 @@
 <?php
 require_once '../DAO/Categoria.php';
 if (isset($_POST['btn'])) {
-    $ret = (new Categoria)->cadastrarCategoria($_POST['nome']);
+    $ret = Categoria::cadastrarCategoria($_POST['nome']);
 }
 ?>
 <!DOCTYPE html>

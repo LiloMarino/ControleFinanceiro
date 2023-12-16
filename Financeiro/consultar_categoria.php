@@ -1,3 +1,11 @@
+<?php
+require_once '../DAO/Categoria.php';
+if (isset($_POST['id'])) {
+    $categoria = Categoria::consultarCategoria($_POST['id']);
+    $categoria->excluirCategoria();
+}
+$categorias = Categoria::consultarCategoria();
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -41,13 +49,17 @@ include_once '_head.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="odd gradeX">
-                                                <td>(Nome)</td>
-                                                <td>
-                                                    <a href="alterar_categoria.php" class="btn btn-warning btn-sm">Alterar</a>
-                                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                                                </td>
-                                            </tr>
+                                            <?php foreach ($categorias as $categoria) : ?>
+                                                <tr class="odd gradeX">
+                                                    <td><?= $categoria->nome_categoria ?></td>
+                                                    <td>
+                                                        <form action="consultar_categoria.php" method="post">
+                                                            <a href="alterar_categoria.php?id=<?= $categoria->id_categoria ?>" class="btn btn-warning btn-sm">Alterar</a>
+                                                            <button type="submit" name="id" value="<?= $categoria->id_categoria ?>" class="btn btn-danger btn-sm">Excluir</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>

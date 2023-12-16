@@ -51,18 +51,29 @@ class Categoria
      */
     static public function consultarCategoria(int $id = null): Categoria|array
     {
-        if ($id != null) {
+        if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
             $query = "SELECT id_categoria, nome_categoria FROM categoria WHERE (id_categoria = ? AND id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
-            return $sql->fetch(PDO::FETCH_CLASS, 'Categoria');;
+            $sql->setFetchMode(PDO::FETCH_CLASS,'Categoria');
+            try {
+                $sql->execute();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+            return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
             $query = "SELECT id_categoria, nome_categoria FROM categoria WHERE (id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+            try {
+                $sql->execute();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Categoria');
         }
     }
@@ -78,12 +89,13 @@ class Categoria
         if (Util::isEmpty($nome)) {
             return 0;
         }
-        $query = "UPDATE categoria SET (nome_categoria = ?) WHERE (id_categoria = ?)";
+        $query = "UPDATE categoria SET nome_categoria = ? WHERE (id_categoria = ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $nome, PDO::PARAM_STR);
-        $sql->bindValue(1, $this->id_categoria, PDO::PARAM_INT);
+        $sql->bindValue(2, $this->id_categoria, PDO::PARAM_INT);
         try {
             $sql->execute();
+            $this->nome_categoria = $nome;
             return 1;
         } catch (Exception $e) {
             echo $e->getMessage();
