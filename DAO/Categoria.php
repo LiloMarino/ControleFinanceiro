@@ -112,6 +112,7 @@ class Categoria
     {
         $query = "DELETE FROM categoria WHERE (id_categoria = ?)";
         $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, $this->id_categoria, PDO::PARAM_INT);
         try {
             $sql->execute();
             return 1;
