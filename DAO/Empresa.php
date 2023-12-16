@@ -1,5 +1,6 @@
 <?php
 require_once 'Util.php';
+require_once 'Conexao.php';
 /**
  * Empresa presente no movimento do sistema financeiro
  */
