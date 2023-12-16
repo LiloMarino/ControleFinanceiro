@@ -1,6 +1,9 @@
 <?php
 require_once 'Util.php';
 require_once 'Conexao.php';
+require_once 'Conta.php';
+require_once 'Empresa.php';
+require_once 'Categoria.php';
 /**
  * Movimento no sistema financeiro
  */
@@ -32,20 +35,42 @@ class Movimento
      */
     public string $obs_movimento;
     /**
-     * Id da empresa do movimento
-     * @var int 
+     * Empresa do movimento
+     * @var Empresa 
      */
-    public int $id_empresa;
+    public Empresa $empresa;
     /**
-     * Id da conta bancária do movimento
-     * @var int 
+     * Conta bancária do movimento
+     * @var Conta 
      */
-    public int $id_conta;
+    public Conta $conta;
     /**
-     * Id da categoria do movimento
-     * @var int 
+     * Categoria do movimento
+     * @var Categoria 
      */
-    public int $id_categoria;
+    public Categoria $categoria;
+
+
+    public function __construct(
+        int $id_movimento,
+        int $tipo_movimento,
+        string $data_movimento,
+        float $valor_movimento,
+        string $obs_movimento,
+        Empresa $empresa,
+        Conta $conta,
+        Categoria $categoria
+    ) {
+        $this->id_movimento = $id_movimento;
+        $this->tipo_movimento = $tipo_movimento;
+        $this->data_movimento = $data_movimento;
+        $this->valor_movimento = $valor_movimento;
+        $this->obs_movimento = $obs_movimento;
+        $this->empresa = $empresa;
+        $this->conta = $conta;
+        $this->categoria = $categoria;
+    }
+
 
     /**
      * Realiza o movimento inserindo-o no banco de dados
@@ -100,9 +125,16 @@ class Movimento
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $id, PDO::PARAM_INT);
         $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
-        $sql->setFetchMode(PDO::FETCH_CLASS, 'Movimento');
         $sql->execute();
-        return $sql->fetch();
+        $linha = $sql->fetch(PDO::FETCH_ASSOC);
+        $empresa = new Empresa();
+        $empresa->nome_empresa = $linha["id_empresa"];
+        $conta = new Conta();
+        $conta->banco_conta = $linha["id_conta"];
+        $categoria = new Categoria();
+        $categoria->nome_categoria = $linha["id_categoria"];
+        $movimento = new Movimento($linha['id_movimento'], $linha['tipo_movimento'], $linha['data_movimento'], $linha['valor_movimento'], $linha['obs_movimento'], $empresa, $conta, $categoria);
+        return $movimento;
     }
 
     /**
@@ -115,11 +147,40 @@ class Movimento
      */
     static public function consultarMovimentos(int $tipo, string $dataInicial, string $dataFinal): array
     {
-        $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, id_empresa, id_conta, id_categoria FROM movimento WHERE (id_usuario = ?)";
+        if ($tipo != 0) {
+            $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
+            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE (tipo_movimento = ? AND (data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? )";
+        } else {
+            $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
+            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE ((data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? )";
+        }
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        if ($tipo != 0) {
+            $sql->bindValue(1, $tipo, PDO::PARAM_INT);
+            $sql->bindValue(2, $dataInicial, PDO::PARAM_STR);
+            $sql->bindValue(3, $dataFinal, PDO::PARAM_STR);
+            $sql->bindValue(4, Util::codigoLogado(), PDO::PARAM_INT);
+        } else {
+            $sql->bindValue(1, $dataInicial, PDO::PARAM_STR);
+            $sql->bindValue(2, $dataFinal, PDO::PARAM_STR);
+            $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
+        }
         $sql->execute();
-        return $sql->fetchAll(PDO::FETCH_CLASS, 'Movimento');
+        while (($linha = $sql->fetch(PDO::FETCH_ASSOC)) !== false) {
+            $empresa = new Empresa();
+            $empresa->nome_empresa = $linha["nome_empresa"];
+            $conta = new Conta();
+            $conta->banco_conta = $linha["banco_conta"];
+            $categoria = new Categoria();
+            $categoria->nome_categoria = $linha["nome_categoria"];
+            $movimento = new Movimento($linha['id_movimento'], $linha['tipo_movimento'], $linha['data_movimento'], $linha['valor_movimento'], $linha['obs_movimento'], $empresa, $conta, $categoria);
+            $movimentos[] = $movimento;
+        }
+        return $movimentos;
     }
 
     /**
@@ -158,11 +219,8 @@ class Movimento
             $sql->execute();
             $this->tipo_movimento = $tipo;
             $this->data_movimento = $data;
-            $this->valor_movimento = $valor; 
+            $this->valor_movimento = $valor;
             $this->obs_movimento = (trim($observacao) != '') ? $observacao : null;
-            $this->id_categoria = $idCategoria;
-            $this->id_conta = $idConta;
-            $this->id_empresa = $idEmpresa;
             return 1;
         } catch (Exception $e) {
             echo $e->getMessage();

@@ -1,3 +1,14 @@
+<?php
+require_once '../DAO/Movimento.php';
+if (isset($_POST['id'])) {
+    $movimento = Movimento::consultarMovimento($_POST['id']);
+    $movimento->excluirMovimento();
+}
+if (isset($_POST['btn'])) {
+    $movimentos = Movimento::consultarMovimentos($_POST['tipo'], $_POST['dataInicio'], $_POST['dataFinal']);
+}
+?>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -28,31 +39,27 @@ include_once '_head.php';
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Tipo do movimento</label>
-                            <select class="form-control">
-                                <option value="0">Todos</option>
-                                <option value="1">Entrada</option>
-                                <option value="2">Saída</option>
+                            <select name="tipo" class="form-control">
+                                <option <?= (isset($_POST['tipo']) && $_POST['tipo'] == 0) ? 'selected' : ''; ?> value="0">Todos</option>
+                                <option <?= (isset($_POST['tipo']) && $_POST['tipo'] == 1) ? 'selected' : ''; ?> value="1">Entrada</option>
+                                <option <?= (isset($_POST['tipo']) && $_POST['tipo'] == 2) ? 'selected' : ''; ?> value="2">Saída</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" id="divDataInicial">
                             <label for="dataInicial">Data Inicial</label><span class="red-text">*</span>
-                            <input id="dataInicial" type="date"
-                                onblur="isCampoPreenchido(dataInicial,divDataInicial,false)" class="form-control"
-                                placeholder="Coloque a data do movimento">
+                            <input id="dataInicial" type="date" onblur="isCampoPreenchido(dataInicial,divDataInicial,false)" class="form-control" name="dataInicio" value="<?= (isset($_POST['dataInicio'])) ? $_POST['dataInicio'] : ''; ?>" placeholder="Coloque a data do movimento">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" id="divDataFinal">
                             <label for="dataFinal">Data Final</label><span class="red-text">*</span>
-                            <input id="dataFinal" type="date" onblur="isCampoPreenchido(dataFinal,divDataFinal,false)"
-                                class="form-control" placeholder="Coloque a data do movimento">
+                            <input id="dataFinal" type="date" onblur="isCampoPreenchido(dataFinal,divDataFinal,false)" name="dataFinal" value="<?= (isset($_POST['dataFinal'])) ? $_POST['dataFinal'] : ''; ?>" class="form-control" placeholder="Coloque a data do movimento">
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button onclick="return ValidarCampos('dataInicial','dataFinal')" type="submit" name="btn"
-                            class="btn btn-info">Pesquisar</a>
+                        <button onclick="return ValidarCampos('dataInicial','dataFinal')" type="submit" name="btn" class="btn btn-info">Pesquisar</a>
                     </div>
                 </form>
                 <div class="row">
@@ -65,8 +72,7 @@ include_once '_head.php';
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover"
-                                        id="dataTables-example">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>Data</th>
@@ -80,22 +86,28 @@ include_once '_head.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="odd gradeX">
-                                                <th>(Data)</th>
-                                                <th>(Tipo)</th>
-                                                <th>(Categoria)</th>
-                                                <th>(Empresa)</th>
-                                                <th>(Conta)</th>
-                                                <th>(Valor)</th>
-                                                <th>(Observações)</th>
-                                                <td>
-                                                    <a type="submit" class="btn btn-danger btn-sm">Excluir</a>
-                                                </td>
-                                            </tr>
+                                            <?php if (isset($_POST['btn'])) : ?>
+                                                <?php foreach ($movimentos as $movimento) : ?>
+                                                    <tr class="odd gradeX">
+                                                    
+                                                        <th><?= date('d/m/Y', strtotime($movimento->data_movimento)); ?></th>
+                                                        <th><?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?></th>
+                                                        <th><?= $movimento->categoria->nome_categoria ?></th>
+                                                        <th><?= $movimento->empresa->nome_empresa ?></th>
+                                                        <th><?= $movimento->conta->banco_conta ?></th>
+                                                        <th><?= $movimento->valor_movimento ?></th>
+                                                        <th><?= $movimento->obs_movimento ?></th>
+                                                        <td>
+                                                            <form action="consultar_movimento.php" method="post">
+                                                                <button type="submit" name="id" value="<?= $movimento->id_movimento ?>" class="btn btn-danger btn-sm">Excluir</a>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
                         </div>
                         <!--End Advanced Tables -->
