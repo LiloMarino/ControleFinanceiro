@@ -89,10 +89,11 @@ class Categoria
         if (Util::isEmpty($nome)) {
             return 0;
         }
-        $query = "UPDATE categoria SET nome_categoria = ? WHERE (id_categoria = ?)";
+        $query = "UPDATE categoria SET nome_categoria = ? WHERE (id_categoria = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $nome, PDO::PARAM_STR);
         $sql->bindValue(2, $this->id_categoria, PDO::PARAM_INT);
+        $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
             $this->nome_categoria = $nome;
@@ -110,9 +111,10 @@ class Categoria
      */
     public function excluirCategoria(): int
     {
-        $query = "DELETE FROM categoria WHERE (id_categoria = ?)";
+        $query = "DELETE FROM categoria WHERE (id_categoria = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $this->id_categoria, PDO::PARAM_INT);
+        $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
             return 1;
