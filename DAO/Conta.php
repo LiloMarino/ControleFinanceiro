@@ -77,7 +77,7 @@ class Conta
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
-            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM categoria WHERE (id_conta = ? AND id_usuario = ?)";
+            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM conta WHERE (id_conta = ? AND id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
@@ -86,7 +86,7 @@ class Conta
             return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
-            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM categoria WHERE (id_usuario = ?)";
+            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM conta WHERE (id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
             $sql->execute();

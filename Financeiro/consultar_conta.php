@@ -1,3 +1,11 @@
+<?php
+require_once '../DAO/Conta.php';
+if (isset($_POST['id'])) {
+    $conta = Conta::consultarConta($_POST['id']);
+    $conta->excluirConta();
+}
+$contas = Conta::consultarConta();
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -44,16 +52,20 @@ include_once '_head.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="odd gradeX">
-                                                <td>(Banco)</td>
-                                                <td>(Agência)</td>
-                                                <td>(Número da conta)</td>
-                                                <td>(Saldo)</td>
-                                                <td>
-                                                    <a href="alterar_conta.php" class="btn btn-warning btn-sm">Alterar</a>
-                                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                                                </td>
-                                            </tr>
+                                            <?php foreach ($contas as $conta) : ?>
+                                                <tr class="odd gradeX">
+                                                    <td><?= $conta->banco_conta ?></td>
+                                                    <td><?= $conta->agencia_conta ?></td>
+                                                    <td><?= $conta->numero_conta ?></td>
+                                                    <td><?= $conta->saldo_conta ?></td>
+                                                    <td>
+                                                        <form action="consultar_conta.php" method="post">
+                                                            <a href="alterar_conta.php?id=<?= $conta->id_conta ?>" class="btn btn-warning btn-sm">Alterar</a>
+                                                            <button type="submit" name="id" value="<?= $conta->id_conta ?>" class="btn btn-danger btn-sm">Excluir</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
