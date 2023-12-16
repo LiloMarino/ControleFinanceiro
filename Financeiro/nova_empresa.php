@@ -1,8 +1,7 @@
 <?php
 require_once '../DAO/Empresa.php';
 if (isset($_POST['btn'])) {
-    $empresa = new Empresa();
-    $ret = $empresa->cadastrarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);
+    $ret = Empresa::cadastrarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);
 }
 ?>
 <!DOCTYPE html>

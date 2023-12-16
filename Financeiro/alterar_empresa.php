@@ -1,7 +1,8 @@
 <?php
 require_once '../DAO/Empresa.php';
+$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+$empresa = Empresa::consultarEmpresa($id);
 if (isset($_POST['btn'])) {
-    $empresa = new Empresa();
     $ret = $empresa->atualizarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);
 }
 ?>
@@ -38,18 +39,19 @@ include_once '_head.php';
                     <div class="form-group" id="divEmpresa">
                         <label>Nome da Empresa</label><span class="red-text">*</span>
                         <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control"
-                            name="nome" placeholder="Digite o nome da empresa. Exemplo: Burger King">
+                            name="nome" value="<?= $empresa->nome_empresa ?>" placeholder="Digite o nome da empresa. Exemplo: Burger King">
                     </div>
                     <div class="form-group">
                         <label>Telefone</label>
-                        <input class="form-control" name="telefone"
+                        <input class="form-control" name="telefone" value="<?= $empresa->telefone_empresa ?>" 
                             placeholder="Digite o telefone da empresa. (Opcional)">
                     </div>
                     <div class="form-group">
                         <label>Endereço</label>
-                        <input class="form-control" name="endereco"
+                        <input class="form-control" name="endereco" value="<?= $empresa->endereco_empresa ?>"
                             placeholder="Digite o endereço da empresa. (Opcional)">
                     </div>
+                    <input hidden name="id" value="<?= $empresa->id_empresa ?>">
                     <button onclick="return ValidarCampos('empresa')" type="submit" name="btn" class="btn btn-warning">Alterar</button>
                 </form>
             </div>

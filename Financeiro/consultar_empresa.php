@@ -1,3 +1,11 @@
+<?php
+require_once '../DAO/Empresa.php';
+if (isset($_POST['id'])) {
+    $empresa = Empresa::consultarEmpresa($_POST['id']);
+    $empresa->excluirEmpresa();
+}
+$empresas = Empresa::consultarEmpresa();
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -43,15 +51,19 @@ include_once '_head.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="odd gradeX">
-                                                <td>(Nome)</td>
-                                                <td>(Telefone)</td>
-                                                <td>(Endereço)</td>
-                                                <td>
-                                                    <a href="alterar_empresa.php" class="btn btn-warning btn-sm">Alterar</a>
-                                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                                                </td>
-                                            </tr>
+                                            <?php foreach ($empresas as $empresa) : ?>
+                                                <tr class="odd gradeX">
+                                                    <td><?= $empresa->nome_empresa ?></td>
+                                                    <td><?= $empresa->telefone_empresa ?></td>
+                                                    <td><?= $empresa->endereco_empresa ?></td>
+                                                    <td>
+                                                        <form action="consultar_empresa.php" method="post">
+                                                            <a href="alterar_empresa.php?id=<?= $empresa->id_empresa ?>" class="btn btn-warning btn-sm">Alterar</a>
+                                                            <button type="submit" name="id" value="<?= $empresa->id_empresa ?>" class="btn btn-danger btn-sm">Excluir</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>

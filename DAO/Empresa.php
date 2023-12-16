@@ -22,13 +22,13 @@ class Empresa
      * Telefone da empresa
      * @var string
      */
-    public string $telefone_empresa;
+    public ?string $telefone_empresa;
 
     /**
      * Endereço da empresa
      * @var string
      */
-    public string $endereco_empresa;
+    public ?string $endereco_empresa;
 
     /**
      * Cadastra a empresa no sistema
@@ -70,13 +70,13 @@ class Empresa
      * Realiza a consulta das empresas cadastradas
      *
      * @param integer|null $id Id da Empresa
-     * @return Empresa|array Retorna Empresas|Empresas[] 
+     * @return Empresa|array Retorna Empresas|Empresas[]
      */
     static public function consultarEmpresa(int $id = null): Empresa|array
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
-            $query = "SELECT id_empresa, nome_empresa, telefone_empresa, endereco_empresa FROM categoria WHERE (id_conta = ? AND id_usuario = ?)";
+            $query = "SELECT id_empresa, nome_empresa, telefone_empresa, endereco_empresa FROM empresa WHERE (id_empresa = ? AND id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
@@ -85,7 +85,7 @@ class Empresa
             return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
-            $query = "SELECT id_empresa, nome_empresa, telefone_empresa, endereco_empresa FROM categoria WHERE (id_usuario = ?)";
+            $query = "SELECT id_empresa, nome_empresa, telefone_empresa, endereco_empresa FROM empresa WHERE (id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
             $sql->execute();
