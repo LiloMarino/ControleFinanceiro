@@ -57,23 +57,15 @@ class Categoria
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
-            $sql->setFetchMode(PDO::FETCH_CLASS,'Categoria');
-            try {
-                $sql->execute();
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+            $sql->setFetchMode(PDO::FETCH_CLASS, 'Categoria');
+            $sql->execute();
             return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
             $query = "SELECT id_categoria, nome_categoria FROM categoria WHERE (id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
-            try {
-                $sql->execute();
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+            $sql->execute();
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Categoria');
         }
     }

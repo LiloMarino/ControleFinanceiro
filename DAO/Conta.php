@@ -51,12 +51,13 @@ class Conta
             return 0;
         }
 
-        $query = "INSERT INTO conta (banco_conta, agencia_conta, numero_conta, saldo_conta) VALUES (? , ? , ? , ?)";
+        $query = "INSERT INTO conta (banco_conta, agencia_conta, numero_conta, saldo_conta, id_usuario) VALUES (? , ? , ? , ?, ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $nomeDoBanco, PDO::PARAM_STR);
         $sql->bindValue(2, $agencia, PDO::PARAM_STR);
         $sql->bindValue(3, $numeroDaConta, PDO::PARAM_STR);
         $sql->bindValue(4, $saldo, PDO::PARAM_STR);
+        $sql->bindValue(5, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
             return 1;
@@ -81,22 +82,14 @@ class Conta
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
             $sql->setFetchMode(PDO::FETCH_CLASS, 'Conta');
-            try {
-                $sql->execute();
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+            $sql->execute();
             return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
             $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM categoria WHERE (id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
-            try {
-                $sql->execute();
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+            $sql->execute();
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Conta');
         }
     }
@@ -118,12 +111,12 @@ class Conta
 
         $query = "UPDATE conta SET banco_conta = ?, agencia_conta = ?, numero_conta = ?, saldo_conta = ? WHERE (id_conta = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nomeDoBanco,PDO::PARAM_STR);
-        $sql->bindValue(2, $agencia,PDO::PARAM_STR);
-        $sql->bindValue(3, $numeroDaConta,PDO::PARAM_STR);
-        $sql->bindValue(4, $saldo,PDO::PARAM_STR);
-        $sql->bindValue(5, $this->numero_conta,PDO::PARAM_INT);
-        $sql->bindValue(6, Util::codigoLogado(),PDO::PARAM_INT);
+        $sql->bindValue(1, $nomeDoBanco, PDO::PARAM_STR);
+        $sql->bindValue(2, $agencia, PDO::PARAM_STR);
+        $sql->bindValue(3, $numeroDaConta, PDO::PARAM_STR);
+        $sql->bindValue(4, $saldo, PDO::PARAM_STR);
+        $sql->bindValue(5, $this->numero_conta, PDO::PARAM_INT);
+        $sql->bindValue(6, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
             $this->banco_conta = $nomeDoBanco;
