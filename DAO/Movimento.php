@@ -33,7 +33,7 @@ class Movimento
      * Observação do movimento
      * @var string 
      */
-    public string $obs_movimento;
+    public ?string $obs_movimento;
     /**
      * Empresa do movimento
      * @var Empresa 
@@ -56,7 +56,7 @@ class Movimento
         int $tipo_movimento,
         string $data_movimento,
         float $valor_movimento,
-        string $obs_movimento,
+        string $obs_movimento = null,
         Empresa $empresa,
         Conta $conta,
         Categoria $categoria
