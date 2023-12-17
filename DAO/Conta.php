@@ -115,7 +115,7 @@ class Conta
         $sql->bindValue(2, $agencia, PDO::PARAM_STR);
         $sql->bindValue(3, $numeroDaConta, PDO::PARAM_STR);
         $sql->bindValue(4, $saldo, PDO::PARAM_STR);
-        $sql->bindValue(5, $this->numero_conta, PDO::PARAM_INT);
+        $sql->bindValue(5, $this->id_conta, PDO::PARAM_INT);
         $sql->bindValue(6, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
