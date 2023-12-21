@@ -27,14 +27,10 @@ class Usuario
             $query = "SELECT nome_usuario,email_usuario FROM usuario WHERE (id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
-            try {
-                $sql->execute();
-                $usuario = $sql->fetch(PDO::FETCH_ASSOC);
-                $this->nome = $usuario['nome_usuario'];
-                $this->email = $usuario['email_usuario'];
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+            $sql->execute();
+            $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+            $this->nome = $usuario['nome_usuario'];
+            $this->email = $usuario['email_usuario'];
         }
         // Caso contrário interpreta-se que é um objeto que ainda não possui um id no banco
     }
@@ -47,18 +43,15 @@ class Usuario
      * @param string $rsenha Repetir senha do usuário
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function cadastrarUsuario(string $nome, string $email, string $senha, string $rsenha) : int
+    public function cadastrarUsuario(string $nome, string $email, string $senha, string $rsenha): int
     {
-        if (Util::isEmpty($nome,$email,$senha,$rsenha))
-        {
+        if (Util::isEmpty($nome, $email, $senha, $rsenha)) {
             return 0;
         }
-        if (strlen($senha) < 6)
-        {
+        if (strlen($senha) < 6) {
             return -2;
         }
-        if($senha != $rsenha)
-        {
+        if ($senha != $rsenha) {
             return -3;
         }
         return 1;
@@ -70,10 +63,9 @@ class Usuario
      * @param string $senha Senha do usuário
      * @return int Retorna 1 em caso de sucesso, 0 em caso de campos inválidos e -1 em caso de erros
      */
-    public function fazerLogin(string $email, string $senha) : int
+    public function fazerLogin(string $email, string $senha): int
     {
-        if (Util::isEmpty($email,$senha))
-        {
+        if (Util::isEmpty($email, $senha)) {
             return 0;
         }
         return 1;
@@ -87,7 +79,7 @@ class Usuario
      */
     public function atualizarDados(string $nome, string $email): int
     {
-        if (Util::isEmpty($nome,$email)) {
+        if (Util::isEmpty($nome, $email)) {
             return 0;
         }
         $query = "UPDATE usuario SET nome_usuario = ?, email_usuario = ? WHERE (id_usuario = ?)";

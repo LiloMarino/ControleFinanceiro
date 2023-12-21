@@ -2,6 +2,7 @@
 
 class Util
 {
+    
     public static function codigoLogado(): int
     {
         return 1;
