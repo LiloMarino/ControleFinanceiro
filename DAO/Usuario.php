@@ -93,7 +93,7 @@ class Usuario
         $query = "UPDATE usuario SET nome_usuario = ?, email_usuario = ? WHERE (id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $nome, PDO::PARAM_STR);
-        $sql->bindValue(2, $email, PDO::PARAM_INT);
+        $sql->bindValue(2, $email, PDO::PARAM_STR);
         $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
