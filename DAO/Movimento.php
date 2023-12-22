@@ -170,6 +170,7 @@ class Movimento
             $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
         }
         $sql->execute();
+        $movimentos = [];
         while (($linha = $sql->fetch(PDO::FETCH_ASSOC)) !== false) {
             $empresa = new Empresa();
             $empresa->nome_empresa = $linha["nome_empresa"];

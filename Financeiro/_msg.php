@@ -26,6 +26,11 @@
                 A senha e o repetir senha não coincidem
             </div>
             <?php break;
+        case 2: ?>
+            <div class="alert alert-warning">
+                Você não tem Categoria ou Empresa ou Conta cadastradas
+            </div>
+            <?php break;
         default: ?>
             <div class="alert alert-danger">
                 Ocorreu um erro na operação. Tente mais tarde!

@@ -9,6 +9,10 @@ if (isset($_POST['btn'])) {
 $empresas = Empresa::consultarEmpresa();
 $contas = Conta::consultarConta();
 $categorias = Categoria::consultarCategoria();
+if (count($empresas) == 0 || count($contas) == 0 || count($categorias) == 0)
+{
+    $ret = 2;
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
