@@ -62,7 +62,24 @@ include_once '_head.php';
                                                     <td>
                                                         <form action="consultar_empresa.php" method="post">
                                                             <a href="alterar_empresa.php?id=<?= $empresa->id_empresa ?>" class="btn btn-warning btn-sm">Alterar</a>
-                                                            <button type="submit" name="id" value="<?= $empresa->id_empresa ?>" class="btn btn-danger btn-sm">Excluir</button>
+                                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Excluir</button>
+                                                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                                                            <h4 class="modal-title" id="myModalLabel">Excluir <?= $empresa->nome_empresa ?></h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Você confirma excluir?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                            <button type="submit" name="id" value="<?= $empresa->id_empresa ?>" class="btn btn-danger">Excluir</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </form>
                                                     </td>
                                                 </tr>
