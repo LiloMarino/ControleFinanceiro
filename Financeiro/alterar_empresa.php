@@ -1,7 +1,17 @@
 <?php
 require_once '../DAO/Empresa.php';
-$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+$id = isset($_POST['id']) ? $_POST['id'] : null;
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = $_GET['id'];
+} else if ($id === null) {
+    header('location: consultar_empresa.php');
+    exit;
+}
 $empresa = Empresa::consultarEmpresa($id);
+if ($empresa === false) {
+    header('location: consultar_empresa.php');
+    exit;
+}
 if (isset($_POST['btn'])) {
     $ret = $empresa->atualizarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);
 }

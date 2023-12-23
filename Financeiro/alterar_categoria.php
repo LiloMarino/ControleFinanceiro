@@ -1,7 +1,17 @@
 <?php
 require_once '../DAO/Categoria.php';
-$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+$id = isset($_POST['id']) ? $_POST['id'] : null;
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = $_GET['id'];
+} else if ($id === null) {
+    header('location: consultar_categoria.php');
+    exit;
+}
 $categoria = Categoria::consultarCategoria($id);
+if ($categoria === false) {
+    header('location: consultar_categoria.php');
+    exit;
+}
 if (isset($_POST['btn'])) {
     $ret = $categoria->atualizarCategoria($_POST['nome']);
 }
@@ -38,12 +48,10 @@ include_once '_head.php';
                 <form action="alterar_categoria.php" method="post">
                     <div class="form-group" id="divCategoria">
                         <label for="categoria">Nome da Categoria</label><span class="red-text">*</span>
-                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome" value="<?= $categoria->nome_categoria ?>"
-                            class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
+                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome" value="<?= $categoria->nome_categoria ?>" class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
                     </div>
                     <input hidden name="id" value="<?= $categoria->id_categoria ?>">
-                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit"
-                        class="btn btn-warning">Alterar</button>
+                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit" class="btn btn-warning">Alterar</button>
                 </form>
             </div>
             <!-- /. PAGE INNER  -->

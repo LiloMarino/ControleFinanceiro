@@ -1,7 +1,17 @@
 <?php
 require_once '../DAO/Conta.php';
-$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+$id = isset($_POST['id']) ? $_POST['id'] : null;
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = $_GET['id'];
+} else if ($id === null) {
+    header('location: consultar_conta.php');
+    exit;
+}
 $conta = Conta::consultarConta($id);
+if ($conta === false) {
+    header('location: consultar_conta.php');
+    exit;
+}
 if (isset($_POST['btn'])) {
     $ret = $conta->atualizarConta($_POST['nome'], $_POST['agencia'], $_POST['nconta'], $_POST['saldo']);
 }

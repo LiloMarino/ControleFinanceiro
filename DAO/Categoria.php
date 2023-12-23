@@ -47,9 +47,9 @@ class Categoria
      * Realiza a consulta das categorias cadastradas
      *
      * @param integer|null $id Id da Categoria
-     * @return Categoria|array Retorna Categoria|Categorias[] 
+     * @return Categoria|array Retorna Categoria|Categorias[] ou false caso erro
      */
-    static public function consultarCategoria(int $id = null): Categoria|array
+    static public function consultarCategoria(int $id = null): Categoria|array|bool
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
