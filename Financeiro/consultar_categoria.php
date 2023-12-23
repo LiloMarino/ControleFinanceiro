@@ -2,7 +2,7 @@
 require_once '../DAO/Categoria.php';
 if (isset($_POST['id'])) {
     $categoria = Categoria::consultarCategoria($_POST['id']);
-    $categoria->excluirCategoria();
+    $ret = $categoria->excluirCategoria();
 }
 $categorias = Categoria::consultarCategoria();
 ?>
@@ -32,6 +32,9 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
+                <?php
+                include_once '_msg.php';
+                ?>
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->

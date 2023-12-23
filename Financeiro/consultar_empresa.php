@@ -2,7 +2,7 @@
 require_once '../DAO/Empresa.php';
 if (isset($_POST['id'])) {
     $empresa = Empresa::consultarEmpresa($_POST['id']);
-    $empresa->excluirEmpresa();
+    $ret = $empresa->excluirEmpresa();
 }
 $empresas = Empresa::consultarEmpresa();
 ?>
@@ -32,6 +32,9 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
+                <?php
+                include_once '_msg.php';
+                ?>
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->

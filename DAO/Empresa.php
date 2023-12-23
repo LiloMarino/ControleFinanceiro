@@ -149,8 +149,14 @@ class Empresa
             $sql->execute();
             return 1;
         } catch (Exception $e) {
-            echo $e->getMessage();
-            return -1;
+            if ($e->getCode() == 23000) {
+                // Registro em uso
+                return -4;
+            } else {
+                // Erro inesperado
+                $e->getMessage();
+                return -1;
+            }
         }
     }
 }

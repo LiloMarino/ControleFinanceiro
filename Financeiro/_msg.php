@@ -1,6 +1,11 @@
 <?php if (isset($ret)): ?>
     <?php
     switch ($ret):
+        case 2: ?>
+            <div class="alert alert-warning">
+                Você não tem Categoria ou Empresa ou Conta cadastradas
+            </div>
+            <?php break;
         case 1: ?>
             <div class="alert alert-success">
                 Ação realizada com sucesso
@@ -26,9 +31,9 @@
                 A senha e o repetir senha não coincidem
             </div>
             <?php break;
-        case 2: ?>
-            <div class="alert alert-warning">
-                Você não tem Categoria ou Empresa ou Conta cadastradas
+        case -4: ?>
+            <div class="alert alert-danger">
+                O registro não poderá ser excluído, pois está em uso!
             </div>
             <?php break;
         default: ?>

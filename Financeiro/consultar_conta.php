@@ -2,7 +2,7 @@
 require_once '../DAO/Conta.php';
 if (isset($_POST['id'])) {
     $conta = Conta::consultarConta($_POST['id']);
-    $conta->excluirConta();
+    $ret = $conta->excluirConta();
 }
 $contas = Conta::consultarConta();
 ?>
@@ -32,6 +32,9 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
+                <?php
+                include_once '_msg.php';
+                ?>
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->
