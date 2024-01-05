@@ -4,7 +4,7 @@ if (isset($_POST['id'])) {
     $categoria = Categoria::consultarCategoria($_POST['id']);
     $ret = $categoria->excluirCategoria();
 }
-$categorias = Categoria::consultarCategoria();
+$categorias = Categoria::consultarCategoria(search: isset($_POST['search']) ? $_POST['search'] : null);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,6 +43,16 @@ include_once '_head.php';
                                 Categorias Cadastradas
                             </div>
                             <div class="panel-body">
+                                <form action="consultar_categoria.php" method="post">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <div class="input-group">
+                                            <input name="search" type="text" value="<?= isset($_POST['search']) ? $_POST['search'] : ''  ?>" class="form-control">
+                                            <span class="form-group input-group-btn">
+                                                <button class="btn btn-info">Pesquisar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
