@@ -25,15 +25,16 @@ abstract class Conexao
      */
     public static function getConexao(): PDO
     {
-        try {
-            if (self::$conexao == null) {
+        if (self::$conexao == null) {
+            try {
                 $dsn = 'mysql:host=' . host . ';dbname=' . db_name;
                 self::$conexao = new PDO($dsn, username, password, null);
+            } 
+            catch (Exception $e) {
+                echo $e->getMessage();
             }
-        } catch (Exception $e) {
-            echo $e->getMessage();
+            self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return self::$conexao;
     }
 }
