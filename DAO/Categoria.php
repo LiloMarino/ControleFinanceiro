@@ -49,11 +49,12 @@ class Categoria
      * @param integer|null $id Id da Categoria
      * @return Categoria|array Retorna Categoria|Categorias[] ou false caso erro
      */
-    static public function consultarCategoria(int $id = null): Categoria|array|bool
+    static public function consultarCategoria(int $id = null, string $search = null): Categoria|array|bool
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
-            $query = "SELECT id_categoria, nome_categoria FROM categoria WHERE (id_categoria = ? AND id_usuario = ?)";
+            $query = "SELECT id_categoria, nome_categoria 
+                        FROM categoria WHERE (id_categoria = ? AND id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
@@ -62,9 +63,17 @@ class Categoria
             return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
-            $query = "SELECT id_categoria, nome_categoria FROM categoria WHERE (id_usuario = ?)";
+            $query = "SELECT id_categoria, nome_categoria 
+                        FROM categoria WHERE (id_usuario = ?)";
+            if (trim($search) != '') {
+                // Busca conforme o search e retorna o array respectivo à busca  
+                $query .= 'AND nome_categoria LIKE ?';
+            }
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+            if (trim($search) != '') {
+                $sql->bindValue(2, "%$search%", PDO::PARAM_STR);
+            }
             $sql->execute();
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Categoria');
         }
