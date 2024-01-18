@@ -60,7 +60,7 @@ include_once '_head.php';
                                                     <td><?= $conta->banco_conta ?></td>
                                                     <td><?= $conta->agencia_conta ?></td>
                                                     <td><?= $conta->numero_conta ?></td>
-                                                    <td><?= $conta->saldo_conta ?></td>
+                                                    <td>R$ <?= $conta->saldo_conta ?></td>
                                                     <td>
                                                         <form action="consultar_conta.php" method="post">
                                                             <a href="alterar_conta.php?id=<?= $conta->id_conta ?>" class="btn btn-warning btn-sm">Alterar</a>

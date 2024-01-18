@@ -86,7 +86,7 @@ include_once '_head.php';
                             <select id="conta" onblur="isCampoPreenchido(conta,divConta,false)" name="conta" class="form-control">
                                 <option value="">Selecione</option>
                                 <?php foreach ($contas as $conta) : ?>
-                                    <option <?= (isset($_POST['conta']) && $_POST['conta'] == $conta->id_conta) ? 'selected' : ''; ?> value="<?= $conta->id_conta ?>"><?= $conta->banco_conta ?></option>
+                                    <option <?= (isset($_POST['conta']) && $_POST['conta'] == $conta->id_conta) ? 'selected' : ''; ?> value="<?= $conta->id_conta ?>"><?= $conta->banco_conta ?> | Ag.:<?= $conta->agencia_conta ?> | Num .:<?= $conta->numero_conta ?> | Saldo:<?= $conta->saldo_conta ?> </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
