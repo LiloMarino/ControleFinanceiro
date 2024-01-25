@@ -130,18 +130,22 @@ class Movimento
     static public function consultarMovimento(int $id): Movimento
     {
         // Busca no banco o objeto especificado e faz as atribuições
-        $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, id_empresa, id_conta, id_categoria FROM movimento WHERE (id_movimento = ? AND id_usuario = ?)";
+        $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, m.id_conta, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
+        INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+        INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+        INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE (id_movimento = ? AND m.id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $id, PDO::PARAM_INT);
         $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
         $sql->execute();
         $linha = $sql->fetch(PDO::FETCH_ASSOC);
         $empresa = new Empresa();
-        $empresa->nome_empresa = $linha["id_empresa"];
+        $empresa->nome_empresa = $linha["nome_empresa"];
         $conta = new Conta();
-        $conta->banco_conta = $linha["id_conta"];
+        $conta->banco_conta = $linha["banco_conta"];
+        $conta->id_conta = $linha["id_conta"];
         $categoria = new Categoria();
-        $categoria->nome_categoria = $linha["id_categoria"];
+        $categoria->nome_categoria = $linha["nome_categoria"];
         $movimento = new Movimento($linha['id_movimento'], $linha['tipo_movimento'], $linha['data_movimento'], $linha['valor_movimento'], $linha['obs_movimento'], $empresa, $conta, $categoria);
         return $movimento;
     }
@@ -246,10 +250,18 @@ class Movimento
         $sql = $conn->prepare($query);
         $sql->bindValue(1, $this->id_movimento, PDO::PARAM_INT);
         $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
+        $conn->beginTransaction();
         try {
             $sql->execute();
+            $query = "UPDATE conta SET saldo_conta = saldo_conta + ? WHERE id_conta = ?";
+            $sql = $conn->prepare($query);
+            $sql->bindValue(1, $this->valor_movimento);
+            $sql->bindValue(2, $this->conta->id_conta);
+            $sql->execute();
+            $conn->commit();
             return 1;
         } catch (Exception $e) {
+            $conn->rollBack();
             echo $e->getMessage();
             return -1;
         }

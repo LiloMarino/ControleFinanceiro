@@ -2,7 +2,7 @@
 require_once '../DAO/Movimento.php';
 if (isset($_POST['id'])) {
     $movimento = Movimento::consultarMovimento($_POST['id']);
-    $movimento->excluirMovimento();
+    $ret = $movimento->excluirMovimento();
 }
 if (isset($_POST['btn'])) {
     $movimentos = Movimento::consultarMovimentos($_POST['tipo'], $_POST['dataInicio'], $_POST['dataFinal']);
@@ -34,6 +34,9 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
+                <?php
+                include_once '_msg.php';
+                ?>
                 <hr />
                 <form action="consultar_movimento.php" method="post">
                     <div class="col-md-12">
@@ -88,20 +91,24 @@ include_once '_head.php';
                                         <tbody>
                                             <?php $total = 0; ?>
                                             <?php if (isset($_POST['btn'])) : ?>
-                                            <?php foreach ($movimentos as $movimento) : ?>
-                                                <tr class="odd gradeX">
+                                                <?php foreach ($movimentos as $movimento) : ?>
+                                                    <tr class="odd gradeX">
                                                         <?php $total += $movimento->valor_movimento; ?>
-                                                    
+
                                                         <th><?= date('d/m/Y', strtotime($movimento->data_movimento)); ?></th>
                                                         <th><?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?></th>
                                                         <th><?= $movimento->categoria->nome_categoria ?></th>
                                                         <th><?= $movimento->empresa->nome_empresa ?></th>
                                                         <th><?= $movimento->conta->banco_conta ?></th>
-                                                        <th>R$<?= number_format($movimento->valor_movimento,2,',','.') ?></th>
+                                                        <th>R$<?= number_format($movimento->valor_movimento, 2, ',', '.') ?></th>
                                                         <th><?= $movimento->obs_movimento ?></th>
                                                         <td>
                                                             <form action="consultar_movimento.php" method="post">
-                                                                <button type="submit" name="id" value="<?= $movimento->id_movimento ?>" class="btn btn-danger btn-sm">Excluir</a>
+                                                                <input type="hidden" name="tipo" value="<?= $_POST['tipo'] ?>">
+                                                                <input type="hidden" name="dataInicio" value="<?= $_POST['dataInicio'] ?>">
+                                                                <input type="hidden" name="dataFinal" value="<?= $_POST['dataFinal'] ?>">
+                                                                <input type="hidden" name="id" value="<?= $movimento->id_movimento ?>">
+                                                                <button type="submit" name="btn" class="btn btn-danger btn-sm">Excluir</a>
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -110,7 +117,7 @@ include_once '_head.php';
                                         </tbody>
                                     </table>
                                     <center>
-                                        <label style="color:<?= ($total < 0) ? "red": "green" ?>;">TOTAL: R$<?= number_format($total,2,',','.') ?></label>
+                                        <label style="color:<?= ($total < 0) ? "red" : "green" ?>;">TOTAL: R$<?= number_format($total, 2, ',', '.') ?></label>
                                     </center>
                                 </div>
                             </div>
