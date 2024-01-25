@@ -41,10 +41,10 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <hr />
                 <?php
                 include_once '_msg.php';
                 ?>
+                <hr />
                 <form action="alterar_conta.php" method="post">
                     <div id="divNome" class="form-group">
                         <label for="nome">Nome do Banco</label><span class="red-text">*</span>

@@ -41,10 +41,10 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <hr />
                 <?php
                 include_once '_msg.php';
                 ?>
+                <hr />
                 <form action="alterar_empresa.php" method="post">
                     <div class="form-group" id="divEmpresa">
                         <label>Nome da Empresa</label><span class="red-text">*</span>

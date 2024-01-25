@@ -31,10 +31,10 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <hr />
                 <?php
                 include_once '_msg.php';
                 ?>
+                <hr />
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->

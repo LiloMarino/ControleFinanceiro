@@ -39,10 +39,10 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <hr />
                 <?php
                 include_once '_msg.php';
                 ?>
+                <hr />
                 <form action="realizar_movimento.php" method="post">
                     <div class="col-md-6">
                         <div class="form-group" id="divTipo">
