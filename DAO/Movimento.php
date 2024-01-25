@@ -89,8 +89,9 @@ class Movimento
         if (Util::isEmpty($tipo, $valor, $data, $idCategoria, $idConta, $idEmpresa)) {
             return 0;
         }
+        $conn = Conexao::getConexao();
         $query = "INSERT INTO movimento (tipo_movimento, data_movimento, valor_movimento, obs_movimento, id_empresa, id_conta, id_categoria, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $sql = Conexao::getConexao()->prepare($query);
+        $sql = $conn->prepare($query);
         $sql->bindValue(1, $tipo, PDO::PARAM_INT);
         $sql->bindValue(2, $data, PDO::PARAM_STR);
         $sql->bindValue(3, $valor, PDO::PARAM_STR);
@@ -103,10 +104,24 @@ class Movimento
         $sql->bindValue(6, $idConta, PDO::PARAM_INT);
         $sql->bindValue(7, $idCategoria, PDO::PARAM_INT);
         $sql->bindValue(8, Util::codigoLogado(), PDO::PARAM_INT);
+        $conn->beginTransaction();
         try {
             $sql->execute();
+            if ($tipo == 1) {
+                // Entrada
+                $query = "UPDATE conta SET saldo_conta = saldo_conta + ? WHERE id_conta = ?";
+            } else if ($tipo == 2) {
+                // Saída
+                $query = "UPDATE conta SET saldo_conta = saldo_conta - ? WHERE id_conta = ?";
+            }
+            $sql = $conn->prepare($query);
+            $sql->bindValue(1, $valor);
+            $sql->bindValue(2, $idConta);
+            $sql->execute();
+            $conn->commit();
             return 1;
         } catch (Exception $e) {
+            $conn->rollBack();
             echo $e->getMessage();
             return -1;
         }
