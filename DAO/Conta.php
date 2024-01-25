@@ -71,7 +71,7 @@ class Conta
      * Realiza a consulta das contas cadastradas
      *
      * @param integer|null $id Id da Conta
-     * @return Conta|array Retorna Conta|Contas[] ou false caso erro
+     * @return Conta|Conta[] Retorna Conta|Contas[] ou false caso erro
      */
     static public function consultarConta(int $id = null): Conta|array|bool
     {

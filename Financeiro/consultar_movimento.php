@@ -5,7 +5,6 @@ if (isset($_POST['id'])) {
     $movimento->excluirMovimento();
 }
 if (isset($_POST['btn'])) {
-    /** @var Movimento[] $movimentos */
     $movimentos = Movimento::consultarMovimentos($_POST['tipo'], $_POST['dataInicio'], $_POST['dataFinal']);
 }
 ?>

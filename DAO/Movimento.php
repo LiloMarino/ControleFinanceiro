@@ -152,7 +152,7 @@ class Movimento
      * @param int $tipo Tipo do movimento
      * @param string $dataInicial Data inicial
      * @param string $dataFinal Data final
-     * @return array Retorna Movimentos[] 
+     * @return Movimento[] Retorna Movimentos[] 
      */
     static public function consultarMovimentos(int $tipo, string $dataInicial, string $dataFinal): array
     {
@@ -242,7 +242,8 @@ class Movimento
     public function excluirMovimento(): int
     {
         $query = "DELETE FROM movimento WHERE (id_movimento = ? AND id_usuario = ?)";
-        $sql = Conexao::getConexao()->prepare($query);
+        $conn = Conexao::getConexao();
+        $sql = $conn->prepare($query);
         $sql->bindValue(1, $this->id_movimento, PDO::PARAM_INT);
         $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
         try {

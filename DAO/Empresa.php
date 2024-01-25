@@ -70,7 +70,7 @@ class Empresa
      * Realiza a consulta das empresas cadastradas
      *
      * @param integer|null $id Id da Empresa
-     * @return Empresa|array Retorna Empresas|Empresas[] ou false caso erro
+     * @return Empresa|Empresa[] Retorna Empresas|Empresas[] ou false caso erro
      */
     static public function consultarEmpresa(int $id = null): Empresa|array|bool
     {

@@ -47,7 +47,7 @@ class Categoria
      * Realiza a consulta das categorias cadastradas
      *
      * @param integer|null $id Id da Categoria
-     * @return Categoria|array Retorna Categoria|Categorias[] ou false caso erro
+     * @return Categoria|Categoria[] Retorna Categoria|Categoria[] ou false caso erro
      */
     static public function consultarCategoria(int $id = null, string $search = null): Categoria|array|bool
     {
