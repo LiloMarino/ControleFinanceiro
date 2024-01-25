@@ -4,7 +4,7 @@ require_once '../DAO/Empresa.php';
 require_once '../DAO/Conta.php';
 require_once '../DAO/Categoria.php';
 if (isset($_POST['btn'])) {
-    $ret = Movimento::realizarMovimento($_POST['tipo'], $_POST['data'], $_POST['valor'], $_POST['obs'], $_POST['categoria'], $_POST['conta'], $_POST['empresa']);
+    $ret = Movimento::realizarMovimento($_POST['tipo'], $_POST['data'], $_POST['tipo'] == 1 ? $_POST['valor'] : -$_POST['valor'], $_POST['obs'], $_POST['categoria'], $_POST['conta'], $_POST['empresa']);
 }
 $empresas = Empresa::consultarEmpresa();
 $contas = Conta::consultarConta();

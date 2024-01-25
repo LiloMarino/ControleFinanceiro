@@ -107,13 +107,7 @@ class Movimento
         $conn->beginTransaction();
         try {
             $sql->execute();
-            if ($tipo == 1) {
-                // Entrada
-                $query = "UPDATE conta SET saldo_conta = saldo_conta + ? WHERE id_conta = ?";
-            } else if ($tipo == 2) {
-                // Saída
-                $query = "UPDATE conta SET saldo_conta = saldo_conta - ? WHERE id_conta = ?";
-            }
+            $query = "UPDATE conta SET saldo_conta = saldo_conta + ? WHERE id_conta = ?";
             $sql = $conn->prepare($query);
             $sql->bindValue(1, $valor);
             $sql->bindValue(2, $idConta);
@@ -162,16 +156,12 @@ class Movimento
      */
     static public function consultarMovimentos(int $tipo, string $dataInicial, string $dataFinal): array
     {
+            $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
+            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE (data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? ";
         if ($tipo != 0) {
-            $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
-            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
-            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
-            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE (tipo_movimento = ? AND (data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? )";
-        } else {
-            $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
-            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
-            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
-            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE ((data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? )";
+            $query .= "AND tipo_movimento = ?";
         }
         $sql = Conexao::getConexao()->prepare($query);
         if ($tipo != 0) {

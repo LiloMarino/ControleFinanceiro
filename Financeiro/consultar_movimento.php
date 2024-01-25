@@ -5,6 +5,7 @@ if (isset($_POST['id'])) {
     $movimento->excluirMovimento();
 }
 if (isset($_POST['btn'])) {
+    /** @var Movimento[] $movimentos */
     $movimentos = Movimento::consultarMovimentos($_POST['tipo'], $_POST['dataInicio'], $_POST['dataFinal']);
 }
 ?>
@@ -86,16 +87,18 @@ include_once '_head.php';
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $total = 0; ?>
                                             <?php if (isset($_POST['btn'])) : ?>
-                                                <?php foreach ($movimentos as $movimento) : ?>
-                                                    <tr class="odd gradeX">
+                                            <?php foreach ($movimentos as $movimento) : ?>
+                                                <tr class="odd gradeX">
+                                                        <?php $total += $movimento->valor_movimento; ?>
                                                     
                                                         <th><?= date('d/m/Y', strtotime($movimento->data_movimento)); ?></th>
                                                         <th><?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?></th>
                                                         <th><?= $movimento->categoria->nome_categoria ?></th>
                                                         <th><?= $movimento->empresa->nome_empresa ?></th>
                                                         <th><?= $movimento->conta->banco_conta ?></th>
-                                                        <th><?= $movimento->valor_movimento ?></th>
+                                                        <th>R$<?= number_format($movimento->valor_movimento,2,',','.') ?></th>
                                                         <th><?= $movimento->obs_movimento ?></th>
                                                         <td>
                                                             <form action="consultar_movimento.php" method="post">
@@ -107,6 +110,9 @@ include_once '_head.php';
                                             <?php endif; ?>
                                         </tbody>
                                     </table>
+                                    <center>
+                                        <label style="color:<?= ($total < 0) ? "red": "green" ?>;">TOTAL: R$<?= number_format($total,2,',','.') ?></label>
+                                    </center>
                                 </div>
                             </div>
                         </div>
