@@ -62,8 +62,8 @@ include_once '_head.php';
                                                     <td>
                                                         <form action="consultar_empresa.php" method="post">
                                                             <a href="alterar_empresa.php?id=<?= $empresa->id_empresa ?>" class="btn btn-warning btn-sm">Alterar</a>
-                                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Excluir</button>
-                                                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<?= $empresa->id_empresa ?>">Excluir</button>
+                                                            <div class="modal fade" id="myModal<?= $empresa->id_empresa ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
