@@ -36,6 +36,11 @@
                 O registro não poderá ser excluído, pois está em uso!
             </div>
             <?php break;
+        case -5: ?>
+            <div class="alert alert-danger">
+                Email já cadastrado! Use outro email
+            </div>
+            <?php break;
         default: ?>
             <div class="alert alert-danger">
                 Ocorreu um erro na operação. Tente mais tarde!

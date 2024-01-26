@@ -144,15 +144,19 @@ class Conta
         try {
             $sql->execute();
             return 1;
-        } catch (Exception $e) {
-            if ($e->getCode() == 23000) {
+        } catch (PDOException  $e) {
+            if ($e->errorInfo[1] == 1451) {
                 // Registro em uso
                 return -4;
             } else {
                 // Erro inesperado
-                $e->getMessage();
+                echo $e->getMessage();
                 return -1;
             }
+        } catch (Exception  $e) {
+            // Erro inesperado
+            echo $e->getMessage();
+            return -1;
         }
     }
 }

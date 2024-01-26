@@ -54,7 +54,32 @@ class Usuario
         if ($senha != $rsenha) {
             return -3;
         }
-        return 1;
+
+        $conn = Conexao::getConexao();
+        $query = "INSERT INTO usuario (nome_usuario,email_usuario,senha_usuario,data_cadastro)
+                  VALUES (?, ?, ?, ?)";
+        $sql = $conn->prepare($query);
+        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(2, $email, PDO::PARAM_STR);
+        $sql->bindValue(3, $senha, PDO::PARAM_STR);
+        $sql->bindValue(4, date('Y-m-d'), PDO::PARAM_STR);
+        try {
+            $sql->execute();
+            return 1;
+        } catch (PDOException  $e) {
+            if ($e->errorInfo[1] == 1062) {
+                // Email em uso
+                return -5;
+            } else {
+                // Erro inesperado
+                echo $e->getMessage();
+                return -1;
+            }
+        } catch (Exception  $e) {
+            // Erro inesperado
+            echo $e->getMessage();
+            return -1;
+        }
     }
 
     /**
