@@ -33,8 +33,8 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <hr />
                 <?php include_once '_msg.php' ?>
+                <hr />
                 <form action="meus_dados.php" method="post">
                     <div class="form-group" id="divNome">
                         <label for="nome">Nome</label>

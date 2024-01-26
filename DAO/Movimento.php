@@ -266,4 +266,11 @@ class Movimento
             return -1;
         }
     }
+
+    static public function totalEntrada()
+    {
+        $conn = Conexao::getConexao();
+        $query = "SELECT SUM(valor_movimento) AS total FROM movimento 
+                  WHERE tipo_movimento = 1 AND id_usuario = ?"
+    }
 }
