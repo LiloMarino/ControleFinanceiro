@@ -253,7 +253,7 @@ class Movimento
         $conn->beginTransaction();
         try {
             $sql->execute();
-            $query = "UPDATE conta SET saldo_conta = saldo_conta + ? WHERE id_conta = ?";
+            $query = "UPDATE conta SET saldo_conta = saldo_conta - ? WHERE id_conta = ?";
             $sql = $conn->prepare($query);
             $sql->bindValue(1, $this->valor_movimento);
             $sql->bindValue(2, $this->conta->id_conta);
