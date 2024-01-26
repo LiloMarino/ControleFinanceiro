@@ -117,7 +117,17 @@ class Usuario
             $this->nome = $nome;
             $this->email = $email;
             return 1;
-        } catch (Exception $e) {
+        } catch (PDOException  $e) {
+            if ($e->errorInfo[1] == 1062) {
+                // Email em uso
+                return -5;
+            } else {
+                // Erro inesperado
+                echo $e->getMessage();
+                return -1;
+            }
+        } catch (Exception  $e) {
+            // Erro inesperado
             echo $e->getMessage();
             return -1;
         }

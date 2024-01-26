@@ -38,7 +38,7 @@
             <?php break;
         case -5: ?>
             <div class="alert alert-danger">
-                Email já cadastrado! Use outro email
+                Email já em uso! Use outro email
             </div>
             <?php break;
         default: ?>
