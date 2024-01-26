@@ -49,7 +49,7 @@ include_once '_head.php';
                                             <tr>
                                                 <th>Banco</th>
                                                 <th>Agência</th>
-                                                <th>Número da conta</th>
+                                                <th>Número da Conta</th>
                                                 <th>Saldo</th>
                                                 <th>Ação</th>
                                             </tr>
@@ -71,9 +71,13 @@ include_once '_head.php';
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                                                            <h4 class="modal-title" id="myModalLabel">Excluir <?= $conta->banco_conta ?></h4>
+                                                                            <h4 class="modal-title" id="myModalLabel">Deseja excluir a conta</h4>
                                                                         </div>
                                                                         <div class="modal-body">
+                                                                            <strong>Banco:</strong> <?= $conta->banco_conta ?><br>
+                                                                            <strong>Agência:</strong> <?= $conta->agencia_conta ?><br>
+                                                                            <strong>Número da Conta:</strong> R$<?= $conta->numero_conta ?><br>
+                                                                            <strong>Saldo:</strong> <?= $conta->saldo_conta ?><br>
                                                                             Você confirma excluir?
                                                                         </div>
                                                                         <div class="modal-footer">

@@ -68,9 +68,12 @@ include_once '_head.php';
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                                                            <h4 class="modal-title" id="myModalLabel">Excluir <?= $empresa->nome_empresa ?></h4>
+                                                                            <h4 class="modal-title" id="myModalLabel">Deseja excluir a empresa</h4>
                                                                         </div>
                                                                         <div class="modal-body">
+                                                                            <strong>Nome da Empresa:</strong> <?= $empresa->nome_empresa ?><br>
+                                                                            <strong>Telefone:</strong> <?= $empresa->telefone_empresa ?><br>
+                                                                            <strong>Endereço:</strong> <?= $empresa->endereco_empresa ?><br>
                                                                             Você confirma excluir?
                                                                         </div>
                                                                         <div class="modal-footer">
