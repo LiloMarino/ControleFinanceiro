@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Empresa.php';
 $id = isset($_POST['id']) ? $_POST['id'] : null;
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {

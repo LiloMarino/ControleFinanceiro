@@ -2,10 +2,44 @@
 
 class Util
 {
-    
+    /**
+     * Inicia a sessão caso ela não exista
+     */
+    private static function iniciarSessao()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    }
+
+    public static function criarSessao($id_usuario)
+    {
+        self::IniciarSessao();
+        $_SESSION['cod'] = $id_usuario;
+    }
+
     public static function codigoLogado(): int
     {
-        return 1;
+        self::IniciarSessao();
+        return $_SESSION['cod'];
+    }
+
+    public static function deslogar()
+    {
+        self::iniciarSessao();
+        unset($_SESSION['cod']);
+        header("location:login.php");
+        exit;
+    }
+
+    public static function verificarLogado()
+    {
+        self::iniciarSessao();
+        if(!isset($_SESSION['cod']) || $_SESSION['cod'] == '')
+        {
+            header("location:login.php");
+            exit;
+        }
     }
 
     /**

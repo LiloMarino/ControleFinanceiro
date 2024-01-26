@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Conta.php';
 if (isset($_POST['btn'])) {
     $ret = Conta::cadastrarConta($_POST['nome'], $_POST['agencia'], $_POST['nconta'], $_POST['saldo']);

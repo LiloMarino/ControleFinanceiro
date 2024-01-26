@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Categoria.php';
 if (isset($_POST['btn'])) {
     $ret = Categoria::cadastrarCategoria($_POST['nome']);

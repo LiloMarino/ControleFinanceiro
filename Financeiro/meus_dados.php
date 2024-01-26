@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Usuario.php';
 $usuario = new Usuario(Util::codigoLogado());
 if (isset($_POST['btn'])) {

@@ -93,7 +93,21 @@ class Usuario
         if (Util::isEmpty($email, $senha)) {
             return 0;
         }
-        return 1;
+        $conn = Conexao::getConexao();
+        $query = "SELECT id_usuario FROM usuario WHERE email_usuario = ? AND senha_usuario = ?";
+        $sql = $conn->prepare($query);
+        $sql->bindValue(1, $email, PDO::PARAM_STR);
+        $sql->bindValue(2, $senha, PDO::PARAM_STR);
+        $sql->execute();
+        $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+        if(!$usuario)
+        {
+            return -6;
+        }
+        Util::criarSessao($usuario['id_usuario']);
+        header('location: meus_dados.php');
+        exit;
+        
     }
 
     /**

@@ -1,3 +1,10 @@
+<?php
+require_once '../DAO/Util.php';
+
+if (isset($_GET['close']) && $_GET['close'] == '1') {
+    Util::deslogar();
+}
+?>
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
@@ -60,7 +67,7 @@
                 </ul>
             </li>
             <li>
-                <a href="login.php">
+                <a href="_menu.php?close=1">
                     <i class="fa fa-right-from-bracket fa-2x"></i>Sair
                 </a>
             </li>

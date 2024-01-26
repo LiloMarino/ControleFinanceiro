@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Empresa.php';
 if (isset($_POST['id'])) {
     $empresa = Empresa::consultarEmpresa($_POST['id']);

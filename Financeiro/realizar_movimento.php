@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Movimento.php';
 require_once '../DAO/Empresa.php';
 require_once '../DAO/Conta.php';

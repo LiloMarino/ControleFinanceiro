@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Movimento.php';
 if (isset($_POST['id'])) {
     $movimento = Movimento::consultarMovimento($_POST['id']);

@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Empresa.php';
 if (isset($_POST['btn'])) {
     $ret = Empresa::cadastrarEmpresa($_POST['nome'], $_POST['telefone'], $_POST['endereco']);

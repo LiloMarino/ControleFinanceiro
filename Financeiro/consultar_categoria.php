@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Categoria.php';
 if (isset($_POST['id'])) {
     $categoria = Categoria::consultarCategoria($_POST['id']);

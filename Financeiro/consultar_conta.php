@@ -1,4 +1,6 @@
 <?php
+require_once '../DAO/Util.php';
+Util::verificarLogado();
 require_once '../DAO/Conta.php';
 if (isset($_POST['id'])) {
     $conta = Conta::consultarConta($_POST['id']);
