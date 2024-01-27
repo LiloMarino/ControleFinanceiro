@@ -47,9 +47,11 @@ class Categoria
      * Realiza a consulta das categorias cadastradas
      *
      * @param integer|null $id Id da Categoria
-     * @return Categoria|Categoria[] Retorna Categoria|Categoria[] ou false caso erro
+     * @param string|null $search Termo pesquisado
+     * @param string|null $limit Limite de resultados por página
+     * @return Categoria|Categoria[]|boolean Retorna Categoria|Categoria[] ou false em caso de erro
      */
-    static public function consultarCategoria(int $id = null, string $search = null): Categoria|array|bool
+    static public function consultarCategoria(int $id = null, string $search = null, string $limit = null): Categoria|array|bool
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
@@ -64,10 +66,14 @@ class Categoria
         } else {
             // Busca todos os elementos e retorna o array
             $query = "SELECT id_categoria, nome_categoria 
-                        FROM categoria WHERE (id_usuario = ?)";
+                        FROM categoria WHERE (id_usuario = ?) ";
             if (trim($search) != '') {
                 // Busca conforme o search e retorna o array respectivo à busca  
                 $query .= 'AND nome_categoria LIKE ?';
+            }
+            if($limit)
+            {
+                $query .= $limit;
             }
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
