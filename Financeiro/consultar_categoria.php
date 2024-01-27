@@ -19,8 +19,8 @@ if (isset($_GET['search']) && trim($_GET['search']) != '')
 else
     $termoPesquisado = null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
-$categorias = Categoria::consultarCategoria(search: $termoPesquisado, limit: $intervalo);
 $totalCategorias = Categoria::totalCategorias($termoPesquisado);
+$categorias = Categoria::consultarCategoria(search: $termoPesquisado, limit: $intervalo);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -71,13 +71,16 @@ class Conta
      * Realiza a consulta das contas cadastradas
      *
      * @param integer|null $id Id da Conta
-     * @return Conta|Conta[] Retorna Conta|Contas[] ou false caso erro
+     * @param string|null $search Termo pesquisado
+     * @param string|null $limit Limite de resultados por página
+     * @return Conta|Conta[]|boolean Retorna Conta|Contas[] ou false caso erro
      */
-    static public function consultarConta(int $id = null): Conta|array|bool
+    static public function consultarConta(int $id = null, string $search = null, string $limit = null): Conta|array|bool
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
-            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM conta WHERE (id_conta = ? AND id_usuario = ?)";
+            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta 
+                        FROM conta WHERE (id_conta = ? AND id_usuario = ?)";
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, $id, PDO::PARAM_INT);
             $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
@@ -86,9 +89,20 @@ class Conta
             return $sql->fetch();
         } else {
             // Busca todos os elementos e retorna o array
-            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta FROM conta WHERE (id_usuario = ?)";
+            $query = "SELECT id_conta, banco_conta, agencia_conta, numero_conta, saldo_conta 
+                        FROM conta WHERE (id_usuario = ?)";
+            if (!is_null($search)) {
+                // Busca conforme o search e retorna o array respectivo à busca  
+                $query .= 'AND banco_conta LIKE ?';
+            }
+            if ($limit) {
+                $query .= $limit;
+            }
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+            if (!is_null($search)) {
+                $sql->bindValue(2, "%$search%");
+            }
             $sql->execute();
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Conta');
         }
@@ -158,5 +172,28 @@ class Conta
             echo $e->getMessage();
             return -1;
         }
+    }
+
+    /**
+     * Retorna o total de contas cadastradas pelo usuário
+     *
+     * @param string $search Termo pesquisado
+     * @return integer Total de contas
+     */
+    static public function totalContas(string $search = null): int
+    {
+        $query = "SELECT COUNT(*) AS total 
+                      FROM conta WHERE id_usuario = ? ";
+        if (!is_null($search)) {
+            $query .= 'AND banco_conta LIKE ?';
+        }
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        if (!is_null($search)) {
+            $sql->bindValue(2, "%$search%");
+        }
+        $sql->execute();
+        $total = $sql->fetch(PDO::FETCH_ASSOC);
+        return $total['total'];
     }
 }
