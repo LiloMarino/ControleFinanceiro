@@ -110,14 +110,7 @@ include_once '_head.php';
                                             </tbody>
                                         </table>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="dataTables_info">Mostrando 1 a 10 de 57 registros</div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="dataTables_paginate paging_simple_numbers">
-                                                    <?php Util::criaPaginacao("consultar_categoria.php", $paginaAtual, 10, $totalCategorias); ?>
-                                                </div>
-                                            </div>
+                                            <?php Util::criaPaginacao("consultar_categoria.php", $paginaAtual, 10, $totalCategorias); ?>
                                         </div>
                                     </div>
                                 </div>

@@ -97,20 +97,32 @@ class Util
      */
     public static function criaPaginacao(string $paginaPHP, int $paginaAtual, int $itensPorPagina, int $totalItens)
     {
-        $totalPaginas = ceil($totalItens / $itensPorPagina); ?>
-        <ul class="pagination">
-            <li class="paginate_button previous <?= ($paginaAtual > 1) ? "" : "disabled" ?>">
-                <a href="<?= ($paginaAtual > 1) ? $paginaPHP . "?page=" . ($paginaAtual - 1) : "#" ?>">Anterior</a>
-            </li>
-            <?php for ($i = (($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1); $i <= (($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas); $i++) : ?>
-                <li class="paginate_button <?= ($paginaAtual == $i) ? 'active' : '' ?>">
-                    <a href="<?= $paginaPHP ?>?page=<?= $i ?>"><?= $i ?></a>
-                </li>
-            <?php endfor; ?>
-            <li class="paginate_button next <?= ($paginaAtual < $totalPaginas) ? "" : "disabled" ?>">
-                <a href="<?= ($paginaAtual < $totalPaginas) ? $paginaPHP . "?page=" . ($paginaAtual + 1) : "#" ?>">Próximo</a>
-            </li>
-        </ul>
+        $totalPaginas = ceil($totalItens / $itensPorPagina);
+        $itemIndiceMinimo = ($paginaAtual - 1) * $itensPorPagina + 1;
+        $itemIndiceMaximo = ($paginaAtual) * $itensPorPagina < $totalItens ? ($paginaAtual) * $itensPorPagina :  $totalItens; 
+        $paginaMinima = ($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1;
+        $paginaMaxima = ($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas;
+        ?>
+        <div class="col-sm-6">
+            <div class="dataTables_info">Mostrando <?= $itemIndiceMinimo ?> a <?= $itemIndiceMaximo ?> de <?= $totalItens ?> registros</div>
+        </div>
+        <div class="col-sm-6">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    <li class="paginate_button previous <?= ($paginaAtual > 1) ? "" : "disabled" ?>">
+                        <a href="<?= ($paginaAtual > 1) ? $paginaPHP . "?page=" . ($paginaAtual - 1) : "#" ?>">Anterior</a>
+                    </li>
+                    <?php for ($i = $paginaMinima; $i <= $paginaMaxima; $i++) : ?>
+                        <li class="paginate_button <?= ($paginaAtual == $i) ? 'active' : '' ?>">
+                            <a href="<?= $paginaPHP ?>?page=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="paginate_button next <?= ($paginaAtual < $totalPaginas) ? "" : "disabled" ?>">
+                        <a href="<?= ($paginaAtual < $totalPaginas) ? $paginaPHP . "?page=" . ($paginaAtual + 1) : "#" ?>">Próximo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 <?php
     }
 }
