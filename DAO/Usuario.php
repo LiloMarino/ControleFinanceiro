@@ -59,10 +59,10 @@ class Usuario
         $query = "INSERT INTO usuario (nome_usuario,email_usuario,senha_usuario,data_cadastro)
                   VALUES (?, ?, ?, ?)";
         $sql = $conn->prepare($query);
-        $sql->bindValue(1, $nome, PDO::PARAM_STR);
-        $sql->bindValue(2, $email, PDO::PARAM_STR);
-        $sql->bindValue(3, $senha, PDO::PARAM_STR);
-        $sql->bindValue(4, date('Y-m-d'), PDO::PARAM_STR);
+        $sql->bindValue(1, $nome);
+        $sql->bindValue(2, $email);
+        $sql->bindValue(3, $senha);
+        $sql->bindValue(4, date('Y-m-d'));
         try {
             $sql->execute();
             return 1;
@@ -96,8 +96,8 @@ class Usuario
         $conn = Conexao::getConexao();
         $query = "SELECT id_usuario FROM usuario WHERE email_usuario = ? AND senha_usuario = ?";
         $sql = $conn->prepare($query);
-        $sql->bindValue(1, $email, PDO::PARAM_STR);
-        $sql->bindValue(2, $senha, PDO::PARAM_STR);
+        $sql->bindValue(1, $email);
+        $sql->bindValue(2, $senha);
         $sql->execute();
         $usuario = $sql->fetch(PDO::FETCH_ASSOC);
         if(!$usuario)
@@ -123,8 +123,8 @@ class Usuario
         }
         $query = "UPDATE usuario SET nome_usuario = ?, email_usuario = ? WHERE (id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nome, PDO::PARAM_STR);
-        $sql->bindValue(2, $email, PDO::PARAM_STR);
+        $sql->bindValue(1, $nome);
+        $sql->bindValue(2, $email);
         $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();

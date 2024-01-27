@@ -18,6 +18,8 @@
     <script src="assets/js/bootstrap.min.js"></script>
     <!-- METISMENU SCRIPTS -->
     <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- TABLE STYLES-->
+    <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <!-- CUSTOM SCRIPTS -->
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/validacao.js"></script>

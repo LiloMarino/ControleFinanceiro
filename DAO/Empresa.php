@@ -45,16 +45,16 @@ class Empresa
         }
         $query = "INSERT INTO empresa (nome_empresa, telefone_empresa, endereco_empresa, id_usuario) VALUES (?, ?, ?, ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(1, $nome);
         if (trim($telefone) != '') {
-            $sql->bindValue(2, $telefone, PDO::PARAM_STR);
+            $sql->bindValue(2, $telefone);
         } else {
-            $sql->bindValue(2, null, PDO::PARAM_STR);
+            $sql->bindValue(2, null);
         }
         if (trim($endereco) != '') {
-            $sql->bindValue(3, $endereco, PDO::PARAM_STR);
+            $sql->bindValue(3, $endereco);
         } else {
-            $sql->bindValue(3, null, PDO::PARAM_STR);
+            $sql->bindValue(3, null);
         }
         $sql->bindValue(4, Util::codigoLogado(), PDO::PARAM_INT);
         try {
@@ -109,16 +109,16 @@ class Empresa
 
         $query = "UPDATE empresa SET nome_empresa = ?, telefone_empresa = ?, endereco_empresa = ?  WHERE (id_empresa = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(1, $nome);
         if (trim($telefone) != '') {
-            $sql->bindValue(2, $telefone, PDO::PARAM_STR);
+            $sql->bindValue(2, $telefone);
         } else {
-            $sql->bindValue(2, null, PDO::PARAM_STR);
+            $sql->bindValue(2, null);
         }
         if (trim($endereco) != '') {
-            $sql->bindValue(3, $endereco, PDO::PARAM_STR);
+            $sql->bindValue(3, $endereco);
         } else {
-            $sql->bindValue(3, null, PDO::PARAM_STR);
+            $sql->bindValue(3, null);
         }
         $sql->bindValue(4, $this->id_empresa, PDO::PARAM_INT);
         $sql->bindValue(5, Util::codigoLogado(), PDO::PARAM_INT);

@@ -53,8 +53,7 @@ class Util
     public static function verificarLogado()
     {
         self::iniciarSessao();
-        if(!isset($_SESSION['cod']) || $_SESSION['cod'] == '')
-        {
+        if (!isset($_SESSION['cod']) || $_SESSION['cod'] == '') {
             header("location:login.php");
             exit;
         }
@@ -73,5 +72,61 @@ class Util
             }
         }
         return false;
+    }
+
+    /**
+     * Determina o LIMIT de consulta do banco e retorna a string para o SQL
+     *
+     * @param integer $paginaAtual Página atual do usuário
+     * @param integer $itensPorPagina Quantos itens por página serão exibidos
+     * @return string String com o LIMIT da consulta
+     */
+    public static function determinaLimit(int $paginaAtual,  int $itensPorPagina): string
+    {
+        $limiteInferior = ($paginaAtual - 1) * $itensPorPagina;
+        return "LIMIT $limiteInferior, $itensPorPagina";
+    }
+
+    /**
+     * Cria a paginação da tabela no HTML
+     *
+     * @param string $paginaPHP  Nome da página PHP que irá carregar os dados
+     * @param integer $paginaAtual  Página atual do usuário
+     * @param integer $itensPorPagina   Quantos itens por página serão exibidos
+     * @param integer $totalItens  Total de itens do banco
+     */
+    public static function criaPaginacao(string $paginaPHP, int $paginaAtual, int $itensPorPagina, int $totalItens)
+    {
+        $totalPaginas = ceil($totalItens / $itensPorPagina);
+        $itemIndiceMinimo = ($paginaAtual - 1) * $itensPorPagina + 1;
+        $itemIndiceMaximo = ($paginaAtual) * $itensPorPagina < $totalItens ? ($paginaAtual) * $itensPorPagina :  $totalItens;
+        $paginaMinima = ($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1;
+        $paginaMaxima = ($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas;
+        $queryParams = $_GET;
+        unset($queryParams['page']);
+        $linkAnterior = ($paginaAtual > 1) ? $paginaPHP . '?' . http_build_query($queryParams + ['page' => $paginaAtual - 1]) : '#';
+        $linkProximo = ($paginaAtual < $totalPaginas) ? $paginaPHP . '?' . http_build_query($queryParams + ['page' => $paginaAtual + 1]) : '#';
+?>
+        <div class="col-sm-6">
+            <div class="dataTables_info">Mostrando <?= $itemIndiceMinimo ?> a <?= $itemIndiceMaximo ?> de <?= $totalItens ?> registros</div>
+        </div>
+        <div class="col-sm-6">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    <li class="paginate_button previous <?= ($paginaAtual > 1) ? "" : "disabled" ?>">
+                        <a href="<?= $linkAnterior ?>">Anterior</a>
+                    </li>
+                    <?php for ($i = $paginaMinima; $i <= $paginaMaxima; $i++) : ?>
+                        <li class="paginate_button <?= ($paginaAtual == $i) ? 'active' : '' ?>">
+                            <a href="<?= $paginaPHP ?>?page=<?= $i . '&' . http_build_query($queryParams) ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="paginate_button next <?= ($paginaAtual < $totalPaginas) ? "" : "disabled" ?>">
+                        <a href="<?= $linkProximo ?>">Próximo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+<?php
     }
 }

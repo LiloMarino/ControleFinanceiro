@@ -93,12 +93,12 @@ class Movimento
         $query = "INSERT INTO movimento (tipo_movimento, data_movimento, valor_movimento, obs_movimento, id_empresa, id_conta, id_categoria, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $sql = $conn->prepare($query);
         $sql->bindValue(1, $tipo, PDO::PARAM_INT);
-        $sql->bindValue(2, $data, PDO::PARAM_STR);
-        $sql->bindValue(3, $valor, PDO::PARAM_STR);
+        $sql->bindValue(2, $data);
+        $sql->bindValue(3, $valor);
         if (trim($observacao) != '') {
-            $sql->bindValue(4, $observacao, PDO::PARAM_STR);
+            $sql->bindValue(4, $observacao);
         } else {
-            $sql->bindValue(4, null, PDO::PARAM_STR);
+            $sql->bindValue(4, null);
         }
         $sql->bindValue(5, $idEmpresa, PDO::PARAM_INT);
         $sql->bindValue(6, $idConta, PDO::PARAM_INT);
@@ -170,12 +170,12 @@ class Movimento
         $sql = Conexao::getConexao()->prepare($query);
         if ($tipo != 0) {
             $sql->bindValue(1, $tipo, PDO::PARAM_INT);
-            $sql->bindValue(2, $dataInicial, PDO::PARAM_STR);
-            $sql->bindValue(3, $dataFinal, PDO::PARAM_STR);
+            $sql->bindValue(2, $dataInicial);
+            $sql->bindValue(3, $dataFinal);
             $sql->bindValue(4, Util::codigoLogado(), PDO::PARAM_INT);
         } else {
-            $sql->bindValue(1, $dataInicial, PDO::PARAM_STR);
-            $sql->bindValue(2, $dataFinal, PDO::PARAM_STR);
+            $sql->bindValue(1, $dataInicial);
+            $sql->bindValue(2, $dataFinal);
             $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
         }
         $sql->execute();
@@ -213,12 +213,12 @@ class Movimento
         $query = "UPDATE empresa SET tipo_movimento = ?, data_movimento = ?, valor_movimento = ?, obs_movimento = ?, id_empresa = ?, id_conta = ?, id_categoria = ?  WHERE (id_movimento = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, $tipo, PDO::PARAM_INT);
-        $sql->bindValue(2, $data, PDO::PARAM_STR);
-        $sql->bindValue(3, $valor, PDO::PARAM_STR);
+        $sql->bindValue(2, $data);
+        $sql->bindValue(3, $valor);
         if (trim($observacao) != '') {
-            $sql->bindValue(4, $observacao, PDO::PARAM_STR);
+            $sql->bindValue(4, $observacao);
         } else {
-            $sql->bindValue(4, null, PDO::PARAM_STR);
+            $sql->bindValue(4, null);
         }
         $sql->bindValue(5, $idEmpresa, PDO::PARAM_INT);
         $sql->bindValue(6, $idConta, PDO::PARAM_INT);
@@ -268,11 +268,12 @@ class Movimento
     }
 
     /**
-     * Obtém o total de movimentos de um determinado tipo
+     * Obtém o valor total dos movimentos de um determinado tipo
      *
      * @param boolean $entrada Se true retorna as entradas, se false as saídas
+     * @return string Valor correspondente ao total dos movimentos especificados
      */
-    static public function obterTotalMovimento(bool $entrada)
+    static public function obterTotalMovimento(bool $entrada): string
     {
         $conn = Conexao::getConexao();
         $query = "SELECT SUM(valor_movimento) AS total FROM movimento 
