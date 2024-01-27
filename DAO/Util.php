@@ -102,7 +102,11 @@ class Util
         $itemIndiceMaximo = ($paginaAtual) * $itensPorPagina < $totalItens ? ($paginaAtual) * $itensPorPagina :  $totalItens;
         $paginaMinima = ($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1;
         $paginaMaxima = ($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas;
-        ?>
+        $queryParams = $_GET;
+        unset($queryParams['page']);
+        $linkAnterior = ($paginaAtual > 1) ? $paginaPHP . '?' . http_build_query($queryParams + ['page' => $paginaAtual - 1]) : '#';
+        $linkProximo = ($paginaAtual < $totalPaginas) ? $paginaPHP . '?' . http_build_query($queryParams + ['page' => $paginaAtual + 1]) : '#';
+?>
         <div class="col-sm-6">
             <div class="dataTables_info">Mostrando <?= $itemIndiceMinimo ?> a <?= $itemIndiceMaximo ?> de <?= $totalItens ?> registros</div>
         </div>
@@ -110,15 +114,15 @@ class Util
             <div class="dataTables_paginate paging_simple_numbers">
                 <ul class="pagination">
                     <li class="paginate_button previous <?= ($paginaAtual > 1) ? "" : "disabled" ?>">
-                        <a href="<?= ($paginaAtual > 1) ? $paginaPHP . "?page=" . ($paginaAtual - 1) : "#" ?>">Anterior</a>
+                        <a href="<?= $linkAnterior ?>">Anterior</a>
                     </li>
                     <?php for ($i = $paginaMinima; $i <= $paginaMaxima; $i++) : ?>
                         <li class="paginate_button <?= ($paginaAtual == $i) ? 'active' : '' ?>">
-                            <a href="<?= $paginaPHP ?>?page=<?= $i ?>"><?= $i ?></a>
+                            <a href="<?= $paginaPHP ?>?page=<?= $i . '&' . http_build_query($queryParams) ?>"><?= $i ?></a>
                         </li>
                     <?php endfor; ?>
                     <li class="paginate_button next <?= ($paginaAtual < $totalPaginas) ? "" : "disabled" ?>">
-                        <a href="<?= ($paginaAtual < $totalPaginas) ? $paginaPHP . "?page=" . ($paginaAtual + 1) : "#" ?>">Próximo</a>
+                        <a href="<?= $linkProximo ?>">Próximo</a>
                     </li>
                 </ul>
             </div>
