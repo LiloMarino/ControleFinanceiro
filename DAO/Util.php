@@ -99,7 +99,7 @@ class Util
     {
         $totalPaginas = ceil($totalItens / $itensPorPagina);
         $itemIndiceMinimo = ($paginaAtual - 1) * $itensPorPagina + 1;
-        $itemIndiceMaximo = ($paginaAtual) * $itensPorPagina < $totalItens ? ($paginaAtual) * $itensPorPagina :  $totalItens; 
+        $itemIndiceMaximo = ($paginaAtual) * $itensPorPagina < $totalItens ? ($paginaAtual) * $itensPorPagina :  $totalItens;
         $paginaMinima = ($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1;
         $paginaMaxima = ($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas;
         ?>

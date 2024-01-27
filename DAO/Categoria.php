@@ -67,7 +67,7 @@ class Categoria
             // Busca todos os elementos e retorna o array
             $query = "SELECT id_categoria, nome_categoria 
                         FROM categoria WHERE (id_usuario = ?) ";
-            if (trim($search) != '') {
+            if (!is_null($search)) {
                 // Busca conforme o search e retorna o array respectivo à busca  
                 $query .= 'AND nome_categoria LIKE ?';
             }
@@ -76,7 +76,7 @@ class Categoria
             }
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
-            if (trim($search) != '') {
+            if (!is_null($search)) {
                 $sql->bindValue(2, "%$search%");
             }
             $sql->execute();
@@ -149,7 +149,7 @@ class Categoria
     static public function totalCategorias(string $search = null): int
     {
         $query = "SELECT COUNT(*) AS total 
-                      FROM categoria WHERE id_usuario = ?";
+                      FROM categoria WHERE id_usuario = ? ";
         if (!is_null($search)) {
             $query .= 'AND nome_categoria LIKE ?';
         }

@@ -6,11 +6,12 @@ if (isset($_POST['id'])) {
     $categoria = Categoria::consultarCategoria($_POST['id']);
     $ret = $categoria->excluirCategoria();
 }
-// Obtém via GET a página que o usuário está
 $paginaAtual = (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0) ? $_GET['page'] : 1;
-$intervalo = Util::determinaLimit($paginaAtual, 10);
-$totalCategorias = Categoria::totalCategorias();
-$categorias = Categoria::consultarCategoria(search: isset($_POST['search']) ? $_POST['search'] : null, limit: $intervalo);
+$itensPagina = (isset($_GET['itensPagina']) && is_numeric($_GET['itensPagina']) && $_GET['itensPagina'] > 0) ? $_GET['itensPagina'] : 10;
+$termoPesquisado = isset($_GET['search']) && trim($_GET['search']) != '' ? $_GET['search'] : null;
+$intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
+$categorias = Categoria::consultarCategoria(search: $termoPesquisado, limit: $intervalo);
+$totalCategorias = Categoria::totalCategorias($termoPesquisado);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -52,13 +53,16 @@ include_once '_head.php';
                                 <div class="table-responsive">
                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                         <div class="row">
-                                            <form action="consultar_categoria.php" method="post">
+                                            <form action="consultar_categoria.php" method="get">
                                                 <div class="col-sm-6">
-                                                    <div class="dataTables_length" id="dataTables-example_length"><label><select name="dataTables-example_length" class="form-control input-sm">
+                                                    <div class="dataTables_length">
+                                                        <label>
+                                                            <select name="itensPagina" class="form-control input-sm">
                                                                 <option value="10">10</option>
-                                                                <option value="25">25</option>
-                                                                <option value="50">50</option>
-                                                            </select> registros por página</label></div>
+                                                                <option value="15">15</option>
+                                                            </select> registros por página
+                                                        </label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div id="dataTables-example_filter" class="dataTables_filter">
@@ -110,7 +114,7 @@ include_once '_head.php';
                                             </tbody>
                                         </table>
                                         <div class="row">
-                                            <?php Util::criaPaginacao("consultar_categoria.php", $paginaAtual, 10, $totalCategorias); ?>
+                                            <?php Util::criaPaginacao("consultar_categoria.php", $paginaAtual, $itensPagina, $totalCategorias); ?>
                                         </div>
                                     </div>
                                 </div>
