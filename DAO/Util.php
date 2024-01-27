@@ -100,7 +100,7 @@ class Util
         $totalPaginas = ceil($totalItens / $itensPorPagina); ?>
         <ul class="pagination">
             <li class="paginate_button previous <?= ($paginaAtual > 1) ? "" : "disabled" ?>">
-                <a href="<?= $paginaPHP ?>?page=<?= $paginaAtual - 1 ?>">Anterior</a>
+                <a href="<?= ($paginaAtual > 1) ? $paginaPHP . "?page=" . ($paginaAtual - 1) : "#" ?>">Anterior</a>
             </li>
             <?php for ($i = (($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1); $i <= (($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas); $i++) : ?>
                 <li class="paginate_button <?= ($paginaAtual == $i) ? 'active' : '' ?>">
@@ -108,7 +108,7 @@ class Util
                 </li>
             <?php endfor; ?>
             <li class="paginate_button next <?= ($paginaAtual < $totalPaginas) ? "" : "disabled" ?>">
-                <a href="<?= $paginaPHP ?>?page=<?= $paginaAtual + 1 ?>">Próximo</a>
+                <a href="<?= ($paginaAtual < $totalPaginas) ? $paginaPHP . "?page=" . ($paginaAtual + 1) : "#" ?>">Próximo</a>
             </li>
         </ul>
 <?php
