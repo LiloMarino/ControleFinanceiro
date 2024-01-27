@@ -32,7 +32,7 @@ class Categoria
 
         $query = "INSERT INTO categoria (nome_categoria, id_usuario) VALUES (?, ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(1, $nome);
         $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
@@ -71,14 +71,13 @@ class Categoria
                 // Busca conforme o search e retorna o array respectivo à busca  
                 $query .= 'AND nome_categoria LIKE ?';
             }
-            if($limit)
-            {
+            if ($limit) {
                 $query .= $limit;
             }
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
             if (trim($search) != '') {
-                $sql->bindValue(2, "%$search%", PDO::PARAM_STR);
+                $sql->bindValue(2, "%$search%");
             }
             $sql->execute();
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Categoria');
@@ -98,7 +97,7 @@ class Categoria
         }
         $query = "UPDATE categoria SET nome_categoria = ? WHERE (id_categoria = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nome, PDO::PARAM_STR);
+        $sql->bindValue(1, $nome);
         $sql->bindValue(2, $this->id_categoria, PDO::PARAM_INT);
         $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
         try {
@@ -144,14 +143,21 @@ class Categoria
     /**
      * Retorna o total de categorias cadastradas pelo usuário
      *
+     * @param string $search Termo pesquisado
      * @return integer Total de categorias
      */
-    static public function totalCategorias() : int
+    static public function totalCategorias(string $search = null): int
     {
         $query = "SELECT COUNT(*) AS total 
                       FROM categoria WHERE id_usuario = ?";
+        if (!is_null($search)) {
+            $query .= 'AND nome_categoria LIKE ?';
+        }
         $sql = Conexao::getConexao()->prepare($query);
         $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        if (!is_null($search)) {
+            $sql->bindValue(2, "%$search%");
+        }
         $sql->execute();
         $total = $sql->fetch(PDO::FETCH_ASSOC);
         return $total['total'];

@@ -53,10 +53,10 @@ class Conta
 
         $query = "INSERT INTO conta (banco_conta, agencia_conta, numero_conta, saldo_conta, id_usuario) VALUES (? , ? , ? , ?, ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nomeDoBanco, PDO::PARAM_STR);
-        $sql->bindValue(2, $agencia, PDO::PARAM_STR);
-        $sql->bindValue(3, $numeroDaConta, PDO::PARAM_STR);
-        $sql->bindValue(4, $saldo, PDO::PARAM_STR);
+        $sql->bindValue(1, $nomeDoBanco);
+        $sql->bindValue(2, $agencia);
+        $sql->bindValue(3, $numeroDaConta);
+        $sql->bindValue(4, $saldo);
         $sql->bindValue(5, Util::codigoLogado(), PDO::PARAM_INT);
         try {
             $sql->execute();
@@ -111,10 +111,10 @@ class Conta
 
         $query = "UPDATE conta SET banco_conta = ?, agencia_conta = ?, numero_conta = ?, saldo_conta = ? WHERE (id_conta = ? AND id_usuario = ?)";
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, $nomeDoBanco, PDO::PARAM_STR);
-        $sql->bindValue(2, $agencia, PDO::PARAM_STR);
-        $sql->bindValue(3, $numeroDaConta, PDO::PARAM_STR);
-        $sql->bindValue(4, $saldo, PDO::PARAM_STR);
+        $sql->bindValue(1, $nomeDoBanco);
+        $sql->bindValue(2, $agencia);
+        $sql->bindValue(3, $numeroDaConta);
+        $sql->bindValue(4, $saldo);
         $sql->bindValue(5, $this->id_conta, PDO::PARAM_INT);
         $sql->bindValue(6, Util::codigoLogado(), PDO::PARAM_INT);
         try {
