@@ -6,9 +6,18 @@ if (isset($_POST['id'])) {
     $categoria = Categoria::consultarCategoria($_POST['id']);
     $ret = $categoria->excluirCategoria();
 }
-$paginaAtual = (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0) ? $_GET['page'] : 1;
-$itensPagina = (isset($_GET['itensPagina']) && is_numeric($_GET['itensPagina']) && $_GET['itensPagina'] > 0) ? $_GET['itensPagina'] : 10;
-$termoPesquisado = isset($_GET['search']) && trim($_GET['search']) != '' ? $_GET['search'] : null;
+if (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0)
+    $paginaAtual = $_GET['page'];
+else
+    $paginaAtual = 1;
+if (isset($_GET['itensPagina']) && is_numeric($_GET['itensPagina']) && $_GET['itensPagina'] > 0)
+    $itensPagina = $_GET['itensPagina'];
+else
+    $itensPagina = 10;
+if (isset($_GET['search']) && trim($_GET['search']) != '')
+    $termoPesquisado =  $_GET['search'];
+else
+    $termoPesquisado = null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
 $categorias = Categoria::consultarCategoria(search: $termoPesquisado, limit: $intervalo);
 $totalCategorias = Categoria::totalCategorias($termoPesquisado);
