@@ -268,11 +268,12 @@ class Movimento
     }
 
     /**
-     * Obtém o total de movimentos de um determinado tipo
+     * Obtém o valor total dos movimentos de um determinado tipo
      *
      * @param boolean $entrada Se true retorna as entradas, se false as saídas
+     * @return string Valor correspondente ao total dos movimentos especificados
      */
-    static public function obterTotalMovimento(bool $entrada)
+    static public function obterTotalMovimento(bool $entrada): string
     {
         $conn = Conexao::getConexao();
         $query = "SELECT SUM(valor_movimento) AS total FROM movimento 

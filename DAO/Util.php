@@ -53,8 +53,7 @@ class Util
     public static function verificarLogado()
     {
         self::iniciarSessao();
-        if(!isset($_SESSION['cod']) || $_SESSION['cod'] == '')
-        {
+        if (!isset($_SESSION['cod']) || $_SESSION['cod'] == '') {
             header("location:login.php");
             exit;
         }
@@ -73,5 +72,45 @@ class Util
             }
         }
         return false;
+    }
+
+    /**
+     * Determina o LIMIT de consulta do banco e retorna a string para o SQL
+     *
+     * @param integer $paginaAtual Página atual do usuário
+     * @param integer $itensPorPagina Quantos itens por página serão exibidos
+     * @return string String com o LIMIT da consulta
+     */
+    public static function determinaLimit(int $paginaAtual,  int $itensPorPagina): string
+    {
+        $limiteInferior = ($paginaAtual - 1) * $itensPorPagina;
+        return "LIMIT $limiteInferior, $itensPorPagina";
+    }
+
+    /**
+     * Cria a paginação da tabela no HTML
+     *
+     * @param string $paginaPHP  Nome da página PHP que irá carregar os dados
+     * @param integer $paginaAtual  Página atual do usuário
+     * @param integer $itensPorPagina   Quantos itens por página serão exibidos
+     * @param integer $totalItens  Total de itens do banco
+     */
+    public static function criaPaginacao(string $paginaPHP, int $paginaAtual, int $itensPorPagina, int $totalItens)
+    {
+        $totalPaginas = ceil($totalItens / $itensPorPagina); ?>
+        <ul class="pagination">
+            <li class="paginate_button previous <?= ($paginaAtual > 1) ? "" : "disabled" ?>">
+                <a href="<?= $paginaPHP ?>?page=<?= $paginaAtual - 1 ?>">Anterior</a>
+            </li>
+            <?php for ($i = (($paginaAtual - 2 > 1) ? $paginaAtual - 2 : 1); $i <= (($paginaAtual + 2 < $totalPaginas) ? $paginaAtual + 2 : $totalPaginas); $i++) : ?>
+                <li class="paginate_button <?= ($paginaAtual == $i) ? 'active' : '' ?>">
+                    <a href="<?= $paginaPHP ?>?page=<?= $i ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
+            <li class="paginate_button next <?= ($paginaAtual < $totalPaginas) ? "" : "disabled" ?>">
+                <a href="<?= $paginaPHP ?>?page=<?= $paginaAtual + 1 ?>">Próximo</a>
+            </li>
+        </ul>
+<?php
     }
 }

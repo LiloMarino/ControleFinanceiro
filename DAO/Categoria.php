@@ -134,4 +134,20 @@ class Categoria
             return -1;
         }
     }
+
+    /**
+     * Retorna o total de categorias cadastradas pelo usuário
+     *
+     * @return integer Total de categorias
+     */
+    static public function totalCategorias() : int
+    {
+        $query = "SELECT COUNT(*) AS total 
+                      FROM categoria WHERE id_usuario = ?";
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        $sql->execute();
+        $total = $sql->fetch(PDO::FETCH_ASSOC);
+        return $total['total'];
+    }
 }
