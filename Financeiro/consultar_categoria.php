@@ -67,8 +67,8 @@ include_once '_head.php';
                                                     <div class="dataTables_length">
                                                         <label>
                                                             <select name="itensPagina" class="form-control input-sm">
-                                                                <option value="10">10</option>
-                                                                <option value="15">15</option>
+                                                                <option value="10" <?= (isset($_GET['itensPagina']) && $_GET['itensPagina'] == 10) ? 'selected' : ''; ?>>10</option>
+                                                                <option value="15" <?= (isset($_GET['itensPagina']) && $_GET['itensPagina'] == 15) ? 'selected' : ''; ?>>15</option>
                                                             </select> registros por página
                                                         </label>
                                                     </div>
