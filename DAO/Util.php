@@ -12,18 +12,32 @@ class Util
         }
     }
 
-    public static function criarSessao($id_usuario)
+    /**
+     * Cria a sessão para o usuário do id especificado
+     *
+     * @param integer $id_usuario  Id do usuário que será criada a sessão.
+     */
+    public static function criarSessao(int $id_usuario)
     {
         self::IniciarSessao();
         $_SESSION['cod'] = $id_usuario;
     }
 
+    /**
+     * Retorna o código  de usuário da sessão atual
+     *
+     * @return integer  Usuário logado no sistema.
+     */
     public static function codigoLogado(): int
     {
         self::IniciarSessao();
         return $_SESSION['cod'];
     }
 
+    /**
+     * Desloga o usuário da sessão
+     *
+     */
     public static function deslogar()
     {
         self::iniciarSessao();
@@ -32,6 +46,10 @@ class Util
         exit;
     }
 
+    /**
+     * Verifica se existe uma sessão do usuário caso não exista redireciona para tela de login
+     *
+     */
     public static function verificarLogado()
     {
         self::iniciarSessao();

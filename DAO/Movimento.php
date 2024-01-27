@@ -267,6 +267,11 @@ class Movimento
         }
     }
 
+    /**
+     * Obtém o total de movimentos de um determinado tipo
+     *
+     * @param boolean $entrada Se true retorna as entradas, se false as saídas
+     */
     static public function obterTotalMovimento(bool $entrada)
     {
         $conn = Conexao::getConexao();
