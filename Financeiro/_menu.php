@@ -9,6 +9,11 @@ if (isset($_GET['close']) && $_GET['close'] == '1') {
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
             <li>
+                <a href="inicial.php">
+                    <i class="fa fa-house fa-2x"></i>Início
+                </a>
+            </li>
+            <li>
                 <a href="meus_dados.php">
                     <i class="fa fa-user fa-2x"></i>Meus Dados
                 </a>

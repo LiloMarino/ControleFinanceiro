@@ -105,7 +105,7 @@ class Usuario
             return -6;
         }
         Util::criarSessao($usuario['id_usuario']);
-        header('location: meus_dados.php');
+        header('location: inicial.php');
         exit;
         
     }

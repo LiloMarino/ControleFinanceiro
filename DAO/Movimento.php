@@ -160,7 +160,7 @@ class Movimento
      */
     static public function consultarMovimentos(int $tipo, string $dataInicial, string $dataFinal): array
     {
-            $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
+        $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
             INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
             INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
             INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE (data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? ";
@@ -267,10 +267,18 @@ class Movimento
         }
     }
 
-    static public function totalEntrada()
+    static public function obterTotalMovimento(bool $entrada)
     {
         $conn = Conexao::getConexao();
         $query = "SELECT SUM(valor_movimento) AS total FROM movimento 
-                  WHERE tipo_movimento = 1 AND id_usuario = ?"
+                  WHERE tipo_movimento = ? AND id_usuario = ?";
+        $sql = $conn->prepare($query);
+        // 1 é Entrada e 2 é Saída
+        $sql->bindValue(1, ($entrada) ? 1 : 2, PDO::PARAM_INT);
+        $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
+        $sql->execute();
+        $resultado = $sql->fetch(PDO::FETCH_ASSOC);
+        $total = number_format(abs($resultado['total']), 2, ',', '.');
+        return $total;
     }
 }

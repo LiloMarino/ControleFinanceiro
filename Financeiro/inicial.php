@@ -1,7 +1,9 @@
 <?php
 require_once '../DAO/Util.php';
 Util::verificarLogado();
-
+require_once '../DAO/Movimento.php';
+$totalEntrada = Movimento::obterTotalMovimento(true);
+$totalSaida = Movimento::obterTotalMovimento(false);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,7 +31,28 @@ include_once '_head.php';
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                
+                <div class="col-md-6">
+                    <div class="panel panel-primary text-center no-boder bg-color-green">
+                        <div class="panel-body">
+                            <i class="fa-solid fa-chart-column fa-5x"></i>
+                            <h3>R$ <?= $totalEntrada ?></h3>
+                        </div>
+                        <div class="panel-footer back-footer-green">
+                            Total de Entrada
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-primary text-center no-boder bg-color-red">
+                        <div class="panel-body">
+                            <i class="fa-solid fa-chart-column fa-5x"></i>
+                            <h3>R$ <?= $totalSaida ?></h3>
+                        </div>
+                        <div class="panel-footer back-footer-red">
+                            Total de Saída
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /. PAGE INNER  -->
         </div>

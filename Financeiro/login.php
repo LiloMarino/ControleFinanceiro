@@ -43,7 +43,7 @@ include_once '_head.php';
                                 <input id="senha" onblur="isCampoPreenchido(senha,divSenha,false)" name="senha" type="password" class="form-control" placeholder="Sua senha" />
                             </div>
 
-                            <button onclick="return ValidarCampos('email','senha')" name="btn" href="meus_dados.php" class="btn btn-primary ">Login</button>
+                            <button onclick="return ValidarCampos('email','senha')" name="btn" class="btn btn-primary ">Login</button>
                             <hr />
                             Não possui conta? <a href="cadastro.php"> Clique aqui </a>
                         </form>
