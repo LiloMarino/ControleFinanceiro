@@ -2,8 +2,8 @@
 require_once '../DAO/Util.php';
 Util::verificarLogado();
 require_once '../DAO/Movimento.php';
-$totalEntrada = Movimento::obterTotalMovimento(true);
-$totalSaida = Movimento::obterTotalMovimento(false);
+$totalEntrada = Movimento::obterValorTotalMovimento(true);
+$totalSaida = Movimento::obterValorTotalMovimento(false);
 $movimentos = Movimento::consultarUltimosMovimentos();
 ?>
 <!DOCTYPE html>

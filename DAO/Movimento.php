@@ -298,7 +298,7 @@ class Movimento
      * @param boolean $entrada Se true retorna as entradas, se false as saídas
      * @return string Valor correspondente ao total dos movimentos especificados
      */
-    static public function obterTotalMovimento(bool $entrada): string
+    static public function obterValorTotalMovimento(bool $entrada): string
     {
         $conn = Conexao::getConexao();
         $query = "SELECT SUM(valor_movimento) AS total FROM movimento 
@@ -311,5 +311,28 @@ class Movimento
         $resultado = $sql->fetch(PDO::FETCH_ASSOC);
         $total = number_format(abs($resultado['total']), 2, ',', '.');
         return $total;
+    }
+
+    /**
+     * Retorna o total de movimentos cadastrados pelo usuário
+     *
+     * @param string $search Termo pesquisado
+     * @return integer Total de movimentos
+     */
+    static public function totalMovimentos(string $search = null): int
+    {
+        $query = "SELECT COUNT(*) AS total 
+                      FROM movimento WHERE id_usuario = ? ";
+        if (!is_null($search)) {
+            $query .= 'AND nome_empresa LIKE ?';
+        }
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        if (!is_null($search)) {
+            $sql->bindValue(2, "%$search%");
+        }
+        $sql->execute();
+        $total = $sql->fetch(PDO::FETCH_ASSOC);
+        return $total['total'];
     }
 }
