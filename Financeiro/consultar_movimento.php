@@ -95,9 +95,8 @@ include_once '_head.php';
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button onclick="return ValidarCampos('dataInicial','dataFinal')" type="submit" name="btn" class="btn btn-info">Pesquisar</a>
+                        <button onclick="return ValidarCampos('dataInicial','dataFinal')" type="submit" class="btn btn-info">Pesquisar</a>
                     </div>
-                </form>
                 <div class="row">
                     <div class="col-md-12">
                         <hr>
@@ -110,7 +109,6 @@ include_once '_head.php';
                                 <div class="table-responsive">
                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                         <div class="row">
-                                            <form action="consultar_movimento.php" method="get">
                                                 <div class="col-sm-6">
                                                     <div class="dataTables_length">
                                                         <label>
