@@ -108,7 +108,9 @@ class Util
         $linkProximo = ($paginaAtual < $totalPaginas) ? $paginaPHP . '?' . http_build_query($queryParams + ['page' => $paginaAtual + 1]) : '#';
 ?>
         <div class="col-sm-6">
-            <div class="dataTables_info">Mostrando <?= $itemIndiceMinimo ?> a <?= $itemIndiceMaximo ?> de <?= $totalItens ?> registros</div>
+            <div class="dataTables_info">
+                Mostrando <?= $itemIndiceMinimo > $itemIndiceMaximo ? $itemIndiceMaximo : $itemIndiceMinimo ?> a <?= $itemIndiceMaximo ?> de <?= $totalItens ?> registros
+            </div>
         </div>
         <div class="col-sm-6">
             <div class="dataTables_paginate paging_simple_numbers">
