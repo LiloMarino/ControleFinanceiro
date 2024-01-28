@@ -28,7 +28,12 @@ $dataInicio = isset($_GET['dataInicio']) && Util::isValidDate($_GET['dataInicio'
 $dataFinal =  isset($_GET['dataFinal']) && Util::isValidDate($_GET['dataFinal']) ? $_GET['dataFinal'] : null;
 $termoPesquisado = (isset($_GET['search']) && trim($_GET['search']) != '') ? $_GET['search'] : null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
-$totalMovimentos = Movimento::totalMovimentos($termoPesquisado);
+$totalMovimentos = Movimento::totalMovimentos(
+    $tipo,
+    $dataInicio,
+    $dataFinal,
+    $termoPesquisado
+);
 $movimentos = Movimento::consultarMovimentos(
     $tipo,
     $dataInicio,

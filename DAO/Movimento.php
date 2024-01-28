@@ -337,20 +337,38 @@ class Movimento
     /**
      * Retorna o total de movimentos cadastrados pelo usuário
      *
-     * @param string $search Termo pesquisado
+     * @param integer $tipo Tipo do movimento Todos/Entrada/Saída
+     * @param string|null $dataInicial Data Inicial
+     * @param string|null $dataFinal Data Final
+     * @param string|null $search Termo pesquisado
      * @return integer Total de movimentos
      */
-    static public function totalMovimentos(string $search = null): int
+    static public function totalMovimentos(int $tipo, string $dataInicial = null, string $dataFinal = null, string $search = null): int
     {
         $query = "SELECT COUNT(*) AS total 
                       FROM movimento WHERE id_usuario = ? ";
+        $values[] = Util::codigoLogado();
+        $types[] = PDO::PARAM_INT;
+        if ($tipo != 0) {
+            $query .= " AND tipo_movimento = ?";
+            $values[] = $tipo;
+            $types[] = PDO::PARAM_INT;
+        }
         if (!is_null($search)) {
-            $query .= 'AND nome_empresa LIKE ?';
+            $query .= " AND nome_empresa LIKE ?";
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+        }
+        if (!(is_null($dataInicial) || is_null($dataFinal))) {
+            $query .= " AND data_movimento BETWEEN ? AND ?";
+            $values[] = $dataInicial;
+            $values[] = $dataFinal;
+            $types[] = PDO::PARAM_STR;
+            $types[] = PDO::PARAM_STR;
         }
         $sql = Conexao::getConexao()->prepare($query);
-        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
-        if (!is_null($search)) {
-            $sql->bindValue(2, "%$search%");
+        for ($i = 0; $i < count($values); $i++) {
+            $sql->bindValue($i + 1, $values[$i], $types[$i]);
         }
         $sql->execute();
         $total = $sql->fetch(PDO::FETCH_ASSOC);
