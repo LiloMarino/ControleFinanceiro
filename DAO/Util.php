@@ -88,6 +88,17 @@ class Util
     }
 
     /**
+     * Verifica se a data especificada é válida
+     *
+     * @param string $date  Data em formato Y-m-d
+     * @return boolean Retorna verdadeiro caso seja válida senão retorna falso
+     */
+    public static function isValidDate(string $date): bool
+    {
+        return (strtotime($date) !== false);
+    }
+
+    /**
      * Cria a paginação da tabela no HTML
      *
      * @param string $paginaPHP  Nome da página PHP que irá carregar os dados
