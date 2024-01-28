@@ -6,18 +6,11 @@ if (isset($_POST['id'])) {
     $categoria = Categoria::consultarCategoria($_POST['id']);
     $ret = $categoria->excluirCategoria();
 }
-if (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0)
-    $paginaAtual = $_GET['page'];
-else
-    $paginaAtual = 1;
-if (isset($_GET['itensPagina']) && is_numeric($_GET['itensPagina']) && $_GET['itensPagina'] > 0)
-    $itensPagina = $_GET['itensPagina'];
-else
-    $itensPagina = 10;
-if (isset($_GET['search']) && trim($_GET['search']) != '')
-    $termoPesquisado =  $_GET['search'];
-else
-    $termoPesquisado = null;
+$paginaAtual = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, 
+['options' => ['default' => 1, 'min_range' => 1]]);
+$itensPagina = filter_input(INPUT_GET, 'itensPagina', FILTER_VALIDATE_INT, 
+['options' => ['default' => 10, 'min_range' => 1, 'max_range' => 15]]);
+$termoPesquisado = (isset($_GET['search']) && trim($_GET['search']) != '') ? $_GET['search'] : null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
 $totalCategorias = Categoria::totalCategorias($termoPesquisado);
 $categorias = Categoria::consultarCategoria(search: $termoPesquisado, limit: $intervalo);
