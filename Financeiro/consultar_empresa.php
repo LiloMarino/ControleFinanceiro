@@ -21,7 +21,7 @@ $itensPagina = filter_input(
 $termoPesquisado = (isset($_GET['search']) && trim($_GET['search']) != '') ? $_GET['search'] : null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
 $totalEmpresas = Empresa::totalEmpresas($termoPesquisado);
-$empresas = Empresa::consultarEmpresa();
+$empresas = Empresa::consultarEmpresa(search: $termoPesquisado, limit: $intervalo);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
