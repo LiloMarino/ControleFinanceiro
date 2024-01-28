@@ -39,7 +39,7 @@ include_once '_head.php';
                     <div class="form-group" id="divCategoria">
                         <label for="categoria">Nome da Categoria</label><span class="red-text">*</span>
                         <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome"
-                            class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
+                            class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz" maxlength="35" required>
                     </div>
                     <button onclick="return ValidarCampos('categoria')" name="btn" type="submit"
                         class="btn btn-success">Adicionar</button>

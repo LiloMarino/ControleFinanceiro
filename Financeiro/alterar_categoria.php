@@ -50,7 +50,7 @@ include_once '_head.php';
                 <form action="alterar_categoria.php" method="post">
                     <div class="form-group" id="divCategoria">
                         <label for="categoria">Nome da Categoria</label><span class="red-text">*</span>
-                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome" value="<?= $categoria->nome_categoria ?>" class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz">
+                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome" value="<?= $categoria->nome_categoria ?>" class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz" maxlength="35" required>
                     </div>
                     <input hidden name="id" value="<?= $categoria->id_categoria ?>">
                     <button onclick="return ValidarCampos('categoria')" name="btn" type="submit" class="btn btn-warning">Alterar</button>

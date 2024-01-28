@@ -38,11 +38,15 @@ include_once '_head.php';
                 <form action="meus_dados.php" method="post">
                     <div class="form-group" id="divNome">
                         <label for="nome">Nome</label>
-                        <input id="nome" onblur="isCampoPreenchido(nome,divNome,false)" class="form-control" placeholder="Insira seu Nome" name="nome" value="<?= $usuario->getNome() ?>">
+                        <input id="nome" onblur="isCampoPreenchido(nome,divNome,false)" class="form-control" 
+                        placeholder="Insira seu Nome" name="nome" value="<?= $usuario->getNome() ?>" maxlength="50" 
+                        required>
                     </div>
                     <div class="form-group" id="divEmail">
                         <label for="email">Email</label>
-                        <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" class="form-control" placeholder="Insira seu Email" name="email" value="<?= $usuario->getEmail() ?>">
+                        <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" class="form-control" 
+                        placeholder="Insira seu Email" name="email" value="<?= $usuario->getEmail() ?>" maxlength="50" 
+                        required>
                     </div>
                     <button type="submit" onclick="return ValidarCampos('nome','email')" class="btn btn-success" name="btn">Concluído</button>
                 </form>

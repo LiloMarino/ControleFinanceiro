@@ -51,17 +51,18 @@ include_once '_head.php';
                     <div class="form-group" id="divEmpresa">
                         <label>Nome da Empresa</label><span class="red-text">*</span>
                         <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control"
-                            name="nome" value="<?= $empresa->nome_empresa ?>" placeholder="Digite o nome da empresa. Exemplo: Burger King">
+                            name="nome" value="<?= $empresa->nome_empresa ?>" 
+                            placeholder="Digite o nome da empresa. Exemplo: Burger King" maxlength="50" required>
                     </div>
                     <div class="form-group">
                         <label>Telefone</label>
                         <input class="form-control" name="telefone" value="<?= $empresa->telefone_empresa ?>" 
-                            placeholder="Digite o telefone da empresa. (Opcional)">
+                            placeholder="Digite o telefone da empresa. (Opcional)" maxlength="15">
                     </div>
                     <div class="form-group">
                         <label>Endereço</label>
                         <input class="form-control" name="endereco" value="<?= $empresa->endereco_empresa ?>"
-                            placeholder="Digite o endereço da empresa. (Opcional)">
+                            placeholder="Digite o endereço da empresa. (Opcional)" maxlength="100">
                     </div>
                     <input hidden name="id" value="<?= $empresa->id_empresa ?>">
                     <button onclick="return ValidarCampos('empresa')" type="submit" name="btn" class="btn btn-warning">Alterar</button>

@@ -36,12 +36,12 @@ include_once '_head.php';
                             <div class="form-group input-group" id="divNome">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 <input id="nome" onblur="isCampoPreenchido(nome,divNome,false)" name="nome" type="text"
-                                    class="form-control" placeholder="Seu Nome" />
+                                    class="form-control" placeholder="Seu Nome" maxlength="50" required />
                             </div>
                             <div class="form-group input-group" id="divEmail">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 <input id="email" onblur="isCampoPreenchido(email,divEmail,false)" name="email"
-                                    type="text" class="form-control" placeholder="Seu e-mail" />
+                                    type="text" class="form-control" placeholder="Seu e-mail" maxlength="50" required />
                             </div>
                             <div id="divSenha">
                                 <label hidden class="control-label" for="senha" id="labelSenha"></label>
@@ -49,13 +49,15 @@ include_once '_head.php';
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <input id="senha" oninput="validarSenha()" onfocus="validarSenha()"
                                     onblur="coincideSenha(senha,divSenha)" name="senha" type="password"
-                                    class="form-control" placeholder="Crie uma senha (mínimo 6 caracteres)" />
+                                    class="form-control" placeholder="Crie uma senha (mínimo 6 caracteres)"
+                                    maxlength="20" required />
                                 </div>
                             </div>
                             <div class="form-group input-group" id="divRsenha">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                 <input id="rsenha" oninput="coincideSenha(rsenha,divRsenha)" onblur="coincideSenha(rsenha,divRsenha)" name="rsenha"
-                                    type="password" class="form-control" placeholder="Repita a senha criada" />
+                                    type="password" class="form-control" placeholder="Repita a senha criada"
+                                    maxlength="20" required />
                             </div>
                             <button onclick="return ValidarCadastro('nome','email','senha','rsenha')" type="submit"
                                 name="btn" class="btn btn-success">Finalizar cadastro</button>

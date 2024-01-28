@@ -96,7 +96,7 @@ include_once '_head.php';
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Observações (Opcional)</label>
-                            <textarea name="obs" class="form-control" rows="3"><?= (isset($_POST['obs'])) ? $_POST['obs'] : ''; ?></textarea>
+                            <textarea name="obs" class="form-control" rows="3" maxlength="100"><?= (isset($_POST['obs'])) ? $_POST['obs'] : ''; ?></textarea>
                         </div>
                         <button onclick="return ValidarCampos('tipo', 'data', 'valor', 'categoria', 'empresa', 'conta')" type="submit" name="btn" class="btn btn-success">Finalizar Lançamento</button>
                     </div>
