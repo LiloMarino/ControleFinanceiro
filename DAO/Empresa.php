@@ -70,9 +70,11 @@ class Empresa
      * Realiza a consulta das empresas cadastradas
      *
      * @param integer|null $id Id da Empresa
-     * @return Empresa|Empresa[] Retorna Empresas|Empresas[] ou false caso erro
+     * @param string|null $search Termo pesquisado
+     * @param string|null $limit Limite de resultados por página
+     * @return Empresa|Empresa[]|boolean Retorna Empresas|Empresas[] ou false caso erro
      */
-    static public function consultarEmpresa(int $id = null): Empresa|array|bool
+    static public function consultarEmpresa(int $id = null, string $search = null, string $limit = null): Empresa|array|bool
     {
         if ($id !== null) {
             // Busca no banco o objeto especificado e faz as atribuições
@@ -86,8 +88,18 @@ class Empresa
         } else {
             // Busca todos os elementos e retorna o array
             $query = "SELECT id_empresa, nome_empresa, telefone_empresa, endereco_empresa FROM empresa WHERE (id_usuario = ?)";
+            if (!is_null($search)) {
+                // Busca conforme o search e retorna o array respectivo à busca  
+                $query .= 'AND nome_empresa LIKE ?';
+            }
+            if ($limit) {
+                $query .= $limit;
+            }
             $sql = Conexao::getConexao()->prepare($query);
             $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+            if (!is_null($search)) {
+                $sql->bindValue(2, "%$search%");
+            }
             $sql->execute();
             return $sql->fetchAll(PDO::FETCH_CLASS, 'Empresa');
         }
@@ -162,5 +174,28 @@ class Empresa
             echo $e->getMessage();
             return -1;
         }
+    }
+
+    /**
+     * Retorna o total de empresas cadastradas pelo usuário
+     *
+     * @param string $search Termo pesquisado
+     * @return integer Total de empresas
+     */
+    static public function totalEmpresas(string $search = null): int
+    {
+        $query = "SELECT COUNT(*) AS total 
+                      FROM empresa WHERE id_usuario = ? ";
+        if (!is_null($search)) {
+            $query .= 'AND nome_empresa LIKE ?';
+        }
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        if (!is_null($search)) {
+            $sql->bindValue(2, "%$search%");
+        }
+        $sql->execute();
+        $total = $sql->fetch(PDO::FETCH_ASSOC);
+        return $total['total'];
     }
 }

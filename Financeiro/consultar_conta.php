@@ -6,10 +6,18 @@ if (isset($_POST['id'])) {
     $conta = Conta::consultarConta($_POST['id']);
     $ret = $conta->excluirConta();
 }
-$paginaAtual = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, 
-['options' => ['default' => 1, 'min_range' => 1]]);
-$itensPagina = filter_input(INPUT_GET, 'itensPagina', FILTER_VALIDATE_INT, 
-['options' => ['default' => 10, 'min_range' => 1, 'max_range' => 15]]);
+$paginaAtual = filter_input(
+    INPUT_GET,
+    'page',
+    FILTER_VALIDATE_INT,
+    ['options' => ['default' => 1, 'min_range' => 1]]
+);
+$itensPagina = filter_input(
+    INPUT_GET,
+    'itensPagina',
+    FILTER_VALIDATE_INT,
+    ['options' => ['default' => 10, 'min_range' => 1, 'max_range' => 15]]
+);
 $termoPesquisado = (isset($_GET['search']) && trim($_GET['search']) != '') ? $_GET['search'] : null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
 $totalContas = Conta::totalContas($termoPesquisado);
