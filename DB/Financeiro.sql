@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `db_financeiro`.`empresa` (
   `id_empresa` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome_empresa` VARCHAR(50) NOT NULL,
-  `telefone_empresa` VARCHAR(11) NULL,
+  `telefone_empresa` VARCHAR(15) NULL,
   `endereco_empresa` VARCHAR(100) NULL,
   `id_usuario` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id_empresa`),
