@@ -176,7 +176,11 @@ class Movimento
             $types[] = PDO::PARAM_INT;
         }
         if (!is_null($search)) {
-            $query .= " AND nome_empresa LIKE ?";
+            $query .= " AND (em.nome_empresa LIKE ? OR co.banco_conta LIKE ? OR ca.nome_categoria LIKE ?)";
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
             $values[] = "%$search%";
             $types[] = PDO::PARAM_STR;
         }
@@ -345,8 +349,10 @@ class Movimento
      */
     static public function totalMovimentos(int $tipo, string $dataInicial = null, string $dataFinal = null, string $search = null): int
     {
-        $query = "SELECT COUNT(*) AS total 
-                      FROM movimento WHERE id_usuario = ? ";
+        $query = "SELECT COUNT(*) AS total FROM movimento as m
+            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE m.id_usuario = ? ";
         $values[] = Util::codigoLogado();
         $types[] = PDO::PARAM_INT;
         if ($tipo != 0) {
@@ -355,7 +361,11 @@ class Movimento
             $types[] = PDO::PARAM_INT;
         }
         if (!is_null($search)) {
-            $query .= " AND nome_empresa LIKE ?";
+            $query .= " AND (em.nome_empresa LIKE ? OR co.banco_conta LIKE ? OR ca.nome_categoria LIKE ?)";
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
             $values[] = "%$search%";
             $types[] = PDO::PARAM_STR;
         }
