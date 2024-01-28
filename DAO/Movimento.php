@@ -193,6 +193,31 @@ class Movimento
         return $movimentos;
     }
 
+    static public function consultarUltimosMovimentos()
+    {
+        $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, 
+            em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
+            INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+            INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria 
+            WHERE m.id_usuario = ? ORDER BY m.id_movimento DESC LIMIT 10";
+        $sql = Conexao::getConexao()->prepare($query);
+        $sql->bindValue(1, Util::codigoLogado(), PDO::PARAM_INT);
+        $sql->execute();
+        $movimentos = [];
+        while (($linha = $sql->fetch(PDO::FETCH_ASSOC)) !== false) {
+            $empresa = new Empresa();
+            $empresa->nome_empresa = $linha["nome_empresa"];
+            $conta = new Conta();
+            $conta->banco_conta = $linha["banco_conta"];
+            $categoria = new Categoria();
+            $categoria->nome_categoria = $linha["nome_categoria"];
+            $movimento = new Movimento($linha['id_movimento'], $linha['tipo_movimento'], $linha['data_movimento'], $linha['valor_movimento'], $linha['obs_movimento'], $empresa, $conta, $categoria);
+            $movimentos[] = $movimento;
+        }
+        return $movimentos;
+    }
+
     /**
      * Atualiza as informações do movimento
      * 

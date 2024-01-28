@@ -111,29 +111,29 @@ include_once '_head.php';
                                                                 <input type="hidden" name="dataFinal" value="<?= $_POST['dataFinal'] ?>">
                                                                 <input type="hidden" name="id" value="<?= $movimento->id_movimento ?>">
                                                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<?= $movimento->id_movimento ?>">Excluir</button>
-                                                            <div class="modal fade" id="myModal<?= $movimento->id_movimento ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                                                            <h4 class="modal-title" id="myModalLabel">Deseja excluir o movimento</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <strong>Data do movimento:</strong> <?= date('d/m/Y', strtotime($movimento->data_movimento)); ?><br>
-                                                                            <strong>Tipo do movimento:</strong> <?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?><br>
-                                                                            <strong>Categoria:</strong> <?= $movimento->categoria->nome_categoria ?><br>
-                                                                            <strong>Empresa:</strong> <?= $movimento->empresa->nome_empresa ?><br>
-                                                                            <strong>Conta:</strong> <?= $movimento->conta->banco_conta ?><br>
-                                                                            <strong>Valor:</strong> R$ <?= number_format($movimento->valor_movimento, 2, ',', '.') ?><br>
-                                                                            Você confirma excluir?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                            <button type="submit" name="id" value="<?= $movimento->id_movimento ?>" class="btn btn-danger">Excluir</button>
+                                                                <div class="modal fade" id="myModal<?= $movimento->id_movimento ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Deseja excluir o movimento</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <strong>Data do movimento:</strong> <?= date('d/m/Y', strtotime($movimento->data_movimento)); ?><br>
+                                                                                <strong>Tipo do movimento:</strong> <?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?><br>
+                                                                                <strong>Categoria:</strong> <?= $movimento->categoria->nome_categoria ?><br>
+                                                                                <strong>Empresa:</strong> <?= $movimento->empresa->nome_empresa ?><br>
+                                                                                <strong>Conta:</strong> <?= $movimento->conta->banco_conta ?><br>
+                                                                                <strong>Valor:</strong> R$ <?= number_format($movimento->valor_movimento, 2, ',', '.') ?><br>
+                                                                                Você confirma excluir?
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                                <button type="submit" name="id" value="<?= $movimento->id_movimento ?>" class="btn btn-danger">Excluir</button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -141,9 +141,9 @@ include_once '_head.php';
                                             <?php endif; ?>
                                         </tbody>
                                     </table>
-                                    <center>
+                                    <div class="text-center">
                                         <label style="color:<?= ($total < 0) ? "red" : "green" ?>;">TOTAL: R$<?= number_format($total, 2, ',', '.') ?></label>
-                                    </center>
+                                    </div>
                                 </div>
                             </div>
                         </div>
