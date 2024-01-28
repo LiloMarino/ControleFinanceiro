@@ -22,7 +22,13 @@ $termoPesquisado = (isset($_GET['search']) && trim($_GET['search']) != '') ? $_G
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
 $totalMovimentos = Movimento::totalMovimentos($termoPesquisado);
 if (isset($_POST['btn'])) {
-    $movimentos = Movimento::consultarMovimentos($_POST['tipo'], $_POST['dataInicio'], $_POST['dataFinal']);
+    $movimentos = Movimento::consultarMovimentos(
+        $_POST['tipo'],
+        $_POST['dataInicio'],
+        $_POST['dataFinal'],
+        $termoPesquisado,
+        $intervalo
+    );
 }
 ?>
 <!DOCTYPE html>
@@ -142,7 +148,7 @@ include_once '_head.php';
                                                             <th>R$<?= number_format($movimento->valor_movimento, 2, ',', '.') ?></th>
                                                             <th><?= $movimento->obs_movimento ?></th>
                                                             <td>
-                                                                <form action="consultar_movimento.php" method="post">
+                                                                <form action="consultar_movimento.php" method="get">
                                                                     <input type="hidden" name="tipo" value="<?= $_POST['tipo'] ?>">
                                                                     <input type="hidden" name="dataInicio" value="<?= $_POST['dataInicio'] ?>">
                                                                     <input type="hidden" name="dataFinal" value="<?= $_POST['dataFinal'] ?>">

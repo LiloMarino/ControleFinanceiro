@@ -154,29 +154,45 @@ class Movimento
      * Consulta os movimentos presentes no banco em um dado intervalo de tempo
      * 
      * @param int $tipo Tipo do movimento
-     * @param string $dataInicial Data inicial
-     * @param string $dataFinal Data final
+     * @param string|null $dataInicial Data inicial
+     * @param string|null $dataFinal Data final
+     * @param string|null $search Termo pesquisado
+     * @param string|null $limit Limite de resultados por página
      * @return Movimento[] Retorna Movimentos[] 
      */
-    static public function consultarMovimentos(int $tipo, string $dataInicial, string $dataFinal): array
+    static public function consultarMovimentos(int $tipo, string $dataInicial = null, string $dataFinal = null, string $search = null, string $limit = null): array
     {
+        $values = array();
+        $types = array();
         $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
             INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
             INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
-            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE (data_movimento BETWEEN ? AND ?) AND m.id_usuario = ? ";
+            INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria WHERE m.id_usuario = ? ";
+        $values[] = Util::codigoLogado();
+        $types[] = PDO::PARAM_INT;
         if ($tipo != 0) {
-            $query .= "AND tipo_movimento = ?";
+            $query .= " AND tipo_movimento = ?";
+            $values[] = $tipo;
+            $types[] = PDO::PARAM_INT;
+        }
+        if (!is_null($search)) {
+            $query .= " AND nome_empresa LIKE ?";
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+        }
+        if (!(is_null($dataInicial) || is_null($dataFinal))) {
+            $query .= " AND data_movimento BETWEEN ? AND ?";
+            $values[] = $dataInicial;
+            $values[] = $dataFinal;
+            $types[] = PDO::PARAM_STR;
+            $types[] = PDO::PARAM_STR;
+        }
+        if ($limit) {
+            $query .= $limit;
         }
         $sql = Conexao::getConexao()->prepare($query);
-        if ($tipo != 0) {
-            $sql->bindValue(1, $tipo, PDO::PARAM_INT);
-            $sql->bindValue(2, $dataInicial);
-            $sql->bindValue(3, $dataFinal);
-            $sql->bindValue(4, Util::codigoLogado(), PDO::PARAM_INT);
-        } else {
-            $sql->bindValue(1, $dataInicial);
-            $sql->bindValue(2, $dataFinal);
-            $sql->bindValue(3, Util::codigoLogado(), PDO::PARAM_INT);
+        for ($i = 0; $i < count($values); $i++) {
+            $sql->bindValue($i + 1, $values[$i], $types[$i]);
         }
         $sql->execute();
         $movimentos = [];
@@ -193,7 +209,12 @@ class Movimento
         return $movimentos;
     }
 
-    static public function consultarUltimosMovimentos()
+    /**
+     * Retorna os últimos 10 movimentos cadastrados pelo usuário
+     *
+     * @return Movimento[] Retorna Movimentos[] 
+     */
+    static public function consultarUltimosMovimentos(): array
     {
         $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, 
             em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
