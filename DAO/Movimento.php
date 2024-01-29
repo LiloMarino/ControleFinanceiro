@@ -320,18 +320,47 @@ class Movimento
     /**
      * Obtém o valor total dos movimentos de um determinado tipo
      *
-     * @param boolean $entrada Se true retorna as entradas, se false as saídas
+     * @param integer $tipo Tipo do movimento
+     * @param string|null $dataInicial Data inicial
+     * @param string|null $dataFinal Data final
+     * @param string|null $search Termo pesquisado
      * @return string Valor correspondente ao total dos movimentos especificados
      */
-    static public function obterValorTotalMovimento(bool $entrada): string
+    static public function obterValorTotalMovimento(int $tipo, string $dataInicial = null, string $dataFinal = null, string $search = null): string
     {
         $conn = Conexao::getConexao();
-        $query = "SELECT SUM(valor_movimento) AS total FROM movimento 
-                  WHERE tipo_movimento = ? AND id_usuario = ?";
+        $query = "SELECT SUM(valor_movimento) AS total FROM movimento as m
+                  INNER JOIN empresa AS em ON m.id_empresa = em.id_empresa 
+                  INNER JOIN conta AS co  ON  m.id_conta = co.id_conta 
+                  INNER JOIN categoria AS ca ON m.id_categoria = ca.id_categoria
+                  WHERE m.id_usuario = ?";
+        $values[] = Util::codigoLogado();
+        $types[] = PDO::PARAM_INT;
+        if ($tipo != 0) {
+            $query .= " AND tipo_movimento = ?";
+            $values[] = $tipo;
+            $types[] = PDO::PARAM_INT;
+        }
+        if (!is_null($search)) {
+            $query .= " AND (em.nome_empresa LIKE ? OR co.banco_conta LIKE ? OR ca.nome_categoria LIKE ?)";
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+            $values[] = "%$search%";
+            $types[] = PDO::PARAM_STR;
+        }
+        if (!(is_null($dataInicial) || is_null($dataFinal))) {
+            $query .= " AND data_movimento BETWEEN ? AND ?";
+            $values[] = $dataInicial;
+            $values[] = $dataFinal;
+            $types[] = PDO::PARAM_STR;
+            $types[] = PDO::PARAM_STR;
+        }
         $sql = $conn->prepare($query);
-        // 1 é Entrada e 2 é Saída
-        $sql->bindValue(1, ($entrada) ? 1 : 2, PDO::PARAM_INT);
-        $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
+        for ($i = 0; $i < count($values); $i++) {
+            $sql->bindValue($i + 1, $values[$i], $types[$i]);
+        }
         $sql->execute();
         $resultado = $sql->fetch(PDO::FETCH_ASSOC);
         $total = number_format(abs($resultado['total']), 2, ',', '.');

@@ -28,6 +28,12 @@ $dataInicio = isset($_GET['dataInicio']) && Util::isValidDate($_GET['dataInicio'
 $dataFinal =  isset($_GET['dataFinal']) && Util::isValidDate($_GET['dataFinal']) ? $_GET['dataFinal'] : null;
 $termoPesquisado = (isset($_GET['search']) && trim($_GET['search']) != '') ? $_GET['search'] : null;
 $intervalo = Util::determinaLimit($paginaAtual, $itensPagina);
+$valorTotal = Movimento::obterValorTotalMovimento(
+    $tipo,
+    $dataInicio,
+    $dataFinal,
+    $termoPesquisado
+);
 $totalMovimentos = Movimento::totalMovimentos(
     $tipo,
     $dataInicio,
@@ -97,18 +103,18 @@ include_once '_head.php';
                     <div class="col-md-12">
                         <button onclick="return ValidarCampos('dataInicial','dataFinal')" type="submit" class="btn btn-info">Pesquisar</a>
                     </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <hr>
-                        <!-- Advanced Tables -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Resultado Encontrado
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                        <div class="row">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr>
+                            <!-- Advanced Tables -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Resultado Encontrado
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                            <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="dataTables_length">
                                                         <label>
@@ -127,89 +133,86 @@ include_once '_head.php';
                                                         </label>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <table class="table table-striped table-bordered table-hover dataTable no-footer">
-                                            <thead>
-                                                <tr>
-                                                    <th>Data</th>
-                                                    <th>Tipo</th>
-                                                    <th>Categoria</th>
-                                                    <th>Empresa</th>
-                                                    <th>Conta</th>
-                                                    <th>Valor</th>
-                                                    <th>Observações</th>
-                                                    <th>Ação</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $total = 0; ?>
-                                                <?php foreach ($movimentos as $movimento) : ?>
-                                                    <tr class="odd gradeX">
-                                                        <?php $total += $movimento->valor_movimento; ?>
-
-                                                        <th><?= date('d/m/Y', strtotime($movimento->data_movimento)); ?></th>
-                                                        <th><?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?></th>
-                                                        <th><?= $movimento->categoria->nome_categoria ?></th>
-                                                        <th><?= $movimento->empresa->nome_empresa ?></th>
-                                                        <th><?= $movimento->conta->banco_conta ?></th>
-                                                        <th>R$<?= number_format($movimento->valor_movimento, 2, ',', '.') ?></th>
-                                                        <th><?= $movimento->obs_movimento ?></th>
-                                                        <td>
-                                                            <form action="consultar_movimento.php" method="get">
-                                                                <input type="hidden" name="tipo" value="<?= $tipo ?>">
-                                                                <input type="hidden" name="dataInicio" value="<?= $dataInicio ?>">
-                                                                <input type="hidden" name="dataFinal" value="<?= $dataFinal ?>">
-                                                                <input type="hidden" name="id" value="<?= $movimento->id_movimento ?>">
-                                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<?= $movimento->id_movimento ?>">Excluir</button>
-                                                                <div class="modal fade" id="myModal<?= $movimento->id_movimento ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                                                                <h4 class="modal-title" id="myModalLabel">Deseja excluir o movimento</h4>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <strong>Data do movimento:</strong> <?= date('d/m/Y', strtotime($movimento->data_movimento)); ?><br>
-                                                                                <strong>Tipo do movimento:</strong> <?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?><br>
-                                                                                <strong>Categoria:</strong> <?= $movimento->categoria->nome_categoria ?><br>
-                                                                                <strong>Empresa:</strong> <?= $movimento->empresa->nome_empresa ?><br>
-                                                                                <strong>Conta:</strong> <?= $movimento->conta->banco_conta ?><br>
-                                                                                <strong>Valor:</strong> R$ <?= number_format($movimento->valor_movimento, 2, ',', '.') ?><br>
-                                                                                Você confirma excluir?
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                                <button type="submit" name="id" value="<?= $movimento->id_movimento ?>" class="btn btn-danger">Excluir</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                        <div class="row">
-                                            <?php Util::criaPaginacao("consultar_movimento.php", $paginaAtual, $itensPagina, $totalMovimentos); ?>
-                                        </div>
-                                        <div class="text-center">
-                                            <label style="color:<?= ($total < 0) ? "red" : "green" ?>;">TOTAL: R$<?= number_format($total, 2, ',', '.') ?></label>
+                </form>
+            </div>
+            <table class="table table-striped table-bordered table-hover dataTable no-footer">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Categoria</th>
+                        <th>Empresa</th>
+                        <th>Conta</th>
+                        <th>Valor</th>
+                        <th>Observações</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($movimentos as $movimento) : ?>
+                        <tr class="odd gradeX">
+                            <th><?= date('d/m/Y', strtotime($movimento->data_movimento)); ?></th>
+                            <th><?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?></th>
+                            <th><?= $movimento->categoria->nome_categoria ?></th>
+                            <th><?= $movimento->empresa->nome_empresa ?></th>
+                            <th><?= $movimento->conta->banco_conta ?></th>
+                            <th>R$<?= number_format($movimento->valor_movimento, 2, ',', '.') ?></th>
+                            <th><?= $movimento->obs_movimento ?></th>
+                            <td>
+                                <form action="consultar_movimento.php" method="get">
+                                    <input type="hidden" name="tipo" value="<?= $tipo ?>">
+                                    <input type="hidden" name="dataInicio" value="<?= $dataInicio ?>">
+                                    <input type="hidden" name="dataFinal" value="<?= $dataFinal ?>">
+                                    <input type="hidden" name="id" value="<?= $movimento->id_movimento ?>">
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<?= $movimento->id_movimento ?>">Excluir</button>
+                                    <div class="modal fade" id="myModal<?= $movimento->id_movimento ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Deseja excluir o movimento</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <strong>Data do movimento:</strong> <?= date('d/m/Y', strtotime($movimento->data_movimento)); ?><br>
+                                                    <strong>Tipo do movimento:</strong> <?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?><br>
+                                                    <strong>Categoria:</strong> <?= $movimento->categoria->nome_categoria ?><br>
+                                                    <strong>Empresa:</strong> <?= $movimento->empresa->nome_empresa ?><br>
+                                                    <strong>Conta:</strong> <?= $movimento->conta->banco_conta ?><br>
+                                                    <strong>Valor:</strong> R$ <?= number_format($movimento->valor_movimento, 2, ',', '.') ?><br>
+                                                    Você confirma excluir?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" name="id" value="<?= $movimento->id_movimento ?>" class="btn btn-danger">Excluir</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-                                </div>
-                            </div>
-                            <!--End Advanced Tables -->
-                        </div>
-                    </div>
-                </div>
-                <!-- /. PAGE INNER  -->
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div class="row">
+                <?php Util::criaPaginacao("consultar_movimento.php", $paginaAtual, $itensPagina, $totalMovimentos); ?>
             </div>
-            <!-- /. PAGE WRAPPER  -->
+            <div class="text-center">
+                <label style="color:<?= ($valorTotal < 0) ? "red" : "green" ?>;">TOTAL: R$<?= $valorTotal ?></label>
+            </div>
         </div>
-        <!-- /. WRAPPER  -->
+
+    </div>
+    </div>
+    <!--End Advanced Tables -->
+    </div>
+    </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
 
 
 </body>

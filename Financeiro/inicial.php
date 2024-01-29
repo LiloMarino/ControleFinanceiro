@@ -2,8 +2,8 @@
 require_once '../DAO/Util.php';
 Util::verificarLogado();
 require_once '../DAO/Movimento.php';
-$totalEntrada = Movimento::obterValorTotalMovimento(true);
-$totalSaida = Movimento::obterValorTotalMovimento(false);
+$totalEntrada = Movimento::obterValorTotalMovimento(1);
+$totalSaida = Movimento::obterValorTotalMovimento(2);
 $movimentos = Movimento::consultarUltimosMovimentos();
 ?>
 <!DOCTYPE html>
@@ -79,10 +79,10 @@ include_once '_head.php';
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $total = 0; ?>
+                                                <?php $valorTotal = 0; ?>
                                                 <?php foreach ($movimentos as $movimento) : ?>
                                                     <tr class="odd gradeX">
-                                                        <?php $total += $movimento->valor_movimento; ?>
+                                                        <?php $valorTotal += $movimento->valor_movimento; ?>
                                                         <th><?= date('d/m/Y', strtotime($movimento->data_movimento)); ?></th>
                                                         <th><?= ($movimento->tipo_movimento == 1) ? 'Entrada' : 'Saída' ?></th>
                                                         <th><?= $movimento->categoria->nome_categoria ?></th>
@@ -95,7 +95,7 @@ include_once '_head.php';
                                             </tbody>
                                         </table>
                                         <div class="text-center">
-                                            <label style="color:<?= ($total < 0) ? "red" : "green" ?>;">TOTAL: R$<?= number_format($total, 2, ',', '.') ?></label>
+                                            <label style="color:<?= ($valorTotal < 0) ? "red" : "green" ?>;">TOTAL: R$<?= number_format($valorTotal, 2, ',', '.') ?></label>
                                         </div>
                                     </div>
                                 </div>
