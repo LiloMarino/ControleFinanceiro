@@ -2,8 +2,18 @@
 require_once '../DAO/Util.php';
 Util::verificarLogado();
 require_once '../DAO/Movimento.php';
-$totalEntrada = Movimento::obterValorTotalMovimento(1);
-$totalSaida = Movimento::obterValorTotalMovimento(2);
+$totalEntrada = number_format(
+    Movimento::obterValorTotalMovimento(1),
+    2,
+    ',',
+    '.'
+);
+$totalSaida = number_format(
+    abs(Movimento::obterValorTotalMovimento(2)),
+    2,
+    ',',
+    '.'
+);
 $movimentos = Movimento::consultarUltimosMovimentos();
 ?>
 <!DOCTYPE html>

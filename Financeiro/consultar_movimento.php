@@ -198,7 +198,7 @@ include_once '_head.php';
                 <?php Util::criaPaginacao("consultar_movimento.php", $paginaAtual, $itensPagina, $totalMovimentos); ?>
             </div>
             <div class="text-center">
-                <label style="color:<?= ($valorTotal < 0) ? "red" : "green" ?>;">TOTAL: R$<?= $valorTotal ?></label>
+                <label style="color:<?= ($valorTotal < 0) ? "red" : "green" ?>;">TOTAL: R$<?=  number_format($valorTotal, 2, ',', '.'); ?></label>
             </div>
         </div>
 

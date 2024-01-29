@@ -324,9 +324,10 @@ class Movimento
      * @param string|null $dataInicial Data inicial
      * @param string|null $dataFinal Data final
      * @param string|null $search Termo pesquisado
-     * @return string Valor correspondente ao total dos movimentos especificados
+     * @return string|null Valor correspondente ao total dos movimentos 
+     * especificados ou null caso não haja nenhum movimento
      */
-    static public function obterValorTotalMovimento(int $tipo, string $dataInicial = null, string $dataFinal = null, string $search = null): string
+    static public function obterValorTotalMovimento(int $tipo, string $dataInicial = null, string $dataFinal = null, string $search = null): string|null
     {
         $conn = Conexao::getConexao();
         $query = "SELECT SUM(valor_movimento) AS total FROM movimento as m
@@ -363,8 +364,7 @@ class Movimento
         }
         $sql->execute();
         $resultado = $sql->fetch(PDO::FETCH_ASSOC);
-        $total = number_format(abs($resultado['total']), 2, ',', '.');
-        return $total;
+        return $resultado['total'];
     }
 
     /**
