@@ -127,7 +127,7 @@ class Movimento
      * @param integer $id Id do movimento
      * @return Movimento Retorna Movimento
      */
-    static public function consultarMovimento(int $id): Movimento
+    static public function consultarMovimento(int $id): Movimento | null
     {
         // Busca no banco o objeto especificado e faz as atribuições
         $query = "SELECT id_movimento, tipo_movimento, data_movimento, valor_movimento, obs_movimento, m.id_conta, em.nome_empresa, co.banco_conta, ca.nome_categoria FROM movimento as m
@@ -139,15 +139,19 @@ class Movimento
         $sql->bindValue(2, Util::codigoLogado(), PDO::PARAM_INT);
         $sql->execute();
         $linha = $sql->fetch(PDO::FETCH_ASSOC);
-        $empresa = new Empresa();
-        $empresa->nome_empresa = $linha["nome_empresa"];
-        $conta = new Conta();
-        $conta->banco_conta = $linha["banco_conta"];
-        $conta->id_conta = $linha["id_conta"];
-        $categoria = new Categoria();
-        $categoria->nome_categoria = $linha["nome_categoria"];
-        $movimento = new Movimento($linha['id_movimento'], $linha['tipo_movimento'], $linha['data_movimento'], $linha['valor_movimento'], $linha['obs_movimento'], $empresa, $conta, $categoria);
-        return $movimento;
+        if($linha)
+        {
+            $empresa = new Empresa();
+            $empresa->nome_empresa = $linha["nome_empresa"];
+            $conta = new Conta();
+            $conta->banco_conta = $linha["banco_conta"];
+            $conta->id_conta = $linha["id_conta"];
+            $categoria = new Categoria();
+            $categoria->nome_categoria = $linha["nome_categoria"];
+            $movimento = new Movimento($linha['id_movimento'], $linha['tipo_movimento'], $linha['data_movimento'], $linha['valor_movimento'], $linha['obs_movimento'], $empresa, $conta, $categoria);
+            return $movimento;
+        }
+        return null;
     }
 
     /**

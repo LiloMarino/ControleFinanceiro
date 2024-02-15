@@ -2,9 +2,17 @@
 require_once '../DAO/Util.php';
 Util::verificarLogado();
 require_once '../DAO/Movimento.php';
-if (isset($_POST['id'])) {
-    $movimento = Movimento::consultarMovimento($_POST['id']);
-    $ret = $movimento->excluirMovimento();
+if (isset($_GET['id'])) {
+    $id = filter_input(
+        INPUT_GET,
+        'id',
+        FILTER_VALIDATE_INT,
+        ['options' => ['default' => 1, 'min_range' => 1]]
+    );
+    $movimento = Movimento::consultarMovimento($id);
+    if ($movimento) {
+        $ret = $movimento->excluirMovimento();
+    }
 }
 $paginaAtual = filter_input(
     INPUT_GET,
@@ -163,7 +171,7 @@ include_once '_head.php';
                                     <input type="hidden" name="tipo" value="<?= $tipo ?>">
                                     <input type="hidden" name="dataInicio" value="<?= $dataInicio ?>">
                                     <input type="hidden" name="dataFinal" value="<?= $dataFinal ?>">
-                                    <input type="hidden" name="id" value="<?= $movimento->id_movimento ?>">
+                                    <input type="hidden" name="search" value="<?= $termoPesquisado ?>">
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<?= $movimento->id_movimento ?>">Excluir</button>
                                     <div class="modal fade" id="myModal<?= $movimento->id_movimento ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
