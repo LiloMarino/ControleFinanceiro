@@ -35,6 +35,7 @@ include_once '_head.php';
 
         <div id="page-wrapper">
             <div id="page-inner">
+                <?php include_once '_msg.php'; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Alterar Empresa</h2>
@@ -43,26 +44,19 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <?php
-                include_once '_msg.php';
-                ?>
                 <hr />
                 <form action="alterar_empresa.php" method="post">
                     <div class="form-group" id="divEmpresa">
                         <label>Nome da Empresa</label><span class="red-text">*</span>
-                        <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control"
-                            name="nome" value="<?= $empresa->nome_empresa ?>" 
-                            placeholder="Digite o nome da empresa. Exemplo: Burger King" maxlength="50" required>
+                        <input id="empresa" onblur="isCampoPreenchido(empresa,divEmpresa,false)" class="form-control" name="nome" value="<?= $empresa->nome_empresa ?>" placeholder="Digite o nome da empresa. Exemplo: Burger King" maxlength="50" required>
                     </div>
                     <div class="form-group">
                         <label>Telefone</label>
-                        <input class="form-control" name="telefone" value="<?= $empresa->telefone_empresa ?>" 
-                            placeholder="Digite o telefone da empresa. (Opcional)" maxlength="15">
+                        <input class="form-control" name="telefone" value="<?= $empresa->telefone_empresa ?>" placeholder="Digite o telefone da empresa. (Opcional)" maxlength="15">
                     </div>
                     <div class="form-group">
                         <label>Endereço</label>
-                        <input class="form-control" name="endereco" value="<?= $empresa->endereco_empresa ?>"
-                            placeholder="Digite o endereço da empresa. (Opcional)" maxlength="100">
+                        <input class="form-control" name="endereco" value="<?= $empresa->endereco_empresa ?>" placeholder="Digite o endereço da empresa. (Opcional)" maxlength="100">
                     </div>
                     <input hidden name="id" value="<?= $empresa->id_empresa ?>">
                     <button onclick="return ValidarCampos('empresa')" type="submit" name="btn" class="btn btn-warning">Alterar</button>

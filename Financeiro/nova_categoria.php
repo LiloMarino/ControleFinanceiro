@@ -23,6 +23,7 @@ include_once '_head.php';
 
         <div id="page-wrapper">
             <div id="page-inner">
+                <?php include_once '_msg.php'; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Nova Categoria</h2>
@@ -31,18 +32,13 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <?php
-                include_once '_msg.php';
-                ?>
                 <hr />
                 <form action="nova_categoria.php" method="post">
                     <div class="form-group" id="divCategoria">
                         <label for="categoria">Nome da Categoria</label><span class="red-text">*</span>
-                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome"
-                            class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz" maxlength="35" required>
+                        <input id="categoria" onblur="isCampoPreenchido(categoria,divCategoria,false)" name="nome" class="form-control" placeholder="Digite o nome da categoria. Exemplo: Luz" maxlength="35" required>
                     </div>
-                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit"
-                        class="btn btn-success">Adicionar</button>
+                    <button onclick="return ValidarCampos('categoria')" name="btn" type="submit" class="btn btn-success">Adicionar</button>
                 </form>
             </div>
             <!-- /. PAGE INNER  -->

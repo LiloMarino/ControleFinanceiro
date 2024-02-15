@@ -11,8 +11,7 @@ if (isset($_POST['btn'])) {
 $empresas = Empresa::consultarEmpresa();
 $contas = Conta::consultarConta();
 $categorias = Categoria::consultarCategoria();
-if (count($empresas) == 0 || count($contas) == 0 || count($categorias) == 0)
-{
+if (count($empresas) == 0 || count($contas) == 0 || count($categorias) == 0) {
     $ret = 2;
 }
 ?>
@@ -33,6 +32,7 @@ include_once '_head.php';
 
         <div id="page-wrapper">
             <div id="page-inner">
+                <?php include_once '_msg.php'; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Realizar Movimento</h2>
@@ -41,9 +41,6 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <?php
-                include_once '_msg.php';
-                ?>
                 <hr />
                 <form action="realizar_movimento.php" method="post">
                     <div class="col-md-6">

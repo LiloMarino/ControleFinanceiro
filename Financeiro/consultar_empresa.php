@@ -40,6 +40,7 @@ include_once '_head.php';
 
         <div id="page-wrapper">
             <div id="page-inner">
+                <?php include_once '_msg.php'; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Consultar Empresa</h2>
@@ -48,9 +49,6 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <?php
-                include_once '_msg.php';
-                ?>
                 <hr />
                 <div class="row">
                     <div class="col-md-12">

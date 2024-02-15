@@ -73,17 +73,14 @@ include_once '_head.php';
 
         <div id="page-wrapper">
             <div id="page-inner">
+                <?php include_once '_msg.php'; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Consultar Movimento</h2>
                         <h5>Aqui você pode consultar todos os seus movimentos em um determinado período</h5>
-
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <?php
-                include_once '_msg.php';
-                ?>
                 <hr />
                 <form action="consultar_movimento.php" method="get">
                     <div class="col-md-12">
@@ -206,7 +203,7 @@ include_once '_head.php';
                 <?php Util::criaPaginacao("consultar_movimento.php", $paginaAtual, $itensPagina, $totalMovimentos); ?>
             </div>
             <div class="text-center">
-                <label style="color:<?= ($valorTotal < 0) ? "red" : "green" ?>;">TOTAL: R$<?=  number_format($valorTotal, 2, ',', '.'); ?></label>
+                <label style="color:<?= ($valorTotal < 0) ? "red" : "green" ?>;">TOTAL: R$<?= number_format($valorTotal, 2, ',', '.'); ?></label>
             </div>
         </div>
 

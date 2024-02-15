@@ -35,6 +35,7 @@ include_once '_head.php';
 
         <div id="page-wrapper">
             <div id="page-inner">
+                <?php include_once '_msg.php'; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Alterar Conta</h2>
@@ -43,9 +44,6 @@ include_once '_head.php';
                     </div>
                 </div>
                 <!-- /. ROW  -->
-                <?php
-                include_once '_msg.php';
-                ?>
                 <hr />
                 <form action="alterar_conta.php" method="post">
                     <div id="divNome" class="form-group">
