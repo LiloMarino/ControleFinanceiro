@@ -94,7 +94,7 @@ class Usuario
             return 0;
         }
         $conn = Conexao::getConexao();
-        $query = "SELECT id_usuario FROM usuario WHERE email_usuario = ? AND senha_usuario = ?";
+        $query = "SELECT id_usuario, nome_usuario FROM usuario WHERE email_usuario = ? AND senha_usuario = ?";
         $sql = $conn->prepare($query);
         $sql->bindValue(1, $email);
         $sql->bindValue(2, $senha);
@@ -104,7 +104,7 @@ class Usuario
         {
             return -6;
         }
-        Util::criarSessao($usuario['id_usuario']);
+        Util::criarSessao($usuario['id_usuario'], $usuario['nome_usuario']);
         header('location: inicial.php');
         exit;
         

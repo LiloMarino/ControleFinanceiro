@@ -16,11 +16,13 @@ class Util
      * Cria a sessão para o usuário do id especificado
      *
      * @param integer $id_usuario  Id do usuário que será criada a sessão.
+     * @param string $nome Nome do usuário
      */
-    public static function criarSessao(int $id_usuario)
+    public static function criarSessao(int $id_usuario, string $nome)
     {
         self::IniciarSessao();
         $_SESSION['cod'] = $id_usuario;
+        $_SESSION['nome'] = $nome;
     }
 
     /**
@@ -42,6 +44,7 @@ class Util
     {
         self::iniciarSessao();
         unset($_SESSION['cod']);
+        unset($_SESSION['nome']);
         header("location:login.php");
         exit;
     }
