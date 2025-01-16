@@ -10,6 +10,9 @@ COPY . /var/www/html/
 # Ajuste as permissões
 RUN chown -R www-data:www-data /var/www/html/
 
+# Defina o ServerName para evitar o aviso
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Exponha a porta 80
 EXPOSE 80
 

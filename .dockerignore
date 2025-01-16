@@ -1,0 +1,4 @@
+.vscode/
+.git/
+DB/
+.dockerignore
